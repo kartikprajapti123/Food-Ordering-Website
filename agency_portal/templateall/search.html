@@ -1,0 +1,474 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Search
+{% endblock title %}
+
+{% block link %}
+  
+{% endblock link %}
+{% block style %}
+  <style>
+	.footer{
+		display:none;
+	}
+  </style>
+{% endblock style %}
+{% block body %}
+  
+
+			<!-- Breadcrumb -->
+			<div class="breadcrumb-bar" style="margin-top:100px;">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 col-12">
+							<div class="breadcrumb-list">
+								<nav aria-label="breadcrumb" class="page-breadcrumb">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item"><a href="/">Home</a></li>
+										<li class="breadcrumb-item active" aria-current="page">Search Videos </li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Breadcrumb -->
+			
+			<!-- Course -->
+			<section class="course-content">
+				<div class="container">
+					<div class="row" style="width: 100%;">
+						
+							<!-- Filter -->
+							<div class="showing-list">
+								<div class="row">
+                                    <div class="col-lg-6" style="width: 100%;margin:15px 0px;">	
+										<div class="show-filter add-course-info">
+											<form action="#">
+												<div class="row gx-2 align-items-center" style="display: flex;
+    justify-content: center;">	
+													<div class="col-md-6 col-item" >
+														<div class=" search-group" >
+															<i class="feather-search"></i>
+															<input type="text" class="form-control" placeholder="Search our courses" id="search" oninput="searchCalled()" >
+														</div>
+													</div>
+													<!-- <div class="col-md-6 col-lg-6 col-item">
+														<div class="input-block select-form mb-0">
+															<select class="form-select select" id="sel1" name="sellist1">
+															  <option>Newly published </option>
+															  <option>published 1</option>
+															  <option>published 2</option>
+															  <option>published 3</option>
+															</select>
+														</div>
+													</div>						 -->
+												</div>
+											</form>
+										</div>	
+									</div>
+									<div class="col-lg-6" style="width: 100%; display:flex;justify-content:center;">
+										<div class="d-flex align-items-center" >
+											<!-- <div class="view-icons">
+												<a href="course-grid.html" class="grid-view active"><i class="feather-grid"></i></a>
+												<a href="course-list.html" class="list-view"><i class="feather-list"></i></a>
+											</div> -->
+											<div class="show-result">
+												<h4 id="search_result_count"></h4>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+							<!-- /Filter -->
+							
+							<div class="row" id="search_results" style="width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;">
+							</div>
+							
+							<!-- /pagination -->
+							<!-- <div class="row">
+								<div class="col-md-12">
+									<ul class="pagination lms-page">
+										<li class="page-item prev">
+											<a class="page-link" href="javascript:void(0)" tabindex="-1"><i class="fas fa-angle-left"></i></a>
+										</li>
+										<li class="page-item first-page active">
+											<a class="page-link" href="javascript:void(0)">1</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="javascript:void(0)">2</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="javascript:void(0)">3</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="javascript:void(0)">4</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="javascript:void(0)">5</a>
+										</li>
+										<li class="page-item next">
+											<a class="page-link" href="javascript:void(0)"><i class="fas fa-angle-right"></i></a>
+										</li>
+									</ul>
+								</div>
+							</div> -->
+                            <div class="dash-pagination">
+                                <div class="row align-items-center">
+                                    <div class="col-6" style="z-index: 1000 !important;display:flex;justify-content:center;">
+                                        <p class="pagination_list" style="color: #ff4667;display:none;" ></p>
+                                    </div>
+                                    <div class="col-6" style="z-index: 1000 !important;display:flex;justify-content:center;">
+                                        <ul class="pagination">
+                                           
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+							<!-- /pagination -->
+							
+						</div>
+					</div>
+				</div>
+			</section>
+			
+		
+			<!-- /Course -->
+{% endblock body %}
+			{% block script %}
+              
+
+            <script>
+                let currentPage = 1; // Track the current page
+	let totalPages = 1;  // Total pages, initially set to 1
+    const url = window.location.href; // Get the full URL
+    const params = new URLSearchParams(window.location.search); // Get the query string part
+    
+    const searchQuery = params.get('search')
+
+	const getUserPosts =  async (search,page) => {
+		console.log(page)
+		await fetch(`${window.location.origin}/api/upload-video/search-video-approved/?page=${page}&search=${search}`, {
+			method: "GET",
+			headers: {
+				"content-type": "application/json",
+			}
+		}).then(response => response.json())
+			.then(async (response) => {
+
+				if (response.results.data) {
+                    document.getElementById('search_results').innerHTML ="";
+
+					console.log("User videos fetched successfully:", response);
+
+					// Update total pages and current page
+					totalPages = Math.ceil(response.count / 10);
+					console.log(totalPages) // Assuming 10 posts per page
+					currentPage = page;
+
+					document.getElementById("search_result_count").innerHTML=`Your search "${search}" returned ${response.count} results.`
+					console.log("response.count",response.count)
+					if (response.count==0){
+						await fetch_user_profile(search)
+					}
+					else{
+
+						await displayPosts(response.results.data);
+						await updatePagination(search);
+					}
+					// Display posts
+
+					// Update pagination UI
+				} else {
+					console.log("Failed to fetch user posts.");
+				}
+			}).catch(error => {
+				console.error("Error fetching user posts:", error);
+			});
+	};
+
+
+                const displayPosts = (data) => {
+                    let str = "";
+            
+                    if (data.length === 0) {
+                        str = `
+                        <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+                            <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                            <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
+                                No creator's have uploaded video related to your Search
+                            </h4>
+                        </div>`;
+                    } else {
+						data.forEach(post => {
+							const timestamp = new Date(post.created_at);
+                            const formattedDate = timestamp.toLocaleDateString('en-US', {
+                                month: '2-digit',
+                                day: '2-digit',
+                                year: 'numeric'
+                            });
+                            const formattedTime = timestamp.toLocaleTimeString('en-US', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                hour12: true
+                            });
+            
+                            const truncatedTitle = post.title.length > 60 ? `${post.title.substring(0, 60)}...` : post.title;
+                            const videoSrc = post.video;
+                            const hoverAttributes = videoSrc ? 'onmouseover="this.play()" onmouseout="this.pause()"' : '';
+                            const videoElement = videoSrc
+                                ? `<video style="width:314px; height: 231px; object-fit: contain; object-position: center;" alt="Img" src="${videoSrc}" poster="${post.thumbnail}" ${hoverAttributes} muted></video>`
+                                : '<div class="video-error">No video available</div>';
+            
+                            
+
+							str+=`<div class="col-lg-12 col-md-12 d-flex">
+									<div class="course-box course-design list-course d-flex">
+										<div class="product">
+											<div class="product-img" style="display: flex;
+    justify-content: center;
+    align-items: center;">
+												<a href="/video-view/${post.id}/">
+													${videoElement}
+												</a>
+												<div class="price" style="box-shadow: 0px 0px 10px 0px grey;">
+													<h3>$${post.price} </h3>
+												</div>
+											</div>
+											<div class="product-content">
+												
+												<div class="head-course-title">
+													<h3 class="title"><a href="/video-view/${post.id}/">${post.title}</a></h3>
+													<div class="all-btn all-category d-flex align-items-center">
+														<a href="#" class="btn btn-primary">BUY NOW</a>
+													</div>
+												</div>
+												<div class="course-info border-bottom-0 pb-0 d-flex align-items-center">
+													
+													
+													
+												</div>
+												
+												
+																		
+													
+												<div class="course-group d-flex mb-0">
+													<div class="course-group-img d-flex">
+														
+														
+													</div>
+													
+												</div>
+												<div class="course-group d-flex">
+                                                <div class="course-group-img d-flex">
+                                                    <a href="/${post.user_username}/"><img src="/media/${post.user_profile_picture}" alt="Img"
+                                                            class="img-fluid"></a>
+                                                    <div class="course-name">
+                                                        <h4><a href="/${post.user_username}/">${post.user_username}</a></h4>
+                                                        <!-- <p>Instructor</p> -->
+                                                    </div>
+                                                </div>
+                                                <div class="course-share d-flex align-items-center justify-content-center" style="margin-left:10px;">
+                                                    <ul class="nav">
+                                        
+                                            <a href="/user-video/${post.user_username}/" class="btn btn-success-dark" id="post_save" style="    height: 33px;
+                color: red;
+                background: #fae2e0;
+                border: none;
+                padding: 5px 13px;">Watch More</a>
+                                        </li>
+                                        
+                                    </ul>
+                                                </div>
+                                            </div>
+											</div>
+											
+										</div>
+									</div>
+								</div>`
+                        });
+                    }
+            
+                    document.getElementById('search_results').innerHTML = str;
+            
+            
+                };
+            
+                const updatePagination = (search) => {
+
+					let paginationList = document.getElementsByClassName("pagination_list")[0];
+					paginationList.style.display="none";
+					
+					const pagination = document.querySelector('.pagination');
+                    pagination.innerHTML = '';
+					
+                    // Add "Previous" button only if we're not on the first page
+                    if (currentPage > 1) {
+						paginationList.style.display="block";
+						paginationList.innerHTML = `Page ${currentPage} of ${totalPages}`;
+                        pagination.innerHTML += `<li><a onclick="getUserPosts('${search}',${currentPage - 1}); document.getElementById('search').scrollIntoView({ behavior: 'smooth' });" style="box-shadow: 0px 0px 10px 0px gray;"><i class="bx bx-chevron-left" style="font-size:25px;"></i></a></li>`;
+                    }
+            
+                    // Add "Next" button only if we're not on the last page
+                    if (currentPage < totalPages) {
+						paginationList.innerHTML = `Page ${currentPage} of ${totalPages}`;
+						paginationList.style.display="block";
+
+                        pagination.innerHTML += `<li><a onclick="getUserPosts('${search}',${currentPage + 1}); document.getElementById('search').scrollIntoView({ behavior: 'smooth' });" style="box-shadow: 0px 0px 10px 0px gray;" ><i class="bx bx-chevron-right" style="font-size:25px;"></i></a></li>`;
+                    }
+                };
+				if (searchQuery) {
+					getUserPosts(searchQuery, currentPage);
+				}
+				function searchCalled() {
+					const searchValue = document.getElementById('search').value;
+					if (searchValue.length>0){
+						getUserPosts(searchValue,1)
+					}else{
+						document.getElementById("search_result_count").innerHTML=`Your search "${searchValue}" returned 0 results.`
+						console.log(searchValue); // Perform your search or other actions
+
+					}
+				}
+				async function fetch_user_profile(search){
+					await fetch(`${window.location.origin}/api/user/search-user-api/?search=${search}`,{
+						"method":"GET"
+					}).then((response)=>{
+						return response.json()
+					}).then((response)=>{
+						let str = "";
+					document.getElementById("search_result_count").innerHTML=`Your search "${search}" returned ${response.data.length} results.`
+						
+                    if (response.data.length === 0) {
+                        str = `
+                        <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+                            <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                            <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
+                                No creator's have this username and No video uploaded related to your Search
+                            </h4>
+                        </div>`;
+                    } else {
+
+						response.data.forEach(post => {
+
+                            const truncatedTitle = post.bio.length > 60 ? `${post.bio.substring(0, 60)}...` : post.bio;
+                            const videoSrc = post.profile_picture;
+                            const hoverAttributes = videoSrc ? 'onmouseover="this.play()" onmouseout="this.pause()"' : '';
+                            const videoElement = videoSrc
+                                ? `<video style="width:314px; height: 231px; object-fit: contain; object-position: center;" alt="Img" src="${videoSrc}" poster="${post.profile_picture}"></video>`
+                                : '<div class="video-error">No video available</div>';
+            
+                            
+
+							str+=`<div class="col-lg-12 col-md-12 d-flex">
+									<div class="course-box course-design list-course d-flex">
+										<div class="product">
+											<div class="product-img" style="display: flex;
+    justify-content: center;
+    align-items: center;">
+												<a href="/${post.username}/">
+													${videoElement}
+												</a>
+												<!-- <div class="price" style="box-shadow: 0px 0px 10px 0px grey;">
+													<h3>$${post.price} </h3>
+												</div> -->
+											</div>
+											<div class="product-content">
+												
+												<div class="head-course-title">
+													<h3 class="title"><a href="/${post.username}/">${post.bio}</a></h3>
+													<!-- <div class="all-btn all-category d-flex align-items-center"> -->
+														<!-- <a href="#" class="btn btn-primary">BUY NOW</a> -->
+													<!-- </div> -->
+												</div>
+												<div class="course-info border-bottom-0 pb-0 d-flex align-items-center">
+													
+												</div>
+
+												<div class="course-group d-flex mb-0">
+													<div class="course-group-img d-flex">
+													</div>
+													
+												</div>
+												<div class="course-group d-flex">
+                                                <div class="course-group-img d-flex">
+                                                    <a href="/${post.username}/"><img src="${post.profile_picture}" alt="Img"
+                                                            class="img-fluid"></a>
+                                                    <div class="course-name">
+                                                        <h4><a href="/${post.username}/">${post.username}</a></h4>
+                                                        <!-- <p>Instructor</p> -->
+                                                    </div>
+                                                </div>
+                                                <div class="course-share d-flex align-items-center justify-content-center" style="margin-left:10px;">
+                                                    <ul class="nav">
+                                        
+                                            <a href="/user-video/${post.username}/" class="btn btn-success-dark" id="post_save" style="    height: 33px;
+                color: red;
+                background: #fae2e0;
+                border: none;
+                padding: 5px 13px;">Watch Videos</a>
+                                        </li>
+                                        
+                                    </ul>
+                                                </div>
+                                            </div>
+											</div>
+											
+										</div>
+									</div>
+								</div>`
+                        });
+                    }
+            
+                    document.getElementById('search_results').innerHTML = str;
+            
+					})
+				}
+			//async function latest_post(){
+			//	await fetch(`${window.location.origin}/api/upload-post/latest-posts/`,{
+			//		"method":"GET"
+			//	}).then((response)=>{
+			//		return response
+//
+			//	}).then((response)=>{
+			//		return response.json()
+			//	}).then((response)=>{
+			//		console.log("latest",response)
+			//		if (response.success){
+			//			str=''
+			//			response.data.forEach((data)=>{
+			//				str+=`<li>
+			//									<div class="post-thumb">
+			//										<a href="/post-view/${data.id}/">
+			//											<img class="img-fluid" src="${data.thumbnail}" alt="Img" style="width: 100px;
+    		//					/* max-height: 50px; */
+    		//					max-height: 71px;
+    		//					object-fit: contain;
+    		//					object-position: center;">
+			//										</a>
+			//									</div>
+			//									<div class="post-info free-color">
+			//										<h4>
+			//											<a href="/post-view/${data.id}/">${data.title}</a>
+			//										</h4>
+			//										<p>$${data.price}</p>
+			//									</div>
+			//								</li>`
+			//			})
+			//			document.getElementById("latest-posts").innerHTML=str
+			//		}
+			//	})
+			//}
+			//latest_post();
+//
+
+            </script>
+            
+            {% endblock script %}

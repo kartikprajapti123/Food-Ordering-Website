@@ -1,0 +1,1031 @@
+{% extends "base.html" %}
+{% block style %}
+
+{% endblock style %}
+{% block title %}
+
+{% endblock title %}
+{% block body %}
+
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar breadcrumb-bar-info" style="margin-top:100px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="breadcrumb-list">
+                    <h2 class="breadcrumb-title">Followers</h2>
+                    <nav aria-label="breadcrumb" class="page-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/index/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Followers</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+
+<!-- Page Content -->
+<div class="page-content">
+    <div class="container">
+        <div class="row">
+
+            <!-- sidebar -->
+            <div class="col-xl-3 col-lg-3 theiaStickySidebar">
+                <div class="settings-widget dash-profile">
+                    <div class="settings-menu">
+                        <div class="profile-bg">
+                            <div class="profile-img">
+                                <a><img id="other_profile_page_image"
+                                        src="/media/profile_pictures/default_profile_image.png" alt="Img"></a>
+                            </div>
+                        </div>
+                        <div class="profile-group">
+                            <div class="profile-name text-center">
+                                <h4 id="other_profile_page_username"> Username</h4>
+                                <div class="add-course btn-primary" id="follow-button" style="margin-top: 20px;">
+                                    <!-- <i class="fas fa-user-plus"></i> follow -->
+                                </div>
+                                <a href="#" class="add-course btn-primary" id="share-button" style="margin-top: 10px;">
+                                    <i class="fas fa-share-alt"></i> Share
+                                </a>
+                                <div class="add-course btn-primary" id="Send_Message" style="margin-top: 10px;">
+                                    <i class="fas fa-paper-plane"></i> Send Message
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-widget account-settings">
+                    <div class="settings-menu">
+                        <h3>Overview</h3>
+                        <ul>
+                            <!-- <li class="nav-item">
+								<a href="/creator/" class="nav-link">
+									<i class="bx bxs-tachometer"></i>Dashboard
+								</a>
+							</li> -->
+                            <li class="nav-item">
+                                <a href="/myprofile/" class="nav-link profile-update" id="other_user_profile">
+                                    <i class="bx bxs-user"></i>Profile
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/videos/" class="nav-link" id="other_user_video">
+                                    <i class="bx bxs-tachometer"></i>Videos
+                                </a>
+                            </li>
+                            <!-- <li class="nav-item">
+								<a href="instructor-enrolled-course.html" class="nav-link">
+									<i class="bx bxs-graduation"></i>Enrolled Courses
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-wishlist.html" class="nav-link">
+									<i class="bx bxs-heart"></i>Wishlist
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-reviews.html" class="nav-link">
+									<i class="bx bxs-star"></i>Reviews
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-quiz.html" class="nav-link">
+									<i class="bx bxs-shapes"></i>My Quiz Attempts
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-orders.html" class="nav-link">
+									<i class="bx bxs-cart"></i>Order History
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-qa.html" class="nav-link">
+									<i class="bx bxs-bookmark-alt"></i>Question & Answer
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-referral.html" class="nav-link">
+									<i class="bx bxs-user-plus"></i>Referrals
+								</a>
+							</li> -->
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="bx bxs-chat"></i>Start Video call
+                                </a>
+                            </li>
+                            <li class="nav-item active" >
+                                <a href="#" class="nav-link" id="link_followers">
+                                    <i class="bx bxs-group"></i>followers
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" id="link_following">
+                                    <i class="bx bxs-user-plus"></i>following
+                                </a>
+                            </li>
+                            <!-- <li class="nav-item">
+								<a href="instructor-notifications.html" class="nav-link">
+									<i class="bx bxs-bell"></i>Notifications
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-tickets.html" class="nav-link">
+									<i class="bx bxs-coupon"></i>Support Tickets
+								</a>
+							</li> -->
+                        </ul>
+                        <!-- <h3>Instructor</h3>
+						<ul>
+							<li class="nav-item">
+								<a href="instructor-course.html" class="nav-link ">
+									<i class="bx bxs-rocket"></i>My Courses
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-announcements.html" class="nav-link">
+									<i class="bx bxs-volume-full"></i>Announcements
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-withdraw.html" class="nav-link ">
+									<i class="bx bxs-wallet"></i>Withdrawls
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-quiz-attempts.html" class="nav-link">
+									<i class="bx bxs-shapes"></i>Quiz Attempts
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-assignment.html" class="nav-link ">
+									<i class="bx bxs-file"></i>Assignments
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-earnings.html" class="nav-link">
+									<i class="bx bxs-badge-dollar"></i>Earnings
+								</a>
+							</li>
+						</ul> -->
+
+                    </div>
+                </div>
+                
+            </div>
+            <!-- /Sidebar -->
+
+            <!-- Student Tickets -->
+            <div class="col-xl-9 col-lg-9">
+
+                <div class="settings-widget card-details">
+                    <div class="settings-menu p-0">
+                        <div class="profile-heading">
+                            <h3>Followers</h3>
+                        </div>
+                        <div class="checkout-form">
+
+                            <!-- Support Information -->
+                            <div class="row">
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="card support-box">
+                                        <div class="card-body">
+                                            <h3 id="followers_count">00</h3>
+                                            <p>Total Followers</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-4 col-sm-6">
+												<div class="card support-box">
+													<div class="card-body">
+														<h3>30</h3>
+														<p>Opened Tickets</p>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-6">
+												<div class="card support-box">
+													<div class="card-body">
+														<h3>20</h3>
+														<p>Closed Tickets</p>
+													</div>
+												</div>
+											</div> -->
+                            </div>
+                            <!-- /Support Information -->
+
+                            <div class="filter-grp ticket-grp d-flex align-items-center justify-content-between"
+                                style="position: relative;">
+                                <div>
+                                    <h3>Followers</h3>
+                                    <p>Here are all of your followers..</p>
+                                </div>
+                                <div class="add-section">
+                                    <ul>
+                                        <li><a href="javascript:void(0);" class="user-chat-search-btn"><i
+                                                    class="feather-search" style="font-size:25px;"></i></a></li>
+                                    </ul>
+                                    <!-- Chat Search -->
+                                    <div class="user-chat-search">
+                                        <form action="#" id="chat-search-form">
+                                            <span class="form-control-feedback"><i class="feather-search"></i></span>
+                                            <input type="text" name="chat-search" placeholder="Search"
+                                                class="form-control" id="search_followers">
+                                            <div class="user-close-btn-chat" id="search-close"><i class="feather-x"></i>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- /Chat Search -->
+                                </div>
+                            </div>
+
+                            <div class="wishlist-tab">
+                                <!-- <ul class="nav">
+												<li class="nav-item">
+													<a href="javascript:void(0);" class="active" data-bs-toggle="tab" data-bs-target="#all">All(30)</a>
+												</li>
+												<li class="nav-item">
+													<a href="javascript:void(0);" data-bs-toggle="tab" data-bs-target="#open">Open(10)</a>
+												</li>
+												<li class="nav-item">
+													<a href="javascript:void(0);" data-bs-toggle="tab" data-bs-target="#inprogress">Inprogress(10)</a>
+												</li>
+												<li class="nav-item">
+													<a href="javascript:void(0);" data-bs-toggle="tab" data-bs-target="#closed">Closed(10)</a>
+												</li>
+											</ul> -->
+                            </div>
+
+                            <!-- Tab Contant -->
+                            <div class="tab-content">
+
+                                <!-- All -->
+                                <div class="tab-pane show active" id="all">
+                                    <div class="table-responsive custom-table">
+
+                                        <!-- Referred Users-->
+                                        <table class="table table-nowrap mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th style="width: 50%;">Followers</th>
+                                                    <!-- <th>Subject</th> -->
+                                                    <!-- <th>Priority</th> -->
+                                                    <!-- <th>Category</th> -->
+                                                    <!-- <th>Status</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody id="all_followers">
+                                                <tr>
+                                                    <td style="display: flex;align-items:center;">
+                                                        <img src="/static/img/admin_image.png" alt="" style="width: 50px;object-fit: contain;
+    object-position: center; height:50px;border-radius:50%;">
+                                                        <div>name</div>
+                                                    </td>
+                                                    <td>
+                                                        <ul class="nav">
+                                                            <!-- <li>
+                                                                        <a href="/myprofile/" class="btn btn-black">Back to Profile</a>
+                                                                    </li> -->
+                                                            <li>
+                                                                <div class="add-course btn-primary" id="follow-button"
+                                                                    style="margin-top: 0px;">
+                                                                    Follow
+                                                                </div>
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /All -->
+
+                            </div>
+                            <!-- Tab Contant -->
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="dash-pagination">
+								<div class="row align-items-center">
+									<div class="col-6">
+										<p>Page 1 of 2</p>
+									</div>
+									<div class="col-6">
+										<ul class="pagination">
+											<li class="active">
+												<a href="#">1</a>
+											</li>
+											<li>
+												<a href="#">2</a>
+											</li>
+											<li>
+												<a href="#"><i class="bx bx-chevron-right"></i></a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div> -->
+            </div>
+            <!-- Student Tickets -->
+
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
+
+<!-- Modal -->
+<div class="modalStyle modal fade" id="addpaymentMethod" tabindex="-1" aria-labelledby="addpaymentMethod"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Payment Method</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-regular fa-circle-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="addpaymethod-form">
+                    <form action="#">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="wallet-method">
+                                    <label class="radio-inline custom_radio me-4">
+                                        <input type="radio" name="optradio" checked="">
+                                        <span class="checkmark"></span> Credit or Debit card
+                                    </label>
+                                    <label class="radio-inline custom_radio">
+                                        <input type="radio" name="optradio">
+                                        <span class="checkmark"></span> PayPal
+                                    </label>
+                                </div>
+                                <div class="input-block">
+                                    <label class="form-control-label">Card Number</label>
+                                    <input type="text" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-block">
+                                    <label class="form-label">Month</label>
+                                    <select class="form-select" name="sellist1">
+                                        <option>Month</option>
+                                        <option>Brazil</option>
+                                        <option>French</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-block">
+                                    <label class="form-label">Year</label>
+                                    <select class="form-select" name="sellist1">
+                                        <option>Year</option>
+                                        <option>India</option>
+                                        <option>America</option>
+                                        <option>London</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-block">
+                                    <label class="form-control-label">CVV Code </label>
+                                    <input type="text" class="form-control" placeholder="XXXX">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="input-block mb-0">
+                                    <label class="form-control-label">Name on Card</label>
+                                    <input type="text" class="form-control" placeholder="Address">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer me-auto">
+                <button type="button" class="btn btn-modal-style btn-theme">Save changes</button>
+                <button type="button" class="btn btn-modal-style btn-cancel" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+{% block script %}
+<script>
+    const pathArray = window.location.pathname.split('/');
+    const username = pathArray[pathArray.length - 2];
+    let other_user = "";
+    console.log(username)
+    userApi = async () => {
+        await fetch(`${window.location.origin}/api/user/retrieve-by-username/?username=${username}`, {
+            "method": "get",
+            "headers": {
+                "content-type": "application/json",
+            }
+        }).then((response) => {
+            return response.json()
+        }).then((response) => {
+
+            if (response.success) {
+                other_user = response.data.user.id
+
+                console.log(response.data)
+
+                /////followers////
+                if (response.is_following) {
+                    document.getElementById("follow-button").innerHTML = `<i class="fas fa-user-plus" data-follow-id="${response.follow_id}"></i> unfollow`
+                }
+                else {
+                    document.getElementById("follow-button").innerHTML = `<i class="fas fa-user-plus"></i> follow`
+                }
+                /////end followers////
+
+
+
+                document.getElementById("other_user_video").href = `/user-video/${response.data.user.username}`
+                document.getElementById("other_user_profile").href = `/user-profile/${response.data.user.username}`
+                document.getElementById("link_following").href = `/following/${response.data.user.username}`
+                document.getElementById("link_followers").href = `/followers/${response.data.user.username}`
+
+
+
+                if (response.data.user.profile_picture == "") {
+                    document.getElementById("other_profile_page_image").src = '/media/profile_pictures/default_profile_image.png'
+
+                }
+                else {
+
+                    document.getElementById("other_profile_page_image").src = `${response.data.user.profile_picture}`
+                }
+
+
+                console.log(response.data.user.username)
+                if (response.data.user.username == "") {
+                    //document.getElementById("profile_page_username").innerHTML = "Not Provided"
+                    document.getElementById("other_profile_page_username").innerHTML = "username"
+
+
+
+                }
+                else {
+                    //document.getElementById("profile_page_username").innerHTML = `${response.data.user.username}`
+                    document.getElementById("other_profile_page_username").innerHTML = `@${response.data.user.username.length > 14 ? `${response.data.user.username.substring(0, 14)}...` : response.data.user.username}`;
+
+                }
+
+                getfollowers(other_user);
+
+                /////folllow////
+                if (authenticated) {
+                    console.log('user',response.data.user)
+                    follow_unfollow(response.data.user.id)
+                }
+                /////end folllow////
+
+                console.log("other_user_id", other_user)
+
+
+            }
+            else {
+                card.style.display = "flex";
+                card.style.borderLeft = "10px solid #3db5dc";
+
+                message_content.innerHTML = "No user Found with this username ! try again";
+                message_type.innerHTML = "Info";
+                message_type.style.color = "#3db5dc";
+                message_icon_parent.style.color = "#3db5dc";
+                message_icon_child.classList = "fas fa-exclamation-circle";
+
+            }
+            console.log(response)
+
+
+        })
+
+    }
+    userApi()
+
+    document.getElementById("Send_Message").addEventListener('click', create_conversation);
+
+    async function create_conversation() {
+        const user_authenticated = localStorage.getItem("jerry_project_access_token");
+
+        if (user_authenticated) {
+            try {
+                // Fetch user profile
+                const userResponse = await fetch(`${window.location.origin}/api/user/`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${user_authenticated}`
+                    }
+                });
+
+                const userData = await userResponse.json();
+
+                if (userResponse.ok && userData.success) {
+                    // Prepare conversation data
+                    const data = {
+                        "user1": other_user, // Make sure profileId is defined elsewhere in your code
+                        "user2": userData.data.id
+                    };
+
+                    // Create conversation
+                    const conversationResponse = await fetch(`${window.location.origin}/api/conversations/`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${user_authenticated}`
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const conversationData = await conversationResponse.json();
+
+                    if (conversationResponse.ok && conversationData.success) {
+                        setTimeout(() => {
+                            window.location.href = "/contact-list/";
+                        }, 1000);
+                    } else {
+                        card.style.display = "flex";
+                        card.style.borderLeft = "10px solid #3db5dc";
+
+                        message_content.innerHTML = "You cannot create conversations yourself.";
+                        message_type.innerHTML = "Info";
+                        message_type.style.color = "#3db5dc";
+                        message_icon_parent.style.color = "#3db5dc";
+                        message_icon_child.classList = "fas fa-exclamation-circle";
+                    }
+                } else {
+                    console.log(userData);
+                    showMessage("Failed to fetch user profile.", "error");
+                }
+            } catch (error) {
+                console.error('An error occurred:', error);
+                showMessage("An error occurred. Please try again.", "error");
+            }
+        } else {
+            card.style.display = "flex";
+            card.style.borderLeft = "10px solid #3db5dc";
+
+            message_content.innerHTML = "You are not logged in ";
+            message_type.innerHTML = "Info";
+            message_type.style.color = "#3db5dc";
+            message_icon_parent.style.color = "#3db5dc";
+            message_icon_child.classList = "fas fa-exclamation-circle";
+
+        }
+    }
+    async function create_message(id) {
+        const user_authenticated = localStorage.getItem("jerry_project_access_token");
+
+        if (user_authenticated) {
+            try {
+                // Fetch user profile
+                const userResponse = await fetch(`${window.location.origin}/api/user/`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${user_authenticated}`
+                    }
+                });
+
+                const userData = await userResponse.json();
+
+                if (userResponse.ok && userData.success) {
+                    // Prepare conversation data
+                    const data = {
+                        "user1": id, // Make sure profileId is defined elsewhere in your code
+                        "user2": userData.data.id
+                    };
+
+                    // Create conversation
+                    const conversationResponse = await fetch(`${window.location.origin}/api/conversations/`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${user_authenticated}`
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const conversationData = await conversationResponse.json();
+
+                    if (conversationResponse.ok && conversationData.success) {
+                        setTimeout(() => {
+                            window.location.href = `/contact-list/?conversation_id=${conversationData.data.id}`;
+                        }, 1000);
+                    } else {
+                        card.style.display = "flex";
+                        card.style.borderLeft = "10px solid #3db5dc";
+
+                        message_content.innerHTML = "You cannot create conversations yourself.";
+                        message_type.innerHTML = "Info";
+                        message_type.style.color = "#3db5dc";
+                        message_icon_parent.style.color = "#3db5dc";
+                        message_icon_child.classList = "fas fa-exclamation-circle";
+                    }
+                } else {
+                    console.log(userData);
+                    showMessage("Failed to fetch user profile.", "error");
+                }
+            } catch (error) {
+                console.error('An error occurred:', error);
+                showMessage("An error occurred. Please try again.", "error");
+            }
+        } else {
+            card.style.display = "flex";
+            card.style.borderLeft = "10px solid #3db5dc";
+
+            message_content.innerHTML = "You are not logged in ";
+            message_type.innerHTML = "Info";
+            message_type.style.color = "#3db5dc";
+            message_icon_parent.style.color = "#3db5dc";
+            message_icon_child.classList = "fas fa-exclamation-circle";
+
+        }
+    }
+    ////follow/////
+    document.getElementById("follow-button").addEventListener('click', async () => {
+        let followButton = document.getElementById("follow-button");
+        let followIcon = followButton.querySelector('i'); // Select the <i> element within the button
+        let isFollowing = followIcon.getAttribute('data-follow-id') !== null; // Check if data-follow-id is present
+
+        if (authenticated) {
+            let url = `${window.location.origin}/api/follow/`;
+            let body = {
+                "to_user": other_user
+            };
+
+            // Handle Follow (POST)
+            if (!isFollowing) {
+                await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${authenticated}`
+                    },
+                    body: JSON.stringify(body)
+                }).then(response => response.json())
+                    .then(response => {
+                        if (response.success) {
+                            console.log(response);
+                            // Store the Follow ID in the <i> tag
+                            followIcon.setAttribute('data-follow-id', response.follow_id); // Assuming response contains follow_id
+                            // Update the button text to UnFollow
+                            followButton.innerHTML = `<i class="fas fa-user-plus" data-follow-id="${response.data.id}"></i> unfollow`;
+                        } else {
+                            handleError(response.message);
+                        }
+                    }).catch(error => {
+                        console.log("Network error:", error);
+                    });
+            }
+
+            // Handle Unfollow (DELETE)
+            else {
+                let followId = followIcon.getAttribute('data-follow-id');
+                console.log(followId)
+                if (followId) {
+                    let deleteUrl = `${url}${followId}/`; // Append the followId to the URL
+                    await fetch(deleteUrl, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${authenticated}`
+                        }
+                    }).then(response => response.json())
+                        .then(response => {
+                            console.log(response)
+                            if (response.success) {
+                                console.log(response);
+                                // Remove the Follow ID from the <i> tag after successful deletion
+                                followIcon.removeAttribute('data-follow-id');
+                                // Update the button text to Follow
+                                followButton.innerHTML = `<i class="fas fa-user-plus"></i> follow`;
+                            } else {
+                                handleError(response.message);
+                            }
+                        }).catch(error => {
+                            console.log("Network error:", error);
+                        });
+                } else {
+                    console.log("Error: Follow ID is not available for deletion.");
+                }
+            }
+        } else {
+            showLoginPrompt();
+        }
+    });
+
+    function handleError(message) {
+        if (message.non_field_errors) {
+            card.style.display = "flex";
+            card.style.borderLeft = "10px solid #3db5dc";
+            message_content.innerHTML = message.non_field_errors;
+            message_type.innerHTML = "Info";
+            message_type.style.color = "#3db5dc";
+            message_icon_parent.style.color = "#3db5dc";
+            message_icon_child.classList = "fas fa-exclamation-circle";
+        }
+        console.log("Error occurred:", message);
+    }
+
+    function showLoginPrompt() {
+        card.style.display = "flex";
+        card.style.borderLeft = "10px solid #3db5dc";
+        message_content.innerHTML = "Please log in to follow creators.";
+        message_type.innerHTML = "Info";
+        message_type.style.color = "#3db5dc";
+        message_icon_parent.style.color = "#3db5dc";
+        message_icon_child.classList = "fas fa-exclamation-circle";
+    }
+
+    async function follow_unfollow(id) {
+        await fetch(`${window.location.origin}/api/follow/user-is-following/?to_user=${id}`, {
+            "method": "get",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${authenticated}`
+            },
+
+        }).then((response) => {
+            return response.json()
+        }).then((response) => {
+            if (response.success) {
+                document.getElementById("follow-button").innerHTML = `<i class="fas fa-user-plus" data-follow-id="${response.data.id}"></i> unfollow`
+            }
+            else {
+                document.getElementById("follow-button").innerHTML = `<i class="fas fa-user-plus"></i> follow`
+                console.log("follow Unfollow", response)
+            }
+        })
+
+    }
+
+    async function getfollowers(id) {
+        await fetch(`${window.location.origin}/api/follow/?no_pagination=true&to_user=${id}`, {
+            method: "GET",
+        }).then(response => response.json())
+            .then(async response => {
+                if (response.success) {
+                    let str = '';
+                    let count = 0;
+                
+                    if (response.data.length > 0) {
+                        for (const data of response.data) {
+                            let show = "";
+                
+                            if (authenticated) {
+                                try {
+                                    const followResponse = await fetch(`${window.location.origin}/api/follow/user-is-following/?to_user=${data.by_user}`, {
+                                        method: "get",
+                                        headers: {
+                                            "content-type": "application/json",
+                                            "Authorization": `Bearer ${authenticated}`
+                                        }
+                                    });
+                
+                                    const followResult = await followResponse.json();
+                
+                                    if (followResult.success) {
+                                        console.log(data.by_user_uuid)
+                                        console.log(data.to_user_uuid)
+
+                                        show = `<div class="add-course btn-primary" style="margin-top: 0px;" onclick="create_message(${data.by_user})">
+                                                    <i class="fas fa-paper-plane"></i> Message
+                                                </div>`;
+                                    } else {
+                                        show = `<div class="add-course btn-primary follow-button" style="margin-top: 0px;" id="${data.by_user}">
+                                                    <i class="fas fa-user-plus"></i> follow
+                                                </div>`;
+                                    }
+                                } catch (error) {
+                                    console.error("Error fetching follow status:", error);
+                                    show = `<div class="add-course btn-primary follow-button" style="margin-top: 0px;" id="${data.by_user}">
+                                                <i class="fas fa-user-plus"></i> follow
+                                            </div>`;
+                                }
+                            } else {
+                                show = `<div class="add-course btn-primary follow-button" style="margin-top: 0px;" id="${data.by_user}">
+                                            <i class="fas fa-user-plus"></i> follow
+                                        </div>`;
+                            }
+                
+                            str += `<tr>
+                                        <td >
+                                    <a href="/user-profile/${data.by_user_username}/" style="display: flex; align-items:center;">
+
+                                            <img src="/media/${data.by_user_profile_picture}" alt="" style="width: 50px; object-fit: contain; object-position: center; height:50px; border-radius:50%;">
+                                            <div style="margin-left:10px;">${data.by_user_username}</div>
+                                    </a>
+                                        </td>
+                                        <td>
+                                            <ul class="nav">
+                                               ${show}
+                                            </ul>
+                                        </td>
+                                    </tr>`;
+                            count++;
+                        }
+                
+                        // Update the innerHTML after the loop completes
+                        document.getElementById('all_followers').innerHTML = str;
+                        document.getElementById("followers_count").innerHTML = String(count).padStart(2, '0');
+                    } else {
+                        document.getElementById("all_followers").innerHTML = `<tr>
+                            <td colspan="2" style="text-align: center; padding: 53px 10px;">
+                                <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                                    <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                                    <h4 style="text-align: center; margin: 10px; color: gray;">
+                                        There are no Followers.
+                                    </h4>
+                                </div>
+                            </td>
+                        </tr>`;
+                        document.getElementById("followers_count").innerHTML = String(count).padStart(2, '0');
+                    }
+                }
+                 else {
+                    console.error("Error fetching followers data.");
+                }
+            }).catch(error => {
+                console.error("Error fetching followers:", error);
+            });
+    }
+
+    document.addEventListener('click', async (event) => {
+
+            if (event.target.closest('.follow-button')) {
+                let followButton = event.target.closest('.follow-button');
+            let to_user=parseInt(followButton.id)
+            let followIcon = followButton.querySelector('i');
+            let followId = followButton.getAttribute('data-follow-id');
+            console.log(followId)
+            if (authenticated) {
+                if (!followId) { 
+                    let data={
+                        "to_user":to_user
+                    } // Follow (POST)
+                    await fetch(`${window.location.origin}/api/follow/`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${authenticated}`
+                        },
+                        body: JSON.stringify(data)
+                    }).then(response => response.json())
+                      .then(response => {
+                          if (response.success) {
+                              followButton.setAttribute('data-follow-id', response.data.id);
+                              followButton.innerHTML = `<i class="fas fa-user-plus" data-follow-id="${response.data.id}"></i> unfollow`;
+                          } else {
+                              handleError(response.message);
+                          }
+                      }).catch(error => {
+                          console.error("Network error:", error);
+                      });
+                } else {  // Unfollow (DELETE)
+                    await fetch(`${window.location.origin}/api/follow/${followId}/`, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${authenticated}`
+                        }
+                    }).then(response => response.json())
+                      .then(response => {
+                          if (response.success) {
+                              followButton.removeAttribute('data-follow-id');
+                              followButton.innerHTML = `<i class="fas fa-user-plus"></i> follow`;
+                          } else {
+                              handleError(response.message);
+                            }
+                      }).catch(error => {
+                          console.error("Network error:", error);
+                      });
+                }
+            } else {
+                showLoginPrompt();
+            }
+        }
+
+    });
+
+
+    
+    document.getElementById("search_followers").addEventListener("input", function () {
+        let query = this.value;
+
+        if (query.length > 0) {
+            searchFollowers(query);
+        } else {
+            // Optionally handle the case when the input is cleared (e.g., reset search results)
+            console.log("Search query is empty.");
+            getfollowers(other_user)
+        }
+    });
+    async function searchFollowers(query) {
+        await fetch(`${window.location.origin}/api/follow/?to_user=${other_user}&by_user_username=${query}&no_pagination=true`, {
+            method: "GET"
+        }).then((response) => {
+            return response.json();
+        }).then(async (response) => {
+            console.log(response)
+            if (response.success) {
+                let str = '';
+                if (response.data.length > 0) {
+                    for (const data of response.data) {
+                        let show = "";
+            
+                        if (authenticated) {
+                            try {
+                                const followResponse = await fetch(`${window.location.origin}/api/follow/user-is-following/?to_user=${data.by_user}`, {
+                                    method: "get",
+                                    headers: {
+                                        "content-type": "application/json",
+                                        "Authorization": `Bearer ${authenticated}`
+                                    }
+                                });
+            
+                                const followResult = await followResponse.json();
+            
+                                if (followResult.success) {
+                                    console.log(data.by_user_uuid)
+                                    console.log(data.to_user_uuid)
+
+                                    show = `<div class="add-course btn-primary" style="margin-top: 0px;" onclick="create_message(${data.by_user})">
+                                                <i class="fas fa-paper-plane"></i> Message
+                                            </div>`;
+                                } else {
+                                    show = `<div class="add-course btn-primary follow-button" style="margin-top: 0px;" id="${data.by_user}">
+                                                <i class="fas fa-user-plus"></i> follow
+                                            </div>`;
+                                }
+                            } catch (error) {
+                                console.error("Error fetching follow status:", error);
+                                show = `<div class="add-course btn-primary follow-button" style="margin-top: 0px;" id="${data.by_user}">
+                                            <i class="fas fa-user-plus"></i> follow
+                                        </div>`;
+                            }
+                        } else {
+                            show = `<div class="add-course btn-primary follow-button" style="margin-top: 0px;" id="${data.by_user}">
+                                        <i class="fas fa-user-plus"></i> follow
+                                    </div>`;
+                        }
+            
+                        str += `<tr>
+                                    <td >
+                                <a href="/user-profile/${data.by_user_username}/" style="display: flex; align-items:center;">
+
+                                        <img src="/media/${data.by_user_profile_picture}" alt="" style="width: 50px; object-fit: contain; object-position: center; height:50px; border-radius:50%;">
+                                        <div style="margin-left:10px;">${data.by_user_username}</div>
+                                </a>
+                                    </td>
+                                    <td>
+                                        <ul class="nav">
+                                           ${show}
+                                        </ul>
+                                    </td>
+                                </tr>`;
+                    }
+            
+                    // Update the innerHTML after the loop completes
+                    document.getElementById('all_followers').innerHTML = str;
+                } else {
+                    document.getElementById("all_followers").innerHTML = `<tr>
+                        <td colspan="2" style="text-align: center; padding: 53px 10px;">
+                            <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                                <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                                <h4 style="text-align: center; margin: 10px; color: gray;">
+                                    There are no Followers.
+                                </h4>
+                            </div>
+                        </td>
+                    </tr>`;
+                }
+            }
+        }).catch((error) => {
+            console.error("Error during search:", error);
+        });
+    }
+    document.getElementById("search-close").onclick = () => {
+        getfollowers(other_user)
+    }
+    document.getElementById('chat-search-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        document.getElementById("search_followers").value=""
+        // Add your search logic here
+
+        // Implement search functionality
+    });
+</script>
+{% endblock script %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block style %}
+  
+{% endblock style %}
+{% block title %}
+{% endblock title %}
+{% block body %}
+  <div class="container" style="margin-top:120px;">
+    <div id="content">
+
+    </div>
+  </div>
+{% endblock body %}
+{% block script %}
+  <script>
+	const pathname = window.location.pathname;
+
+    const pathParts = pathname.split('/');
+
+	// Extract the ID (assuming it's the second-to-last part)
+	const page_name = pathParts[pathParts.length - 2];
+
+    document.title=page_name
+    async function get_content(){
+        card.style.display = "none";
+
+        await fetch(`${window.location.origin}/api/simultaneously-page/?page_url=${page_name}&no_pagination=true`,{
+            method:"get",
+        }).then((Response)=>{
+            return Response.json()
+        }).then((Response)=>{
+            console.log("pages",Response)
+            if (Response.success){
+                if (Response.data.length>0){
+
+                    document.getElementById("content").innerHTML=Response.data[0].content
+                }
+                else{
+                    card.style.display = "flex";
+					card.style.borderLeft = "10px solid #3db5dc";
+					message_content.innerHTML = "No Page found with this link";
+					message_type.innerHTML = "Info";
+					message_type.style.color = "#3db5dc";
+					message_icon_parent.style.color = "#3db5dc";
+					message_icon_child.classList = "fas fa-exclamation-circle";
+                }
+            }
+        })
+    }
+    get_content()
+
+  </script>
+{% endblock script %}

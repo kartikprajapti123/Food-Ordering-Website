@@ -1,0 +1,602 @@
+{% extends "base.html" %}
+{% block style %}
+
+{% endblock style %}
+{% block title %}
+  Profile
+{% endblock title %}
+{% block link %}
+
+{% endblock link %}
+{% block body %}
+
+<div id="all-main" style="display: none;">
+
+
+<!-- Breadcrumb -->
+<div id="profile-main-content">
+	 <div class="breadcrumb-bar breadcrumb-bar-info" style="margin-top: 100px;">
+		 <div class="container">
+		<div class="row">
+			<div class="col-md-12 col-12">
+				<div class="breadcrumb-list">
+					<h2 class="breadcrumb-title">Profile</h2>
+					<nav aria-label="breadcrumb" class="page-breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/index/">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Profile</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Breadcrumb -->
+
+<!-- Page Content -->
+<div class="page-content">
+	<div class="container">
+		<div class="row">
+
+			<!-- sidebar -->
+			<div class="col-xl-3 col-lg-3 theiaStickySidebar">
+				<div class="settings-widget dash-profile">
+					<div class="settings-menu">
+						<div class="profile-bg">
+							<div class="profile-img">
+								<a href="#" id="profile_picture_link2"><img id="other_profile_page_image" src="/media/profile_pictures/default_profile_image.png"
+										alt="Img"></a>
+							</div>
+						</div>
+						<div class="profile-group">
+							<div class="profile-name text-center">
+								<h4 id="other_profile_page_username"> Username</h4>
+								<!-- <div class="add-course btn-primary" id="follow-button" style="margin-top: 20px;"> -->
+									<!-- <i class="fas fa-user-plus"></i> follow -->
+								  <!-- </div> -->
+								<a href="#" class="add-course btn-primary" id="share-button2" style="margin-top: 10px;">
+									<i class="fas fa-share-alt"></i> Share Profile URL
+								</a>
+								<div class="add-course btn-primary" id="Send_Message" style="margin-top: 10px;cursor:pointer;">
+									<i class="fas fa-paper-plane"></i> Send Message
+								  </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="settings-widget account-settings">
+					<div class="settings-menu">
+						<h3>Overview</h3>
+						<ul>
+							<!-- <li class="nav-item">
+								<a href="/creator/" class="nav-link">
+									<i class="bx bxs-tachometer"></i>Dashboard
+								</a>
+							</li> -->
+							<li class="nav-item active">
+								<a href="/myprofile/" class="nav-link profile-update" id="other_user_profile">
+									<i class="bx bxs-user"></i>Profile
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="/videos/" class="nav-link" id="other_user_video">
+									<i class="bx bxs-tachometer"></i>Videos
+								</a>
+							</li>
+							<!-- <li class="nav-item">
+								<a href="instructor-enrolled-course.html" class="nav-link">
+									<i class="bx bxs-graduation"></i>Enrolled Courses
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-wishlist.html" class="nav-link">
+									<i class="bx bxs-heart"></i>Wishlist
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-reviews.html" class="nav-link">
+									<i class="bx bxs-star"></i>Reviews
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-quiz.html" class="nav-link">
+									<i class="bx bxs-shapes"></i>My Quiz Attempts
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-orders.html" class="nav-link">
+									<i class="bx bxs-cart"></i>Order History
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-qa.html" class="nav-link">
+									<i class="bx bxs-bookmark-alt"></i>Question & Answer
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-referral.html" class="nav-link">
+									<i class="bx bxs-user-plus"></i>Referrals
+								</a>
+							</li> -->
+							<li class="nav-item">
+								<a href="#" class="nav-link">
+									<i class="bx bxs-chat"></i>Start Video call
+								</a>
+							</li>
+							<!-- <li class="nav-item">
+								<a href="#" class="nav-link" id="link_followers">
+									<i class="bx bxs-group"></i>followers
+								</a>
+							</li>
+                            <li class="nav-item">
+								<a href="#" class="nav-link" id="link_following">
+									<i class="bx bxs-user-plus"></i>following
+								</a>
+							</li> -->
+							<!-- <li class="nav-item">
+								<a href="instructor-notifications.html" class="nav-link">
+									<i class="bx bxs-bell"></i>Notifications
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-tickets.html" class="nav-link">
+									<i class="bx bxs-coupon"></i>Support Tickets
+								</a>
+							</li> -->
+						</ul>
+						<!-- <h3>Instructor</h3>
+						<ul>
+							<li class="nav-item">
+								<a href="instructor-course.html" class="nav-link ">
+									<i class="bx bxs-rocket"></i>My Courses
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-announcements.html" class="nav-link">
+									<i class="bx bxs-volume-full"></i>Announcements
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-withdraw.html" class="nav-link ">
+									<i class="bx bxs-wallet"></i>Withdrawls
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-quiz-attempts.html" class="nav-link">
+									<i class="bx bxs-shapes"></i>Quiz Attempts
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-assignment.html" class="nav-link ">
+									<i class="bx bxs-file"></i>Assignments
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-earnings.html" class="nav-link">
+									<i class="bx bxs-badge-dollar"></i>Earnings
+								</a>
+							</li>
+						</ul> -->
+						
+					</div>
+				</div>
+				
+			</div>
+			<!-- /Sidebar -->
+
+			<!-- Instructor profile -->
+			<div class="col-xl-9 col-lg-9">
+
+				<div class="settings-widget card-details mb-0">
+					<div class="settings-menu p-0">
+						<div class="profile-heading">
+							<h3 id="profile_page_username3">Profile</h3>
+						</div>
+						<div class="checkout-form personal-address">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="contact-info">
+										<h6>User Name</h6>
+										<p id="profile_page_username">Not Provided</p>
+									</div>
+								</div>
+
+								<div class="col-sm-6">
+									<div class="contact-info">
+										<h6>First Name</h6>
+										<p id="profile_page_firstname">Not Provided</p>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="contact-info">
+										<h6>Email</h6>
+										<p id="profile_page_email">Not Provided</p>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="contact-info">
+										<h6>Last Name</h6>
+										<p id="profile_page_lastname">Not Provided</p>
+									</div>
+								</div>
+
+
+
+
+
+								<div class="col-sm-12">
+									<div class="contact-info mb-0">
+										<h6>Bio</h6>
+										<p id="profile_page_bio">Not Provided</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- /Instructor profile -->
+				
+				
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<!-- /Instructor Courses -->
+
+<!-- /Page Content -->
+{% endblock body %}
+
+{% block script %}
+<script>
+	const pathArray = window.location.pathname.split('/');
+	const username = pathArray[pathArray.length - 2];
+	let other_user = "";
+	console.log(username)
+	userApi = async () => {
+		await fetch(`${window.location.origin}/api/user/retrieve-by-username/?username=${username}`, {
+			"method": "get",
+			"headers": {
+				"content-type": "application/json",
+			}
+		}).then((response) => {
+			return response.json()
+		}).then((response) => {
+
+			if (response.success) {
+				document.getElementById("all-main").style.display="block"
+				sharebutton2(response.data.user.username)
+
+				other_user = response.data.user.id
+
+				console.log(response.data)
+			//	if (response.is_following){
+			//		document.getElementById("follow-button").innerHTML=`<i class="fas fa-user-plus" data-follow-id="${response.follow_id}"></i> unfollow`
+			//	}
+			//	else{
+//document.getElementById("follow-button").innerHTML=`<i class="fas fa-user-plus"></i> follow`
+//				}
+				document.getElementById("other_user_video").href=`/user-video/${response.data.user.username}`
+				document.getElementById("other_user_profile").href=`/${response.data.user.username}/`
+				//document.getElementById("link_following").href=`/following/${response.data.user.username}`
+                //document.getElementById("link_followers").href=`/followers/${response.data.user.username}`
+
+				if (response.data.user.profile_picture == "") {
+					document.getElementById("other_profile_page_image").src = '/media/profile_pictures/default_profile_image.png'
+
+				}
+				else {
+
+					document.getElementById("other_profile_page_image").src = `${response.data.user.profile_picture}`
+				}
+
+
+				console.log(response.data.user.username)
+				if (response.data.user.username == "") {
+					document.getElementById("profile_page_username").innerHTML = "Not Provided"
+					document.getElementById("other_profile_page_username").innerHTML = "username"
+					document.getElementById("profile_page_username3").innerHTML = "Profile"
+
+
+
+				}
+				else {
+					document.getElementById("profile_page_username").innerHTML = `${response.data.user.username}`
+					document.getElementById("other_profile_page_username").innerHTML = `@${response.data.user.username.length > 14 ? `${response.data.user.username.substring(0, 14)}...` : response.data.user.username}`;
+
+					document.getElementById("profile_page_username3").innerHTML = `${response.data.user.username}'s Profile`
+				}
+
+				if (response.data.user.first_name == "") {
+					document.getElementById("profile_page_firstname").innerHTML = "Not Provided"
+
+				}
+				else {
+
+					document.getElementById("profile_page_firstname").innerHTML = `${response.data.user.first_name}`
+				}
+
+				if (response.data.user.last_name == "") {
+					document.getElementById("profile_page_lastname").innerHTML = "Not Provided"
+
+				}
+				else {
+
+					document.getElementById("profile_page_lastname").innerHTML = `${response.data.user.last_name}`
+				}
+				console.log("user_bio", response.data.user.bio)
+				if (response.data.user.bio == "") {
+					document.getElementById("profile_page_bio").innerHTML = "Not Provided"
+
+				}
+				else {
+
+					document.getElementById("profile_page_bio").innerHTML = `${response.data.user.bio}`
+				}
+
+				if (response.data.user.email == "") {
+					document.getElementById("profile_page_email").innerHTML = "Not Provided"
+
+				}
+				else {
+
+					document.getElementById("profile_page_email").innerHTML = `${response.data.user.email}`
+				}
+				//if(authenticated){
+//
+//				//	follow_unfollow(response.data.user.id)
+				//}
+				console.log("other_user_id", other_user)
+
+
+			}
+			else{
+			
+			console.log(response)
+			document.getElementById("all-main").style.display="block"
+
+			document.getElementById("all-main").innerHTML=`<div class="main-wrapper" style="margin-top:100px;">
+				
+				<div class="error-box">
+					<div class="error-logo">
+						<a href="index.html">
+							<img src="/static/img/logo.svg" class="img-fluid" alt="Logo">
+						</a>
+					</div>
+					<div class="error-box-img">
+						<img src="/static/img/error-01.png" alt="Img" class="img-fluid" >
+					</div>
+					<h3 class="h2 mb-3"> Oh No! Error 404</h3>
+					<p class="h4 font-weight-normal">This page you requested counld not found. May the force be with you!</p>
+					<a href="/" class="btn btn-primary">Back to Home</a>
+				</div>
+			
+			</div>`
+			
+		}
+			
+		})
+
+	}
+	userApi()
+
+	document.getElementById("Send_Message").addEventListener('click', create_conversation);
+
+	async function create_conversation() {
+		const user_authenticated = localStorage.getItem("jerry_project_access_token");
+
+		if (user_authenticated) {
+			try {
+				// Fetch user profile
+				const userResponse = await fetch(`${window.location.origin}/api/user/`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${user_authenticated}`
+					}
+				});
+
+				const userData = await userResponse.json();
+
+				if (userResponse.ok && userData.success) {
+					// Prepare conversation data
+					const data = {
+						"user1": other_user, // Make sure profileId is defined elsewhere in your code
+						"user2": userData.data.id
+					};
+
+					// Create conversation
+					const conversationResponse = await fetch(`${window.location.origin}/api/conversations/`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": `Bearer ${user_authenticated}`
+						},
+						body: JSON.stringify(data)
+					});
+
+					const conversationData = await conversationResponse.json();
+
+					if (conversationResponse.ok && conversationData.success) {
+						setTimeout(() => {
+							window.location.href = `/contact-list/?conversation_id=${conversationData.data.id}`;
+							//https://www.bmy.fan/contact-list/?conversation_id=086339f7-13d9-47b3-8c0c-f14e8078cb58
+						}, 1000);
+					} else {
+						card.style.display = "flex";
+			card.style.borderLeft = "10px solid #3db5dc";
+
+			message_content.innerHTML = "You cannot create conversations yourself.";
+			message_type.innerHTML = "Info";
+			message_type.style.color = "#3db5dc";
+			message_icon_parent.style.color = "#3db5dc";
+			message_icon_child.classList = "fas fa-exclamation-circle";
+					}
+				} else {
+					console.log(userData);
+					showMessage("Failed to fetch user profile.", "error");
+				}
+			} catch (error) {
+				console.error('An error occurred:', error);
+				showMessage("An error occurred. Please try again.", "error");
+			}
+		} else {
+			card.style.display = "flex";
+			card.style.borderLeft = "10px solid #3db5dc";
+
+			message_content.innerHTML = "You are not logged in ";
+			message_type.innerHTML = "Info";
+			message_type.style.color = "#3db5dc";
+			message_icon_parent.style.color = "#3db5dc";
+			message_icon_child.classList = "fas fa-exclamation-circle";
+			
+			
+		}
+	}
+
+	//document.getElementById("follow-button").addEventListener('click', async () => {
+	//	let followButton = document.getElementById("follow-button");
+	//	let followIcon = followButton.querySelector('i'); // Select the <i> element within the button
+	//	let isFollowing = followIcon.getAttribute('data-follow-id') !== null; // Check if data-follow-id is present
+	//
+	//	if (authenticated) {
+	//		let url = `${window.location.origin}/api/follow/`;
+	//		let body = {
+	//			"to_user": other_user
+	//		};
+	//
+	//		// Handle Follow (POST)
+	//		if (!isFollowing) {
+	//			await fetch(url, {
+	//				method: "POST",
+	//				headers: {
+	//					"Content-Type": "application/json",
+	//					"Authorization": `Bearer ${authenticated}`
+	//				},
+	//				body: JSON.stringify(body)
+	//			}).then(response => response.json())
+	//			  .then(response => {
+	//				if (response.success) {
+	//					console.log(response);
+	//					// Store the Follow ID in the <i> tag
+	//					followIcon.setAttribute('data-follow-id', response.follow_id); // Assuming response contains follow_id
+	//					// Update the button text to UnFollow
+	//					followButton.innerHTML = `<i class="fas fa-user-plus" data-follow-id="${response.data.id}"></i> unfollow`;
+	//				} else {
+	//					handleError(response.message);
+	//				}
+	//			}).catch(error => {
+	//				console.log("Network error:", error);
+	//			});
+	//		}
+	//
+	//		// Handle Unfollow (DELETE)
+	//		else {
+	//			let followId = followIcon.getAttribute('data-follow-id');
+	//			console.log(followId)
+	//			if (followId) {
+	//				let deleteUrl = `${url}${followId}/`; // Append the followId to the URL
+	//				await fetch(deleteUrl, {
+	//					method: "DELETE",
+	//					headers: {
+	//						"Content-Type": "application/json",
+	//						"Authorization": `Bearer ${authenticated}`
+	//					}
+	//				}).then(response => response.json())
+	//				  .then(response => {
+	//					console.log(response)
+	//					if (response.success) {
+	//						console.log(response);
+	//						// Remove the Follow ID from the <i> tag after successful deletion
+	//						followIcon.removeAttribute('data-follow-id');
+	//						// Update the button text to Follow
+	//						followButton.innerHTML = `<i class="fas fa-user-plus"></i> follow`;
+	//					} else {
+	//						handleError(response.message);
+	//					}
+	//				}).catch(error => {
+	//					console.log("Network error:", error);
+	//				});
+	//			} else {
+	//				console.log("Error: Follow ID is not available for deletion.");
+	//			}
+	//		}
+	//	} else {
+	//		showLoginPrompt();
+	//	}
+	//});
+	//
+	//function handleError(message) {
+	//	if (message.non_field_errors) {
+	//		card.style.display = "flex";
+	//		card.style.borderLeft = "10px solid #3db5dc";
+	//		message_content.innerHTML = message.non_field_errors;
+	//		message_type.innerHTML = "Info";
+	//		message_type.style.color = "#3db5dc";
+	//		message_icon_parent.style.color = "#3db5dc";
+	//		message_icon_child.classList = "fas fa-exclamation-circle";
+	//	}
+	//	console.log("Error occurred:", message);
+	//}
+	//
+	//function showLoginPrompt() {
+	//	card.style.display = "flex";
+	//	card.style.borderLeft = "10px solid #3db5dc";
+	//	message_content.innerHTML = "Please log in to follow creators.";
+	//	message_type.innerHTML = "Info";
+	//	message_type.style.color = "#3db5dc";
+	//	message_icon_parent.style.color = "#3db5dc";
+	//	message_icon_child.classList = "fas fa-exclamation-circle";
+	//}
+//
+	//async function follow_unfollow(id){
+	//	await fetch(`${window.location.origin}/api/follow/user-is-following/?to_user=${id}`,{
+	//		"method":"get",
+	//		headers:{
+	//			"Content-Type": "application/json",
+	//						"Authorization": `Bearer ${authenticated}`
+	//		},
+	//		
+	//	}).then((response)=>{
+	//		return response.json()
+	//	}).then((response)=>{
+	//		if(response.success){
+	//			document.getElementById("follow-button").innerHTML=`<i class="fas fa-user-plus" data-follow-id="${response.data.id}"></i> unfollow`
+	//		}
+	//		else{
+	//			document.getElementById("follow-button").innerHTML=`<i class="fas fa-user-plus"></i> follow`
+	//			console.log("follow Unfollow",response)
+	//		}
+	//	})
+	//}
+	//
+	//
+	function sharebutton2(username) {
+		const shareButtonElement = document.getElementById('share-button2');
+
+		if (shareButtonElement) {
+			shareButtonElement.addEventListener('click', function (event) {
+				event.preventDefault();
+
+				const shareUrl = `${window.location.origin}/${username}/`;
+
+				if (navigator.share) {
+					navigator.share({
+						title: 'User profile',
+						text: 'Check out this Link!',
+						url: shareUrl, // Use the dynamic URL
+					}).then(() => {
+						console.log('Thanks for sharing!');
+					}).catch((error) => {
+						console.log('Something went wrong', error);
+					});
+				} else {
+					alert('Sharing not supported on this browser.');
+				}
+			});
+		}
+	}
+</script>
+{% endblock script %}

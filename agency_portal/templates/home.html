@@ -1,0 +1,1656 @@
+{% extends "base.html" %}
+{% block title %}
+  Home
+{% endblock title %}
+{% block link%}
+
+{% endblock link%}
+{% block style %}
+
+{% endblock style %}
+{% block body %}
+
+<!-- Home Banner -->
+
+<section class="home-slide d-flex align-items-center">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="home-slide-face aos" data-aos="fade-up">
+					<div class="home-slide-text">
+						<h5>The Platform for Creators</h5>
+						<h1>Upload, Share, and Discover Amazing Content</h1>
+						<p>Empower your creativity and connect with a global audience</p>
+					</div>
+					<div class="banner-content">
+						<form class="form" action="javascript:void(0);" onsubmit="handleSearch()">
+							<div class="form-inner">
+								<div class="input-group">
+									<i class="fa-solid fa-magnifying-glass search-icon"></i>
+									<input type="text" id="searchInput" class="form-control" placeholder="Search videos, creators, content, etc.">
+									<span class="drop-detail">
+										<select id="categorySelect" class="form-select select">
+											
+										</select>
+									</span>
+									<button class="btn btn-primary sub-btn" type="submit"><i class="fas fa-arrow-right"></i></button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="trust-user">
+						<p>Trusted by Thousands of Creators <br>worldwide since 2022</p>
+						<!-- <div class="trust-rating d-flex align-items-center">
+							<div class="rate-head">
+								<h2><span>5000</span>+</h2>
+							</div>
+							<div class="rating d-flex align-items-center">
+								<h2 class="d-inline-block average-rating">4.8</h2>
+								<i class="fas fa-star filled"></i>
+								<i class="fas fa-star filled"></i>
+								<i class="fas fa-star filled"></i>
+								<i class="fas fa-star filled"></i>
+								<i class="fas fa-star filled"></i>
+							</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5 d-flex align-items-center">
+				<div class="girl-slide-img aos" data-aos="fade-up">
+					<img src="/static/img/object.png" alt="Img">
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- /Home Banner -->
+<!-- <section class="section student-course">
+	<div class="container">
+		<div class="course-widget">
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="course-full-width">
+						<div class="blur-border course-radius align-items-center aos" data-aos="fade-up">
+							<div class="online-course d-flex align-items-center">
+								<div class="course-img">
+									<img src="/static/img/pencil-icon.svg" alt="Img">
+								</div>
+								<div class="course-inner-content">
+									<h4><span>10</span>K</h4>
+									<p>Online Courses</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 d-flex">
+					<div class="course-full-width">
+						<div class="blur-border course-radius aos" data-aos="fade-up">
+							<div class="online-course d-flex align-items-center">
+								<div class="course-img">
+									<img src="/static/img/cources-icon.svg" alt="Img">
+								</div>
+								<div class="course-inner-content">
+									<h4><span>200</span>+</h4>
+									<p>Expert Tutors</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 d-flex">
+					<div class="course-full-width">
+						<div class="blur-border course-radius aos" data-aos="fade-up">
+							<div class="online-course d-flex align-items-center">
+								<div class="course-img">
+									<img src="/static/img/certificate-icon.svg" alt="Img">
+								</div>
+								<div class="course-inner-content">
+									<h4><span>6</span>K+</h4>
+									<p>Ceritified Courses</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 d-flex">
+					<div class="course-full-width">
+						<div class="blur-border course-radius aos" data-aos="fade-up">
+							<div class="online-course d-flex align-items-center">
+								<div class="course-img">
+									<img src="/static/img/gratuate-icon.svg" alt="Img">
+								</div>
+								<div class="course-inner-content">
+									<h4><span>60</span>K +</h4>
+									<p>Online Students</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
+<!-- Home Banner -->
+<!-- <div id="temp-card" style="display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;">
+
+</div> -->
+<!-- Top Categories -->
+<!-- <section class="section how-it-works">
+	<div class="container">
+		<div class="section-header aos" data-aos="fade-up">
+			<div class="section-sub-head">
+				<span>Favourite Course</span>
+				<h2>Top Category</h2>
+			</div>
+			<div class="all-btn all-category d-flex align-items-center">
+				<a href="#" class="btn btn-primary">All Categories</a>
+			</div>
+		</div>
+		<div class="section-text aos" data-aos="fade-up">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget aenean accumsan bibendum gravida maecenas
+				augue elementum et neque. Suspendisse imperdiet.</p>
+		</div>
+		<div class="owl-carousel mentoring-course owl-theme aos" data-aos="fade-up" id="other_users">
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">kartik Development</div>
+						</div>
+					</div>
+					<p>40 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Angular Development</div>
+						</div>
+					</div>
+					<p>40 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-01.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Docker Development</div>
+						</div>
+					</div>
+					<p>45 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-02.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Node JS Frontend</div>
+						</div>
+					</div>
+					<p>40 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-03.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Swift Development</div>
+						</div>
+					</div>
+					<p>23 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-04.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Python Development</div>
+						</div>
+					</div>
+					<p>30 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-05.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">React<br> Native</div>
+						</div>
+					</div>
+					<p>80 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-04.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Angular Development</div>
+						</div>
+					</div>
+					<p>40 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-01.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Docker Development</div>
+						</div>
+					</div>
+					<p>45 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-02.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Node JS Frontend</div>
+						</div>
+					</div>
+					<p>40 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-03.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Swift Development</div>
+						</div>
+					</div>
+					<p>23 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-04.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Python Development</div>
+						</div>
+					</div>
+					<p>30 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-01.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Docker Development</div>
+						</div>
+					</div>
+					<p>45 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-02.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Node JS Frontend</div>
+						</div>
+					</div>
+					<p>40 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-03.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Swift Development</div>
+						</div>
+					</div>
+					<p>23 Instructors</p>
+				</div>
+			</div>
+			<div class="feature-box text-center ">
+				<div class="feature-bg">
+					<div class="feature-header">
+						<div class="feature-icon">
+							<img src="/static/img/categories-icon-04.png" alt="Img">
+						</div>
+						<div class="feature-cont">
+							<div class="feature-text">Python Development</div>
+						</div>
+					</div>
+					<p>30 Instructors</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
+<!-- /Top Categories -->
+
+<!-- Feature Course -->
+<!-- <section class="section new-course">
+	<div class="container" id="trending_cources">
+		<div class="section-header aos" data-aos="fade-up">
+			<div class="section-sub-head">
+				<span>What’s New</span>
+				<h2>Featured Videos</h2>
+			</div>
+			<div class="all-btn all-category d-flex align-items-center">
+				<a href="#" class="btn btn-primary">Top Purchased Posts</a>
+			</div>
+		</div>
+		<div class="section-text aos" data-aos="fade-up">
+			<p class="mb-0">Below are some Videos you may like. We've handpicked these just for you! Dive in and discover
+				something new, inspiring, or thought-provoking.</p>
+		</div>
+		<div class="course-feature">
+			<div class="row" id="all_random_post"
+				style="display: flex;justify-content:center;align-items:center;flex-wrap:wrap;"> -->
+				<!-- <div class="col-lg-4 col-md-6 d-flex">
+					<div class="course-box d-flex aos" data-aos="fade-up">
+						<div class="product">
+							<div class="product-img">
+								<a href="#">
+									<img class="img-fluid" alt="Img" src="/static/img/course/course-01.jpg">
+								</a>
+								<div class="price">
+									<h3>$300 <span>$99.00</span></h3>
+								</div>
+							</div>
+							<div class="product-content">
+								<div class="course-group d-flex">
+									<div class="course-group-img d-flex">
+										<a href="#"><img src="/static/img/user/user1.jpg" alt="Img"
+												class="img-fluid"></a>
+										<div class="course-name">
+											<h4><a href="#">Nicole Brown</a></h4>
+											<p>Instructor</p>
+										</div>
+									</div>
+									<div class="course-share d-flex align-items-center justify-content-center">
+										<a href="#"><i class="fa-regular fa-heart"></i></a>
+									</div>
+								</div>
+								<h3 class="title instructor-text"><a href="#">Information About UI/UX Design Degree</a>
+								</h3>
+								<div class="course-info d-flex align-items-center">
+									<div class="rating-img d-flex align-items-center">
+										<img src="/static/img/icon/icon-01.svg" alt="Img">
+										<p>12+ Lesson</p>
+									</div>
+									<div class="course-view d-flex align-items-center">
+										<img src="/static/img/icon/icon-02.svg" alt="Img">
+										<p>9hr 30min</p>
+									</div>
+								</div>
+								<div class="d-flex align-items-center justify-content-between">
+									<div class="rating m-0">
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star"></i>
+										<span class="d-inline-block average-rating"><span>4.0</span> (15)</span>
+									</div>
+									<div class="all-btn all-category d-flex align-items-center">
+										<a href="#" class="btn btn-primary">BUY NOW</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 d-flex">
+					<div class="course-box d-flex aos" data-aos="fade-up">
+						<div class="product">
+							<div class="product-img">
+								<a href="#">
+									<img class="img-fluid" alt="Img" src="/static/img/course/course-02.jpg">
+								</a>
+								<div class="price">
+									<h3>$400 <span>$99.00</span></h3>
+								</div>
+							</div>
+							<div class="product-content">
+								<div class="course-group d-flex">
+									<div class="course-group-img d-flex">
+										<a href="#"><img src="/static/img/user/user2.jpg" alt="Img"
+												class="img-fluid"></a>
+										<div class="course-name">
+											<h4><a href="#">Jenis R.</a></h4>
+											<p>Instructor</p>
+										</div>
+									</div>
+									<div class="course-share d-flex align-items-center justify-content-center">
+										<a href="#"><i class="fa-regular fa-heart"></i></a>
+									</div>
+								</div>
+								<h3 class="title instructor-text"><a href="#">Wordpress for Beginners - Master Wordpress
+										Quickly</a></h3>
+								<div class="course-info d-flex align-items-center">
+									<div class="rating-img d-flex align-items-center">
+										<img src="/static/img/icon/icon-01.svg" alt="Img">
+										<p>11+ Lesson</p>
+									</div>
+									<div class="course-view d-flex align-items-center">
+										<img src="/static/img/icon/icon-02.svg" alt="Img">
+										<p>6hr 30min</p>
+									</div>
+								</div>
+								<div class="d-flex align-items-center justify-content-between">
+									<div class="rating m-0">
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star"></i>
+										<span class="d-inline-block average-rating"><span>4.3</span> (15)</span>
+									</div>
+									<div class="all-btn all-category d-flex align-items-center">
+										<a href="#" class="btn btn-primary">BUY NOW</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 d-flex">
+					<div class="course-box d-flex aos" data-aos="fade-up">
+						<div class="product">
+							<div class="product-img">
+								<a href="#">
+									<img class="img-fluid" alt="Img" src="/static/img/course/course-03.jpg">
+								</a>
+								<div class="price combo">
+									<h3>FREE</h3>
+								</div>
+							</div>
+							<div class="product-content">
+								<div class="course-group d-flex">
+									<div class="course-group-img d-flex">
+										<a href="#"><img src="/static/img/user/user5.jpg" alt="Img"
+												class="img-fluid"></a>
+										<div class="course-name">
+											<h4><a href="#">Jesse Stevens</a></h4>
+											<p>Instructor</p>
+										</div>
+									</div>
+									<div class="course-share d-flex align-items-center justify-content-center">
+										<a href="#"><i class="fa-regular fa-heart"></i></a>
+									</div>
+								</div>
+								<h3 class="title instructor-text"><a href="#">Sketch from A to Z (2022): Become an app
+										designer</a></h3>
+								<div class="course-info d-flex align-items-center">
+									<div class="rating-img d-flex align-items-center">
+										<img src="/static/img/icon/icon-01.svg" alt="Img">
+										<p>16+ Lesson</p>
+									</div>
+									<div class="course-view d-flex align-items-center">
+										<img src="/static/img/icon/icon-02.svg" alt="Img">
+										<p>12hr 30min</p>
+									</div>
+								</div>
+								<div class="d-flex align-items-center justify-content-between">
+									<div class="rating m-0">
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star"></i>
+										<span class="d-inline-block average-rating"><span>4.5</span> (15)</span>
+									</div>
+									<div class="all-btn all-category d-flex align-items-center">
+										<a href="#" class="btn btn-primary">BUY NOW</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 d-flex">
+					<div class="course-box d-flex aos" data-aos="fade-up">
+						<div class="product">
+							<div class="product-img">
+								<a href="#">
+									<img class="img-fluid" alt="Img" src="/static/img/course/course-04.jpg">
+								</a>
+								<div class="price">
+									<h3>$500 <span>$99.00</span></h3>
+								</div>
+							</div>
+							<div class="product-content">
+								<div class="course-group d-flex">
+									<div class="course-group-img d-flex">
+										<a href="#"><img src="/static/img/user/user4.jpg" alt="Img"
+												class="img-fluid"></a>
+										<div class="course-name">
+											<h4><a href="#">Nicole Brown</a></h4>
+											<p>Instructor</p>
+										</div>
+									</div>
+									<div class="course-share d-flex align-items-center justify-content-center">
+										<a href="#"><i class="fa-regular fa-heart"></i></a>
+									</div>
+								</div>
+								<h3 class="title instructor-text"><a href="#">The Ultimate Drawing Course - Beginner to
+										Advanced</a></h3>
+								<div class="course-info d-flex align-items-center">
+									<div class="rating-img d-flex align-items-center">
+										<img src="/static/img/icon/icon-01.svg" alt="Img">
+										<p>15+ Lesson</p>
+									</div>
+									<div class="course-view d-flex align-items-center">
+										<img src="/static/img/icon/icon-02.svg" alt="Img">
+										<p>8hr 30min</p>
+									</div>
+								</div>
+								<div class="d-flex align-items-center justify-content-between">
+									<div class="rating m-0">
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star"></i>
+										<span class="d-inline-block average-rating"><span>4.8</span> (15)</span>
+									</div>
+									<div class="all-btn all-category d-flex align-items-center">
+										<a href="#" class="btn btn-primary">BUY NOW</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 d-flex">
+					<div class="course-box d-flex aos" data-aos="fade-up">
+						<div class="product">
+							<div class="product-img">
+								<a href="#">
+									<img class="img-fluid" alt="Img" src="/static/img/course/course-05.jpg">
+								</a>
+								<div class="price combo">
+									<h3>FREE</h3>
+								</div>
+							</div>
+							<div class="product-content">
+								<div class="course-group d-flex">
+									<div class="course-group-img d-flex">
+										<a href="#"><img src="/static/img/user/user6.jpg" alt="Img"
+												class="img-fluid"></a>
+										<div class="course-name">
+											<h4><a href="#">Jesse Stevens</a></h4>
+											<p>Instructor</p>
+										</div>
+									</div>
+									<div class="course-share d-flex align-items-center justify-content-center">
+										<a href="#"><i class="fa-regular fa-heart"></i></a>
+									</div>
+								</div>
+								<h3 class="title instructor-text"><a href="#">Photoshop CC for Web Design</a></h3>
+								<div class="course-info d-flex align-items-center">
+									<div class="rating-img d-flex align-items-center">
+										<img src="/static/img/icon/icon-01.svg" alt="Img">
+										<p>12+ Lesson</p>
+									</div>
+									<div class="course-view d-flex align-items-center">
+										<img src="/static/img/icon/icon-02.svg" alt="Img">
+										<p>8hr 00min</p>
+									</div>
+								</div>
+								<div class="d-flex align-items-center justify-content-between">
+									<div class="rating m-0">
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star"></i>
+										<span class="d-inline-block average-rating"><span>4.4</span> (15)</span>
+									</div>
+									<div class="all-btn all-category d-flex align-items-center">
+										<a href="#" class="btn btn-primary">BUY NOW</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 d-flex">
+					<div class="course-box d-flex aos" data-aos="fade-up">
+						<div class="product">
+							<div class="product-img">
+								<a href="#">
+									<img class="img-fluid" alt="Img" src="/static/img/course/course-06.jpg">
+								</a>
+								<div class="price">
+									<h3>$250 <span>$99.00</span></h3>
+								</div>
+							</div>
+							<div class="product-content">
+								<div class="course-group d-flex">
+									<div class="course-group-img d-flex">
+										<a href="#"><img src="/static/img/user/user3.jpg" alt="Img"
+												class="img-fluid"></a>
+										<div class="course-name">
+											<h4><a href="#">Jenis R.</a></h4>
+											<p>Instructor</p>
+										</div>
+									</div>
+									<div class="course-share d-flex align-items-center justify-content-center">
+										<a href="#"><i class="fa-regular fa-heart"></i></a>
+									</div>
+								</div>
+								<h3 class="title instructor-text"><a href="#">The Web Developer Bootcamp 2023</a></h3>
+								<div class="course-info d-flex align-items-center">
+									<div class="rating-img d-flex align-items-center">
+										<img src="/static/img/icon/icon-01.svg" alt="Img">
+										<p>21+ Lesson</p>
+									</div>
+									<div class="course-view d-flex align-items-center">
+										<img src="/static/img/icon/icon-02.svg" alt="Img">
+										<p>15hr 00min</p>
+									</div>
+								</div>
+								<div class="d-flex align-items-center justify-content-between">
+									<div class="rating m-0">
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star"></i>
+										<span class="d-inline-block average-rating"><span>4.6</span> (15)</span>
+									</div>
+									<div class="all-btn all-category d-flex align-items-center">
+										<a href="#" class="btn btn-primary">BUY NOW</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+
+
+
+			<!-- </div>
+			<div class="dash-pagination">
+				<div class="row align-items-center">
+					<div class="col-6" style="z-index: 1000 !important;display:flex;justify-content:center;">
+						<p class="pagination_list" style="color: #ff4667;">Page 1 of 2</p>
+					</div>
+					<div class="col-6" style="z-index: 1000 !important;display:flex;justify-content:center;">
+						<ul class="pagination">
+							<li class="active">
+								<a href="#">1</a>
+							</li>
+							<li>
+								<a href="#">2</a>
+							</li>
+							<li>
+								<a href="#"><i class="bx bx-chevron-right"></i></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
+<!-- /Feature Course -->
+
+<!-- Master Skill -->
+<!-- <section class="section master-skill">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-7 col-md-12">
+				<div class="section-header aos" data-aos="fade-up">
+					<div class="section-sub-head">
+						<span>What’s New</span>
+						<h2>Master the skills to drive your career</h2>
+					</div>
+				</div>
+				<div class="section-text aos" data-aos="fade-up">
+					<p>Get certified, master modern tech skills, and level up your career — whether you’re starting out
+						or a seasoned pro. 95% of eLearning learners report our hands-on content directly helped their
+						careers.</p>
+				</div>
+				<div class="career-group aos" data-aos="fade-up">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 d-flex">
+							<div class="certified-group blur-border d-flex">
+								<div class="get-certified d-flex align-items-center">
+									<div class="blur-box">
+										<div class="certified-img ">
+											<img src="/static/img/icon/icon-1.svg" alt="Img" class="img-fluid">
+										</div>
+									</div>
+									<p>Stay motivated with engaging instructors</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 d-flex">
+							<div class="certified-group blur-border d-flex">
+								<div class="get-certified d-flex align-items-center">
+									<div class="blur-box">
+										<div class="certified-img ">
+											<img src="/static/img/icon/icon-2.svg" alt="Img" class="img-fluid">
+										</div>
+									</div>
+									<p>Keep up with in the latest in cloud</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 d-flex">
+							<div class="certified-group blur-border d-flex">
+								<div class="get-certified d-flex align-items-center">
+									<div class="blur-box">
+										<div class="certified-img ">
+											<img src="/static/img/icon/icon-3.svg" alt="Img" class="img-fluid">
+										</div>
+									</div>
+									<p>Get certified with 100+ certification courses</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 d-flex">
+							<div class="certified-group blur-border d-flex">
+								<div class="get-certified d-flex align-items-center">
+									<div class="blur-box">
+										<div class="certified-img ">
+											<img src="/static/img/icon/icon-4.svg" alt="Img" class="img-fluid">
+										</div>
+									</div>
+									<p>Build skills your way, from labs to courses</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-5 col-md-12 d-flex align-items-end">
+				<div class="career-img aos" data-aos="fade-up">
+					<img src="/static/img/join.png" alt="Img" class="img-fluid">
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
+<!-- /Master Skill -->
+
+<!-- Trending Course -->
+<!-- <section class="section trend-course">
+	<div class="container" >
+		<div class="section-header aos" data-aos="fade-up">
+			<div class="section-sub-head">
+				<span>What’s New</span>
+				<h2>TRENDING COURSES</h2>
+			</div>
+			<div class="all-btn all-category d-flex align-items-center">
+				<a href="course-list.html" class="btn btn-primary">All Courses</a>
+			</div>
+		</div>
+		<div class="section-text aos" data-aos="fade-up">
+			<p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget aenean accumsan bibendum
+				gravida maecenas augue elementum et neque. Suspendisse imperdiet.</p>
+		</div>
+		<div class="owl-carousel trending-course owl-theme aos" data-aos="fade-up" 
+			style="display: flex;justify-content:center;align-items:center;flex-wrap:wrap;">
+			<div class="course-box trend-box">
+				<div class="product trend-product">
+					<div class="product-img">
+						<a href="course-details.html">
+							<img class="img-fluid" alt="Img" src="/static/img/course/course-07.jpg">
+						</a>
+						<div class="price">
+							<h3>$200 <span>$99.00</span></h3>
+						</div>
+					</div>
+					<div class="product-content">
+						<div class="course-group d-flex">
+							<div class="course-group-img d-flex">
+								<a href="instructor-profile.html"><img src="/static/img/user/user.jpg" alt="Img"
+										class="img-fluid"></a>
+								<div class="course-name">
+									<h4><a href="instructor-profile.html">John Michael</a></h4>
+									<p>Instructor</p>
+								</div>
+							</div>
+							<div class="course-share d-flex align-items-center justify-content-center">
+								<a href="#"><i class="fa-regular fa-heart"></i></a>
+							</div>
+						</div>
+						<h3 class="title"><a href="course-details.html">Learn JavaScript and Express to become a
+								professional JavaScript</a></h3>
+						<div class="course-info d-flex align-items-center">
+							<div class="rating-img d-flex align-items-center">
+								<img src="/static/img/icon/icon-01.svg" alt="Img" class="img-fluid">
+								<p>13+ Lesson</p>
+							</div>
+							<div class="course-view d-flex align-items-center">
+								<img src="/static/img/icon/icon-02.svg" alt="Img" class="img-fluid">
+								<p>10hr 30min</p>
+							</div>
+						</div>
+						<div class="d-flex align-items-center justify-content-between">
+							<div class="rating m-0">
+								<i class="fas fa-star filled"></i>
+								<i class="fas fa-star filled"></i>
+								<i class="fas fa-star filled"></i>
+								<i class="fas fa-star filled"></i>
+								<i class="fas fa-star"></i>
+								<span class="d-inline-block average-rating"><span>4.0</span> (15)</span>
+							</div>
+							<div class="all-btn all-category d-flex align-items-center">
+								<a href="checkout.html" class="btn btn-primary">BUY NOW</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="course-box trend-box">
+				<div class="product trend-product">
+					<div class="product-img">
+						<a href="course-details.html">
+							<img class="img-fluid" alt="Img" src="/static/img/course/course-08.jpg">
+						</a>
+						<div class="price">
+							<h3>$300 <span>$99.00</span></h3>
+						</div>
+					</div>
+					<div class="product-content">
+						<div class="course-group d-flex">
+							<div class="course-group-img d-flex">
+								<a href="instructor-profile.html"><img src="/static/img/user/user2.jpg" alt="Img"
+										class="img-fluid"></a>
+								<div class="course-name">
+									<h4><a href="instructor-profile.html">John Smith</a></h4>
+									<p>Instructor</p>
+								</div>
+							</div>
+							<div class="course-share d-flex align-items-center justify-content-center">
+								<a href="#"><i class="fa-regular fa-heart"></i></a>
+							</div>
+						</div>
+						<h3 class="title"><a href="course-details.html">Responsive Web Design Essentials HTML5 CSS3 and
+								Bootstrap</a></h3>
+						<div class="course-info d-flex align-items-center">
+							<div class="rating-img d-flex align-items-center">
+								<img src="/static/img/icon/icon-01.svg" alt="Img" class="img-fluid">
+								<p>10+ Lesson</p>
+							</div>
+							<div class="course-view d-flex align-items-center">
+								<img src="/static/img/icon/icon-02.svg" alt="Img" class="img-fluid">
+								<p>11hr 30min</p>
+							</div>
+						</div>
+						<div class="d-flex align-items-center justify-content-between">
+							<div class="rating m-0">
+								<i class="fas fa-star filled"></i>
+								<i class="fas fa-star filled"></i>
+								<i class="fas fa-star filled"></i>
+								<i class="fas fa-star filled"></i>
+								<i class="fas fa-star"></i>
+								<span class="d-inline-block average-rating"><span>4.2</span> (15)</span>
+							</div>
+							<div class="all-btn all-category d-flex align-items-center">
+								<a href="checkout.html" class="btn btn-primary">BUY NOW</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+<!-- <div class="dash-pagination">
+			<div class="row align-items-center">
+				<div class="col-6">
+					<p class="pagination_list">Page 1 of 2</p>
+				</div>
+				<div class="col-6">
+					<ul class="pagination">
+						<li class="active">
+							<a href="#">1</a>
+						</li>
+						<li>
+							<a href="#">2</a>
+						</li>
+						<li>
+							<a href="#"><i class="bx bx-chevron-right"></i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div> -->
+
+<!-- Feature Instructors -->
+<!-- <div class="feature-instructors">
+			<div class="section-header aos" data-aos="fade-up">
+				<div class="section-sub-head feature-head text-center">
+					<h2>Featured Instructor</h2>
+					<div class="section-text aos" data-aos="fade-up">
+						<p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget aenean accumsan
+							bibendum gravida maecenas augue elementum et neque. Suspendisse imperdiet.</p>
+					</div>
+				</div>
+			</div>
+			<div class="owl-carousel instructors-course owl-theme aos" data-aos="fade-up">
+				<div class="instructors-widget">
+					<div class="instructors-img ">
+						<a href="instructor-list.html">
+							<img class="img-fluid" alt="Img" src="/static/img/user/user7.jpg">
+						</a>
+					</div>
+					<div class="instructors-content text-center">
+						<h5><a href="instructor-profile.html">David Lee</a></h5>
+						<p>Web Developer</p>
+						<div class="student-count d-flex justify-content-center">
+							<i class="fa-solid fa-user-group"></i>
+							<span>50 Students</span>
+						</div>
+					</div>
+				</div>
+				<div class="instructors-widget">
+					<div class="instructors-img">
+						<a href="instructor-list.html">
+							<img class="img-fluid" alt="Img" src="/static/img/user/user8.jpg">
+						</a>
+					</div>
+					<div class="instructors-content text-center">
+						<h5><a href="instructor-profile.html">Daziy Millar</a></h5>
+						<p>PHP Expert</p>
+						<div class="student-count d-flex justify-content-center">
+							<i class="fa-solid fa-user-group yellow"></i>
+							<span>50 Students</span>
+						</div>
+					</div>
+				</div>
+				<div class="instructors-widget">
+					<div class="instructors-img">
+						<a href="instructor-list.html">
+							<img class="img-fluid" alt="Img" src="/static/img/user/user9.jpg">
+						</a>
+					</div>
+					<div class="instructors-content text-center">
+						<h5><a href="instructor-profile.html">Patricia Mendoza</a></h5>
+						<p>Web Developer</p>
+						<div class="student-count d-flex justify-content-center">
+							<i class="fa-solid fa-user-group violet"></i>
+							<span>50 Students</span>
+						</div>
+					</div>
+				</div>
+				<div class="instructors-widget">
+					<div class="instructors-img">
+						<a href="instructor-list.html">
+							<img class="img-fluid" alt="Img" src="/static/img/user/user10.jpg">
+						</a>
+					</div>
+					<div class="instructors-content text-center">
+						<h5><a href="instructor-profile.html">Skyler Whites</a></h5>
+						<p>UI Designer</p>
+						<div class="student-count d-flex justify-content-center">
+							<i class="fa-solid fa-user-group orange"></i>
+							<span>50 Students</span>
+						</div>
+					</div>
+				</div>
+				<div class="instructors-widget">
+					<div class="instructors-img ">
+						<a href="instructor-list.html">
+							<img class="img-fluid" alt="Img" src="/static/img/user/user7.jpg">
+						</a>
+					</div>
+					<div class="instructors-content text-center">
+						<h5><a href="instructor-profile.html">Patricia Mendoza</a></h5>
+						<p>Java Developer</p>
+						<div class="student-count d-flex justify-content-center">
+							<i class="fa-solid fa-user-group"></i>
+							<span>40 Students</span>
+						</div>
+					</div>
+				</div>
+				<div class="instructors-widget">
+					<div class="instructors-img">
+						<a href="instructor-list.html">
+							<img class="img-fluid" alt="Img" src="/static/img/user/user8.jpg">
+						</a>
+					</div>
+					<div class="instructors-content text-center">
+						<h5><a href="instructor-profile.html">David Lee</a></h5>
+						<p>Web Developer</p>
+						<div class="student-count d-flex justify-content-center">
+							<i class="fa-solid fa-user-group"></i>
+							<span>50 Students</span>
+						</div>
+					</div>
+				</div>
+				<div class="instructors-widget">
+					<div class="instructors-img ">
+						<a href="instructor-list.html">
+							<img class="img-fluid" alt="Img" src="/static/img/user/user9.jpg">
+						</a>
+					</div>
+					<div class="instructors-content text-center">
+						<h5><a href="instructor-profile.html">Daziy Millar</a></h5>
+						<p>PHP Expert</p>
+						<div class="student-count d-flex justify-content-center">
+							<i class="fa-solid fa-user-group"></i>
+							<span>40 Students</span>
+						</div>
+					</div>
+				</div>
+				<div class="instructors-widget">
+					<div class="instructors-img ">
+						<a href="instructor-list.html">
+							<img class="img-fluid" alt="Img" src="/static/img/user/user10.jpg">
+						</a>
+					</div>
+					<div class="instructors-content text-center">
+						<h5><a href="instructor-profile.html">Patricia Mendoza</a></h5>
+						<p>Web Developer</p>
+						<div class="student-count d-flex justify-content-center">
+							<i class="fa-solid fa-user-group"></i>
+							<span>20 Students</span>
+						</div>
+					</div>
+				</div>
+				<div class="instructors-widget">
+					<div class="instructors-img ">
+						<a href="instructor-list.html">
+							<img class="img-fluid" alt="Img" src="/static/img/user/user7.jpg">
+						</a>
+					</div>
+					<div class="instructors-content text-center">
+						<h5><a href="instructor-profile.html">Skyler Whites</a></h5>
+						<p>UI Designer</p>
+						<div class="student-count d-flex justify-content-center">
+							<i class="fa-solid fa-user-group"></i>
+							<span>30 Students</span>
+						</div>
+					</div>
+				</div>
+				<div class="instructors-widget">
+					<div class="instructors-img">
+						<a href="instructor-list.html">
+							<img class="img-fluid" alt="Img" src="/static/img/user/user8.jpg">
+						</a>
+					</div>
+					<div class="instructors-content text-center">
+						<h5><a href="instructor-profile.html">Patricia Mendoza</a></h5>
+						<p>Java Developer</p>
+						<div class="student-count d-flex justify-content-center">
+							<i class="fa-solid fa-user-group"></i>
+							<span>40 Students</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+<!-- /Feature Instructors -->
+
+<!-- </div>
+</section> -->
+<!-- /Trending Course -->
+
+<!-- Leading Companies -->
+<!-- <section class="section lead-companies">
+	<div class="container">
+		<div class="section-header aos" data-aos="fade-up">
+			<div class="section-sub-head feature-head text-center">
+				<span>Trusted By</span>
+				<h2>500+ Leading Universities And Companies</h2>
+			</div>
+		</div>
+		<div class="lead-group aos" data-aos="fade-up">
+			<div class="lead-group-slider owl-carousel owl-theme">
+				<div class="item">
+					<div class="lead-img">
+						<img class="img-fluid" alt="Img" src="/static/img/lead-01.png">
+					</div>
+				</div>
+				<div class="item">
+					<div class="lead-img">
+						<img class="img-fluid" alt="Img" src="/static/img/lead-02.png">
+					</div>
+				</div>
+				<div class="item">
+					<div class="lead-img">
+						<img class="img-fluid" alt="Img" src="/static/img/lead-03.png">
+					</div>
+				</div>
+				<div class="item">
+					<div class="lead-img">
+						<img class="img-fluid" alt="Img" src="/static/img/lead-04.png">
+					</div>
+				</div>
+				<div class="item">
+					<div class="lead-img">
+						<img class="img-fluid" alt="Img" src="/static/img/lead-05.png">
+					</div>
+				</div>
+				<div class="item">
+					<div class="lead-img">
+						<img class="img-fluid" alt="Img" src="/static/img/lead-06.png">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
+<!-- /Leading Companies -->
+
+<!-- Share Knowledge -->
+<!-- <section class="section share-knowledge">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="knowledge-img aos" data-aos="fade-up">
+					<img src="/static/img/share.png" alt="Img" class="img-fluid">
+				</div>
+			</div>
+			<div class="col-md-6 d-flex align-items-center">
+				<div class="join-mentor aos" data-aos="fade-up">
+					<h2>Want to share your knowledge? Join us a Mentor</h2>
+					<p>High-definition video is video of higher resolution and quality than standard-definition. While
+						there is no standardized meaning for high-definition, generally any video.</p>
+					<ul class="course-list">
+						<li><i class="fa-solid fa-circle-check"></i>Best Courses</li>
+						<li><i class="fa-solid fa-circle-check"></i>Top rated Instructors</li>
+					</ul>
+					<div class="all-btn all-category d-flex align-items-center">
+						<a href="instructor-list.html" class="btn btn-primary">Read More</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
+<!-- /Share Knowledge -->
+
+<!-- Users Love -->
+<!-- <section class="section user-love">
+	<div class="container">
+		<div class="section-header white-header aos" data-aos="fade-up">
+			<div class="section-sub-head feature-head text-center">
+				<span>Check out these real reviews</span>
+				<h2>Users-love-us Don't take it from us.</h2>
+			</div>
+		</div>
+	</div>
+</section> -->
+<!-- /Users Love -->
+
+<!-- Say testimonial Four -->
+<!-- <section class="testimonial-four">
+	<div class="review">
+		<div class="container">
+			<div class="testi-quotes">
+				<img src="/static/img/qute.png" alt="Img">
+			</div>
+			<div class="mentor-testimonial lazy slider aos" data-aos="fade-up" data-sizes="50vw ">
+				<div class="d-flex justify-content-center">
+					<div class="testimonial-all d-flex justify-content-center">
+						<div class="testimonial-two-head text-center align-items-center d-flex">
+							<div class="testimonial-four-saying ">
+								<div class="testi-right">
+									<img src="/static/img/qute-01.png" alt="Img">
+								</div>
+								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+									Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+									unknown printer took a galley of type and scrambled it to make a type specimen book.
+								</p>
+								<div class="four-testimonial-founder">
+									<div class="fount-about-img">
+										<a href="instructor-profile.html"><img src="/static/img/user/user1.jpg"
+												alt="Img" class="img-fluid"></a>
+									</div>
+									<h3><a href="instructor-profile.html">Daziy Millar</a></h3>
+									<span>Founder of Awesomeux Technology</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="d-flex justify-content-center">
+					<div class="testimonial-all d-flex justify-content-center">
+						<div class="testimonial-two-head text-center align-items-center d-flex">
+							<div class="testimonial-four-saying ">
+								<div class="testi-right">
+									<img src="/static/img/qute-01.png" alt="Img">
+								</div>
+								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+									Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+									unknown printer took a galley of type and scrambled it to make a type specimen book.
+								</p>
+								<div class="four-testimonial-founder">
+									<div class="fount-about-img">
+										<a href="instructor-profile.html"><img src="/static/img/user/user3.jpg"
+												alt="Img" class="img-fluid"></a>
+									</div>
+									<h3><a href="instructor-profile.html">john smith</a></h3>
+									<span>Founder of Awesomeux Technology</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="d-flex justify-content-center">
+					<div class="testimonial-all d-flex justify-content-center">
+						<div class="testimonial-two-head text-center align-items-center d-flex">
+							<div class="testimonial-four-saying ">
+								<div class="testi-right">
+									<img src="/static/img/qute-01.png" alt="Img">
+								</div>
+								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+									Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+									unknown printer took a galley of type and scrambled it to make a type specimen book.
+								</p>
+								<div class="four-testimonial-founder">
+									<div class="fount-about-img">
+										<a href="instructor-profile.html"><img src="/static/img/user/user2.jpg"
+												alt="Img" class="img-fluid"></a>
+									</div>
+									<h3><a href="instructor-profile.html">David Lee</a></h3>
+									<span>Founder of Awesomeux Technology</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
+<!-- /Say testimonial Four -->
+
+<!-- Become An Instructor -->
+<!-- <section class="section become-instructors aos" data-aos="fade-up">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-6 d-flex">
+				<div class="student-mentor cube-instuctor ">
+					<h4>Become An Instructor</h4>
+					<div class="row">
+						<div class="col-lg-7 col-md-12">
+							<div class="top-instructors">
+								<p>Top instructors from around the world teach millions of students on Mentoring.</p>
+							</div>
+						</div>
+						<div class="col-lg-5 col-md-12">
+							<div class="mentor-img">
+								<img class="img-fluid" alt="Img" src="/static/img/icon/become-02.svg">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 d-flex">
+				<div class="student-mentor yellow-mentor">
+					<h4>Transform Access To Education</h4>
+					<div class="row">
+						<div class="col-lg-8 col-md-12">
+							<div class="top-instructors">
+								<p>Create an account to receive our newsletter, course recommendations and promotions.
+								</p>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-12">
+							<div class="mentor-img">
+								<img class="img-fluid" alt="Img" src="/static/img/icon/become-01.svg">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
+<!-- /Become An Instructor -->
+
+<!-- Latest Blog -->
+/
+<!-- /Latest Blog -->
+{% endblock body %}
+
+{% block script %}
+<script>
+
+	//		await fetch(`${window.location.origin}/api/upload-post/get-other-users/`, {
+	//			method: "GET",
+	//			headers: {
+	//				"Content-Type": "application/json",
+	//			}
+	//		})
+	//		.then(response => response.json())
+	//		.then(response => {
+	//			if (response.success) {
+	//				let str = '';
+	//				response.data.forEach(data => {
+	//					str += `<div class="card" style="width: 18rem;
+	//margin: 10px;">
+	//	<img class="card-img-top" src="${data.profile_picture}" alt="Card image cap">
+	//	<div class="card-body">
+	//	  <h5 class="card-title">${data.username}</h5>
+	//	  <p class="card-text">${data.email}</p>
+	//	  <a href="/profile/${data.username}/" class="btn btn-primary">Profile</a>
+	//	</div>
+	//  </div>`;
+	//				});
+	//				const otherUsersElement = document.getElementById("temp-card");
+	//				otherUsersElement.innerHTML += str;
+	//
+	//				// Optional: Force reflow or trigger style application if needed
+	//				
+	//			} else {
+	//				console.error('Failed to fetch data:', response.message);
+	//			}
+	//		})
+	//		.catch(error => {
+	//			console.error('Error fetching data:', error);
+	//		});
+	//});
+	//let currentPage = 1; // Track the current page
+	//let totalPages = 1;  // Total pages, initially set to 1
+//
+	//const getUserPosts = async (page) => {
+	//	console.log(page)
+	//	await fetch(`${window.location.origin}/api/upload-post/random-posts/?page=${page}`, {
+	//		method: "GET",
+	//		headers: {
+	//			"content-type": "application/json",
+	//		}
+	//	}).then(response => response.json())
+	//		.then(response => {
+	//			if (response.results) {
+	//				console.log("User posts fetched successfully:", response);
+//
+	//				// Update total pages and current page
+	//				totalPages = Math.ceil(response.count / 10);
+	//				console.log(totalPages) // Assuming 10 posts per page
+	//				currentPage = page;
+//
+	//				// Display posts
+	//				displayPosts(response.results);
+//
+	//				// Update pagination UI
+	//				updatePagination();
+	//			} else {
+	//				console.log("Failed to fetch user posts.");
+	//			}
+	//		}).catch(error => {
+	//			console.error("Error fetching user posts:", error);
+	//		});
+	//};
+//
+	//const displayPosts = (data) => {
+	//	let str = "";
+//
+	//	if (data.data.length === 0) {
+	//		str = `
+	//		<div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+	//			<i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+	//			<h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
+	//				There are no approved posts of this user.
+	//			</h4>
+	//		</div>`;
+	//	} else {
+	//		data.data.forEach(post => {
+	//			const timestamp = new Date(post.created_at);
+	//			const formattedDate = timestamp.toLocaleDateString('en-US', {
+	//				month: '2-digit',
+	//				day: '2-digit',
+	//				year: 'numeric'
+	//			});
+	//			const formattedTime = timestamp.toLocaleTimeString('en-US', {
+	//				hour: '2-digit',
+	//				minute: '2-digit',
+	//				hour12: true
+	//			});
+//
+	//			const truncatedTitle = post.title.length > 60 ? `${post.title.substring(0, 60)}...` : post.title;
+	//			const videoSrc = post.preview || post.video;
+	//			const hoverAttributes = videoSrc ? 'onmouseover="this.play()" onmouseout="this.pause()"' : '';
+	//			const videoElement = videoSrc
+	//				? `<video style="width:314px; height: 231px; object-fit: contain; object-position: center;" alt="Img" src="${videoSrc}" poster="${post.thumbnail}" ${hoverAttributes} muted></video>`
+	//				: '<div class="video-error">No video available</div>';
+//
+	//			str += `
+	//			<div class="col-lg-4 col-md-6 d-flex" style="padding: 10px; box-sizing: border-box;">
+	//				<div class="course-box course-design d-flex aos flex-column" data-aos="fade-up">
+	//					<div class="product">
+	//						<div class="product-img" style="display: flex;
+    //justify-content: center;">
+	//							<a href="#">
+	//								${videoElement}
+	//							</a>
+	//							<div class="price">
+	//								<h3>$${post.price} <span>$99.00</span></h3>
+	//							</div>
+	//						</div>
+	//						<div class="product-content">
+	//							<div class="course-group d-flex">
+	//								<div class="course-group-img d-flex">
+	//									<a href="/profile/${post.user_username}/"><img src="/media/${post.user_profile_picture}" alt="Img"
+	//											class="img-fluid"></a>
+	//									<div class="course-name">
+	//										<h4><a href="/profile/${post.user_username}/">${post.user_username}</a></h4>
+	//										<!-- <p>Instructor</p> -->
+	//									</div>
+	//								</div>
+	//								<div class="course-share d-flex align-items-center justify-content-center">
+	//									<ul class="nav">
+    //                        
+    //                            <a href="javascript:void(0);" class="btn btn-success-dark" id="post_save" style="    height: 33px;
+    //color: red;
+    //background: #fae2e0;
+    //border: none;
+    //padding: 5px 13px;">Follow</a>
+    //                        </li>
+    //                        
+    //                    </ul>
+	//								</div>
+	//							</div>
+	//							<h3 class="title instructor-text"><a href="/post-view/${post.id}/">${post.title}</a>
+	//							</h3>
+	//							<div class="course-info d-flex align-items-center">
+	//								<!-- <div class="rating-img d-flex align-items-center">
+	//									<img src="/static/img/icon/icon-01.svg" alt="Img">
+	//									<p>12+ Lesson</p>
+	//								</div> -->
+	//								<div class="course-view d-flex align-items-center">
+	//									<img src="/static/img/icon/icon-02.svg" alt="Img">
+	//									<p>${formattedDate} ${formattedTime}</p>
+	//								</div>
+	//							</div>
+	//							<div class="d-flex align-items-center justify-content-between">
+	//								<div class="rating m-0">
+	//									<!-- <i class="fas fa-star filled"></i>
+	//									<i class="fas fa-star filled"></i>
+	//									<i class="fas fa-star filled"></i>
+	//									<i class="fas fa-star filled"></i>
+	//									<i class="fas fa-star"></i> -->
+	//									<span class="d-inline-block average-rating"><span>Reviews</span> (${post.post_review_count})</span>
+	//								</div>
+	//								<div class="all-btn all-category d-flex align-items-center">
+	//									<a href="#" class="btn btn-primary">BUY NOW</a>
+	//								</div>
+	//							</div>
+	//						</div>
+	//					</div>
+	//				</div>
+	//			</div>
+	//			`;
+	//		});
+	//	}
+//
+	//	document.getElementById('all_random_post').innerHTML = str;
+//
+//
+	//};
+//
+	//const updatePagination = () => {
+	//	const paginationList = document.getElementsByClassName("pagination_list")[0];
+	//	paginationList.innerHTML = `Page ${currentPage} of ${totalPages}`;
+//
+	//	const pagination = document.querySelector('.pagination');
+	//	pagination.innerHTML = '';
+//
+	//	// Add "Previous" button only if we're not on the first page
+	//	if (currentPage > 1) {
+	//		pagination.innerHTML += `<li><a onclick="getUserPosts(${currentPage - 1}); document.getElementById('trending_cources').scrollIntoView({ behavior: 'smooth' });" style="box-shadow: 0px 0px 10px 0px gray;"><i class="bx bx-chevron-left" style="font-size:25px;"></i></a></li>`;
+	//	}
+//
+	//	// Add "Next" button only if we're not on the last page
+	//	if (currentPage < totalPages) {
+	//		pagination.innerHTML += `<li><a onclick="getUserPosts(${currentPage + 1}); document.getElementById('trending_cources').scrollIntoView({ behavior: 'smooth' });" style="box-shadow: 0px 0px 10px 0px gray;" ><i class="bx bx-chevron-right" style="font-size:25px;"></i></a></li>`;
+	//	}
+	//};
+//
+	//// Initialize with the first page
+	//getUserPosts(1);
+
+
+	function handleSearch() {
+		const searchValue = document.getElementById('searchInput').value;
+		const categoryValue = document.getElementById('categorySelect').value;
+		
+		let url = '/search/?';
+		
+		if (searchValue) {
+			url += `search=${encodeURIComponent(searchValue)}`;
+		window.location.href = url;
+
+		}
+		
+		if (categoryValue) {
+			if (searchValue) {
+				url += '&';
+			}
+			url += `search=${encodeURIComponent(categoryValue)}`;
+		window.location.href = url;
+
+		}
+		
+	}
+	if (authenticated) {
+
+		console.log("called")
+		let token = authenticated
+		userApi = async () => {
+			await fetch(`${window.location.origin}/api/user/`, {
+				"method": "get",
+				"headers": {
+					"content-type": "application/json",
+					"Authorization": `Bearer ${token}`
+				}
+			}).then((response) => {
+				return response.json()
+			}).then((response) => {
+				if (response.success) {
+					profileId = response.data.id
+					get_other_user_index(profileId)
+
+				}
+				console.log(response)
+			})
+		}
+		userApi()
+	}
+	else {
+		talking_to_empty_index()
+	}
+	
+
+	async function get_other_user_index(id) {
+		await fetch(`${window.location.origin}/api/conversations/user-conversations/?user_id=${id}`, {
+			method: "GET",
+			headers: {
+				"content-type": "application/json",
+				"Authorization": `Bearer ${authenticated}`
+			}
+
+
+		}).then((response) => {
+			return response.json()
+		}).then((response) => {
+			console.log("index",response)
+			if (response.success) {
+				if (response.data.length > 0) {
+
+					str = ""
+					let main_username = ""
+
+					str=`<option value="">Your contact-list</option>`
+					response.data.forEach((data) => {
+						if (data.user1 == id) {
+							console.log("if")
+							main_username = data.user2_username
+						}
+						else {
+							console.log("else")
+
+							main_username = data.user1_username
+
+						}
+						console.log(main_username)
+						str+=`<option value="${main_username}">${main_username}</option>`
+					})
+					document.getElementById("categorySelect").innerHTML=str
+				}
+				else {
+					let str=`<option value="">Your contact-list is empty</option>`
+					document.getElementById("categorySelect").innerHTML=str
+
+				}
+			}
+		})
+	}
+	function talking_to_empty_index() {
+		let str=`<option value="">Your contact-list is empty Login and create contact's</option>`
+		document.getElementById("categorySelect").innerHTML=str
+	}
+
+</script>
+{% endblock script %}

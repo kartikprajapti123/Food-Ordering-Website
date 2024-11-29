@@ -1,0 +1,707 @@
+{% extends "base.html" %}
+{% block title %}
+My Orders
+{% endblock title %}
+{% block style %}
+
+{% endblock style %}
+{% block link %}
+<style>
+    input[type="radio"]+label {
+        font-size: 14px;
+        color: #555;
+        cursor: pointer;
+    }
+
+    input[type="radio"]:checked+label {
+        color: #007bff;
+    }
+
+    input[type="radio"]:focus {
+        outline: none;
+        box-shadow: 0 0 2px 2px rgba(0, 123, 255, 0.25);
+    }
+
+    :root {
+        --arrow-bg: rgba(255, 255, 255, 0.3);
+        --arrow-icon: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg);
+        --option-bg: white;
+        --select-bg: rgba(255, 255, 255, 0.2);
+    }
+
+    select {
+        /* Reset */
+        appearance: none;
+        border: 0;
+        outline: 0;
+        font: inherit;
+        /* Personalize */
+        width: 20rem;
+        padding: 1rem 4rem 1rem 1rem;
+        background: var(--arrow-icon) no-repeat right 0.8em center / 1.4em,
+            linear-gradient(to left, var(--arrow-bg) 3em, var(--select-bg) 3em);
+        color: white;
+        border-radius: 0.25em;
+        box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+
+        /* Remove IE arrow */
+        &::-ms-expand {
+            display: none;
+        }
+
+        /* Remove focus outline */
+        &:focus {
+            outline: none;
+        }
+    }
+
+    /* <option> colors */
+    option {
+
+        border-radius: 35px;
+        width: 250px;
+
+        background: #fe4565;
+        color: white;
+    }
+
+    /* Filters Container */
+    .filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        justify-content: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Dropdown Container */
+    .drop-detail {
+        background-color: #fe4565;
+        padding: 8px;
+        border-radius: 24px;
+        width: 100%;
+        max-width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 5px;
+    }
+
+    /* Dropdown Styling */
+    .drop-detail select {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 12px;
+        font-size: 14px;
+        color: #333;
+        background-color: #ffffff;
+        outline: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .drop-detail select:focus {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Date Picker Styling */
+    .filters input[type="date"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        font-size: 14px;
+        color: #333;
+        width: 100%;
+        max-width: 200px;
+        background-color: #ffffff;
+        outline: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .filters input[type="date"]:focus {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Filter Button Styling */
+    .filters button {
+        background-color: #fe6a84;
+        color: #ffffff;
+        border: none;
+        padding: 12px 20px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .filters button:hover {
+        background-color: #e44c6f;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .filters {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 20px;
+        }
+
+        .drop-detail,
+        .filters input[type="date"],
+        .filters button {
+            max-width: 100%;
+        }
+    }
+</style>
+{% endblock link %}
+{% block body %}
+
+<!-- /Header -->
+
+<!-- New Course -->
+
+<div id="approved" style="display:block;">
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper" style="margin-top: 100px;">
+
+        <!-- Header -->
+        <!-- /Header -->
+
+        <!-- Breadcrumb -->
+        <div class="breadcrumb-bar breadcrumb-bar-info">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div class="breadcrumb-list">
+                            <h2 class="breadcrumb-title">My Orders</h2>
+                            <nav aria-label="breadcrumb" class="page-breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">My Orders</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Breadcrumb -->
+
+        <!-- Page Content -->
+        <div class="page-content">
+            <div class="container">
+                <div class="row">
+
+                    <!-- sidebar -->
+                    <div class="col-xl-3 col-lg-3 theiaStickySidebar">
+                        <div class="settings-widget dash-profile">
+                            <div class="settings-menu">
+                                <div class="profile-bg">
+                                    <div class="profile-img">
+                                        <a href="/myprofile/" id="profile_picture_link2"><img id="profile_page_image"
+                                                src="/media/profile_picture/default_profile_image.png" alt="Img"></a>
+                                    </div>
+                                </div>
+                                <div class="profile-group">
+                                    <div class="profile-name text-center">
+                                        <h4 id="profile_page_username2"> Username</h4>
+                                        <a href="/create-order/" class="add-course btn-primary">
+                                            <i class="fas fa-upload"></i> Create New Order
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Sidebar -->
+
+                    <!-- Student Dashboard -->
+                    <div class="col-xl-9 col-lg-9">
+
+                        <!-- Dashboard Grid -->
+                        <div class="row">
+
+                            <!-- Course Grid -->
+
+                            <div class="settings-widget card-info">
+                                <div class="settings-menu p-0">
+                                    <div class="profile-heading">
+                                        <h3>My Orders</h3>
+                                        <p>Manage Your Orders and update here.</p>
+                                    </div>
+                                    <div class="checkout-form pb-0">
+                                            <div class="form-inner">
+                                                <div class="input-group">
+                                                    <input type="text" id="searchInput" class="form-control" placeholder="Search Orders - Type anything you want to search" oninput="getUserPosts(1,'search='+this.value)">
+                                                </div>
+                                            </div>
+                                        <div class="filters">
+                                            <!-- Status Dropdown -->
+                                            <span class="drop-detail">
+                                                <select id="filter-status">
+                                                    <option value="">All Status</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Processed">Processed</option>
+                                                    <option value="Delivered">Delivered</option>
+                                                    <option value="Canceled">Canceled</option>
+                                                </select>
+                                            </span>
+                                            <span class="drop-detail">
+                                                <select id="filter-time-period">
+                                                    <option value="">All Time</option>
+                                                    <option value="last_week">Last Week</option>
+                                                    <option value="last_month">Last Month</option>
+                                                    <option value="last_year">Last Year</option>
+                                                </select>
+                                            </span>
+
+                                            <span style="display: flex
+;
+    flex-direction: row;
+    justify-content: space-evenly;">
+    
+            <label for="filter-start-date" style="margin: auto;margin-left:10px;">Start:</label>
+            <input type="date" id="filter-start-date" />
+        
+            <label for="filter-end-date" style="margin: auto;margin-left:10px;">End:</label>
+            <input type="date" id="filter-end-date" />
+                                            </span>
+                                            <span>
+                                                <button onclick="applyFilters()" style="margin-left:10px;">Apply Filter</button>
+
+                                            </span>
+                                            <!-- Start and End Date Pickers -->
+
+                                            <!-- Filter Button -->
+                                        </div>
+
+                                        <!-- <div class="wishlist-tab"> -->
+                                        <!-- <ul class="nav"> -->
+                                        <!-- <li class="nav-item"> -->
+                                        <!-- <a href="javascript:void(0);" class="active" data-bs-toggle="tab" -->
+                                        <!-- data-bs-target="#all">All Orders (<span -->
+                                        <!-- id="all_orders_count"></span>)</a> -->
+                                        <!-- </li> -->
+                                        <!-- <li class="nav-item"> -->
+                                        <!-- <a href="javascript:void(0);" data-bs-toggle="tab" -->
+                                        <!-- data-bs-target="#pending">Pending Orders (<span -->
+                                        <!-- id="pending_orders_count"></span>)</a> -->
+                                        <!-- </li> -->
+                                        <!-- <li class="nav-item"> -->
+                                        <!-- <a href="javascript:void(0);" data-bs-toggle="tab" -->
+                                        <!-- data-bs-target="#processed">Processed Orders (<span -->
+                                        <!-- id="processed_orders_count"></span>)</a> -->
+                                        <!-- </li> -->
+                                        <!-- <li class="nav-item"> -->
+                                        <!-- <a href="javascript:void(0);" data-bs-toggle="tab" -->
+                                        <!-- data-bs-target="#delivered">Delivered Orders (<span -->
+                                        <!-- id="delivered_orders_count"></span>)</a> -->
+                                        <!-- </li> -->
+                                        <!-- <li class="nav-item"> -->
+                                        <!-- <a href="javascript:void(0);" data-bs-toggle="tab" -->
+                                        <!-- data-bs-target="#canceled">Canceled Orders (<span -->
+                                        <!-- id="canceled_orders_count"></span>)</a> -->
+                                        <!-- </li> -->
+                                        <!-- </ul> -->
+                                        <!-- </div> -->
+
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show active">
+                                                <div class="row">
+
+                                                    <div class="table-responsive custom-table">
+
+                                                        <!-- Referred Users-->
+                                                        <table class="table table-nowrap mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Customer Name</th>
+                                                                    <th>Delivery Address</th>
+                                                                    <th>Special Instructions</th>
+                                                                    <th>Order Total Price</th>
+                                                                    <th>Status</th>
+                                                                    <th>Created At</th>
+
+                                                                    <th>View Details</th>
+                                                                    <th>Edit</th>
+                                                                    <th>Delete</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="orders-all">
+                                                            </tbody>
+                                                        </table>
+                                                        <div id="all"></div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-pagination">
+                                <div class="row align-items-center">
+                                    <div class="col-6">
+                                        <p class="pagination_list"></p>
+                                    </div>
+                                    <div class="col-6">
+                                        <ul class="pagination">
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- /Instructor Courses -->
+
+                        </div>
+                        <!-- /Course Grid -->
+
+                    </div>
+                </div>
+
+                <!-- Student Dashboard -->
+
+            </div>
+        </div>
+    </div>
+    <!-- /Page Content -->
+
+    <!-- Footer -->
+</div>
+
+
+<!-- /New Course -->
+
+{% endblock body %}
+<!-- Footer -->
+{% block script %}
+<script>
+    let user_id = 0;
+    let username = "";
+    if (authenticated) {
+
+        userApi = async () => {
+            await fetch(`${window.location.origin}/api/user/get-user-single/`, {
+                "method": "get",
+                "headers": {
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${authenticated}`
+                }
+            }).then((response) => {
+                return response.json()
+            }).then((response) => {
+                if (response.success) {
+                    user_id = response.data.id
+                    username = response.data.username
+                    userprofileid = response.data.id
+                    console.log(response.data.image);
+                    document.getElementById("profile_image").src = `${response.data.profile_picture}`;
+                    document.getElementById("profile_image2").src = `${response.data.profile_picture}`;
+                    document.getElementById("profile_username").innerHTML = `${response.data.username}`;
+                    document.getElementById("profile_page_image").src = response.data.profile_picture
+
+
+                    document.getElementById("profile_page_username2").innerHTML = `${response.data.username}`;
+
+                    getUserPosts(1)
+                    //followers_following();
+                }
+                console.log(response)
+            })
+        }
+        userApi()
+
+    }
+    else {
+        window.location.href = "/"
+    }
+    let totalPages = 0
+    let currentPage = 0
+
+    const getUserPosts = async (page, queryset = '') => {
+        const url = `${window.location.origin}/api/orders/?username=${username}&page=${page}${queryset ? `&${queryset}` : ''}`;
+        await fetch(url, {
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                "Authorization": `Bearer ${authenticated}`
+
+            }
+        }).then(response => response.json())
+            .then(response => {
+                if (response.results) {
+                    console.log("User videos fetched successfully:", response);
+                    totalPages = Math.ceil(response.count / 10);
+                    // Update total pages and current page
+                    // Display posts
+                    currentPage = page;
+
+                    displayPosts(response.results);
+
+
+                    // Update pagination UI
+                    updatePagination();
+                } else {
+                    console.log("Failed to fetch user posts.");
+                }
+            }).catch(error => {
+                console.error("Error fetching My Orders", error);
+            });
+    };
+
+
+    const displayPosts = (data) => {
+        console.log(data);
+        let all = "";
+        document.getElementById("all").style.display = "none"
+
+        data.data.forEach(data => {
+
+            // Handle the special instructions if not provided
+            let special_instruction = data.special_instructions ? data.special_instructions : "Not Provided";
+
+            const dateObject = new Date(data.order_date);
+
+            const formattedDate = dateObject.toLocaleDateString(); // "11/27/2024" (default format, depends on locale)
+            const formattedTime = dateObject.toLocaleTimeString();
+            // Function to truncate text to a max length
+            const truncateText = (text, maxLength) => {
+                if (text && text.length > maxLength) {
+                    return text.substring(0, maxLength) + '...';
+                }
+                return text;
+            };
+
+            let customerName = truncateText(data.customer_name, 50);
+            let deliveryAddress = truncateText(data.delivery_address, 50);
+            special_instruction = truncateText(special_instruction, 50);
+
+            // HTML structure for the post
+            all += `
+                <tr>
+                    <td style="text-align:left;"><a href="/view-order/${data.id}/" style="color:#ff4667;">${customerName}</a></td>
+                    <td style="text-align:left;">${deliveryAddress}</td>
+                    <td style="text-align:center;">${special_instruction}</td>
+                    <td style="text-align:center;">$${data.order_total_price}</td>
+                    <td>${data.status}</td>
+                    <td>${formattedDate} ${formattedTime}</td>
+
+                    <td>
+                        <ul class="nav">
+                            <li>
+                                <a href="/view-order/${data.id}/" class="btn btn-success-dark"
+                                   style="height: 50px;background-color:#f24262;border:none;color:white;">
+                                    View Details
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                                        <td>
+                        <ul class="nav">
+                            <li>
+                                <a href="/update-order/${data.id}/" class="btn btn-success-dark"
+                                   style="height: 50px;background-color:green;border:none;color:white;">
+                                    Edit
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                    </td>
+                                        <td>
+                        <ul class="nav">
+                            <li>
+    <a href="javascript:void(0);"
+       onclick="${data.status === 'Canceled' ? `activateorder(${data.id})` : `deleteorder(${data.id})`}"
+       class="btn btn-success-dark"
+       style="height: 50px; background-color: ${data.status === 'Canceled' ? `#f24262` : `red`}; border: none; color: white;">
+        ${data.status === 'Canceled' ? 'Activate' : 'Cancel'}
+    </a>
+</li>
+
+                        </ul>
+                    </td>
+                </tr>
+            `;
+
+
+        })
+
+        // Update the DOM with the generated HTML for each status
+        if (!all) {
+            document.getElementById('all').innerHTML = `
+                <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+                    <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                    <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
+                        There are no orders.
+                    </h4>
+                </div>`;
+
+            document.getElementById('orders-all').innerHTML = "";
+            document.getElementById("all").style.display = "block"
+            document.getElementsByClassName("table-responsive")[0].style.overflow = "hidden";
+
+        } else {
+            document.getElementById('orders-all').innerHTML = all;
+            document.getElementsByClassName("table-responsive")[0].style.overflow = "scroll";
+
+        }
+
+
+    }
+
+
+    const updatePagination = () => {
+        const paginationList = document.getElementsByClassName("pagination_list")[0];
+        if (totalPages > 1) {
+
+            paginationList.innerHTML = `Page ${currentPage} of ${totalPages}`;
+        }
+        else {
+            paginationList.innerHTML = ``;
+
+        }
+
+        const pagination = document.querySelector('.pagination');
+        pagination.innerHTML = '';
+
+        // Add "Previous" button only if we're not on the first page
+        if (currentPage > 1) {
+            pagination.innerHTML += `<li><a onclick="getUserPosts(${currentPage - 1}); document.getElementById('tabel_list').scrollIntoView({ behavior: 'smooth' });" style="box-shadow: 0px 0px 10px 0px gray;"><i class="bx bx-chevron-left" style="font-size:25px;"></i></a></li>`;
+        }
+
+        // Add "Next" button only if we're not on the last page
+        if (currentPage < totalPages) {
+            pagination.innerHTML += `<li><a onclick="getUserPosts(${currentPage + 1}); document.getElementById('tabel_list').scrollIntoView({ behavior: 'smooth' });" style="box-shadow: 0px 0px 10px 0px gray;" ><i class="bx bx-chevron-right" style="font-size:25px;"></i></a></li>`;
+        }
+
+    };
+    const applyFilters = () => {
+        const status = document.getElementById('filter-status').value;
+        const timePeriod = document.getElementById('filter-time-period').value;
+        const startDate = document.getElementById('filter-start-date').value;
+        const endDate = document.getElementById('filter-end-date').value;
+
+        let query = '';
+        if (status) query += `&status=${status}`;
+        if (timePeriod) query += `&time_period=${timePeriod}`;
+        if (startDate) query += `&start_date=${startDate}`;
+        if (endDate) query += `&end_date=${endDate}`;
+
+        // Fetch filtered orders
+        getUserPosts(1, query);
+    };
+
+    function deleteorder(id) {
+        check = confirm("Are you sure to Cancel this order")
+        if (check) {
+
+            fetch(`${window.location.origin}/api/orders/${id}/`, {
+                "method": "DELETE",
+                "headers": {
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${authenticated}`
+                }
+
+            }).then((response) => {
+                return response.json()
+            }).then((response) => {
+                console.log(response)
+                if (response.success) {
+                    card.style.display = "flex";
+                    card.style.borderLeft = "10px solid green";
+
+                    message_content.innerHTML = response.message;
+                    message_type.innerHTML = "Success";
+                    message_type.style.color = "green";
+                    message_icon_parent.style.color = "green";
+                    message_icon_child.classList = "fas fa-check-circle";
+
+                    getUserPosts(1)
+                    setTimeout(()=>{
+                    card.style.display = "none";
+                        
+                    },2500)
+
+                }
+                else {
+                    card.style.display = "flex";
+                    card.style.borderLeft = "10px solid green";
+
+                    message_content.innerHTML = response.message;
+                    message_type.innerHTML = "Success";
+                    message_type.style.color = "green";
+                    message_icon_parent.style.color = "green";
+                    message_icon_child.classList = "fas fa-check-circle";
+
+                }
+            })
+        }
+    }
+
+    function activateorder(id) {
+        check = confirm("Are you sure to Activate this order")
+        if (check) {
+            let data = {
+                "id":id,
+                "status": "Pending"
+            }
+            fetch(`${window.location.origin}/api/orders/status-update/`, {
+                "method": "POST",
+                "headers": {
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${authenticated}`
+                },
+                "body": JSON.stringify(data)
+
+            }).then((response) => {
+                return response.json()
+            }).then((response) => {
+                console.log(response)
+                if (response.success) {
+                    card.style.display = "flex";
+                    card.style.borderLeft = "10px solid green";
+
+                    message_content.innerHTML = response.message;
+                    message_type.innerHTML = "Success";
+                    message_type.style.color = "green";
+                    message_icon_parent.style.color = "green";
+                    message_icon_child.classList = "fas fa-check-circle";
+                    getUserPosts(1)
+                    setTimeout(()=>{
+                    card.style.display = "none";
+                        
+                    },2500)
+
+                }
+                else {
+                    message_content.innerHTML = "Server Error";
+
+                    card.style.display = "flex";
+                    card.style.borderLeft = "10px solid red";
+                    message_type.innerHTML = "Error";
+                    message_type.style.color = "red";
+                    message_icon_parent.style.color = "red";
+                    message_icon_child.classList = "fas fa-times-circle";
+
+                }
+            })
+        }
+
+    }
+
+</script>
+{% endblock script %}

@@ -1,0 +1,702 @@
+{% extends "base.html" %}
+{% block style %}
+
+{% endblock style %}
+{% block title %}
+  Videos
+{% endblock title %}
+{% block link %}
+
+{% endblock link %}
+{% block body %}
+
+<div id="all-main" style="display: none;">
+
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar breadcrumb-bar-info" style="margin-top: 100px;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-12">
+				<div class="breadcrumb-list">
+					<h2 class="breadcrumb-title">Video</h2>
+					<nav aria-label="breadcrumb" class="page-breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/index/">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">video</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Breadcrumb -->
+
+<!-- Page Content -->
+<div class="page-content">
+	<div class="container">
+		<div class="row">
+
+			<!-- sidebar -->
+			<div class="col-xl-3 col-lg-3 theiaStickySidebar">
+				<div class="settings-widget dash-profile">
+					<div class="settings-menu">
+						<div class="profile-bg">
+							<div class="profile-img">
+								<a href="#" id="profile_picture_link2"><img id="other_profile_page_image" src="/media/profile_pictures/default_profile_image.png"
+										alt="Img"></a>
+							</div>
+						</div>
+						<div class="profile-group">
+							<div class="profile-name text-center">
+								<h4 id="other_profile_page_username"> Username</h4>
+								<!-- <div class="add-course btn-primary" id="follow-button" style="margin-top: 20px;">
+									<i class="fas fa-user-plus"></i> Follow
+								  </div> -->
+								<a href="#" class="add-course btn-primary" id="share-button" style="margin-top: 10px;">
+									<i class="fas fa-share-alt"></i> Share Profile URL
+								</a>
+								<div class="add-course btn-primary" id="Send_Message" style="margin-top: 10px;cursor:pointer;" >
+									<i class="fas fa-paper-plane"></i> Send Message
+								  </div>
+								  
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="settings-widget account-settings">
+					<div class="settings-menu">
+						<h3>Overview</h3>
+						<ul>
+							<!-- <li class="nav-item">
+								<a href="/creator/" class="nav-link">
+									<i class="bx bxs-tachometer"></i>Dashboard
+								</a>
+							</li> -->
+							<li class="nav-item ">
+								<a href="/myprofile/" class="nav-link profile-update" id="other_user_profile">
+									<i class="bx bxs-user"></i>Profile
+								</a>
+							</li>
+							<li class="nav-item active">
+								
+								<a href="/videos/" class="nav-link" id="other_user_video">
+									<i class="bx bxs-tachometer"></i>Videos
+								</a>
+							</li>
+							<!-- <li class="nav-item">
+								<a href="instructor-enrolled-course.html" class="nav-link">
+									<i class="bx bxs-graduation"></i>Enrolled Courses
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-wishlist.html" class="nav-link">
+									<i class="bx bxs-heart"></i>Wishlist
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-reviews.html" class="nav-link">
+									<i class="bx bxs-star"></i>Reviews
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-quiz.html" class="nav-link">
+									<i class="bx bxs-shapes"></i>My Quiz Attempts
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-orders.html" class="nav-link">
+									<i class="bx bxs-cart"></i>Order History
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-qa.html" class="nav-link">
+									<i class="bx bxs-bookmark-alt"></i>Question & Answer
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-referral.html" class="nav-link">
+									<i class="bx bxs-user-plus"></i>Referrals
+								</a>
+							</li> -->
+							<li class="nav-item">
+								<a class="nav-link">
+									<i class="bx bxs-chat"></i>Start Video call
+								</a>
+							</li>
+							<!-- <li class="nav-item">
+								<a href="#" class="nav-link" id="link_followers">
+									<i class="bx bxs-group"></i>followers
+								</a>
+							</li>
+                            <li class="nav-item">
+								<a href="#" class="nav-link" id="link_following">
+									<i class="bx bxs-user-plus"></i>following
+								</a>
+							</li> -->
+							<!-- <li class="nav-item">
+								<a href="instructor-notifications.html" class="nav-link">
+									<i class="bx bxs-bell"></i>Notifications
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-tickets.html" class="nav-link">
+									<i class="bx bxs-coupon"></i>Support Tickets
+								</a>
+							</li> -->
+						</ul>
+						<!-- <h3>Instructor</h3>
+						<ul>
+							<li class="nav-item">
+								<a href="instructor-course.html" class="nav-link ">
+									<i class="bx bxs-rocket"></i>My Courses
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-announcements.html" class="nav-link">
+									<i class="bx bxs-volume-full"></i>Announcements
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-withdraw.html" class="nav-link ">
+									<i class="bx bxs-wallet"></i>Withdrawls
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-quiz-attempts.html" class="nav-link">
+									<i class="bx bxs-shapes"></i>Quiz Attempts
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-assignment.html" class="nav-link ">
+									<i class="bx bxs-file"></i>Assignments
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="instructor-earnings.html" class="nav-link">
+									<i class="bx bxs-badge-dollar"></i>Earnings
+								</a>
+							</li>
+						</ul> -->
+						
+					</div>
+				</div>
+				
+			</div>
+			<!-- /Sidebar -->
+
+			<!-- Instructor profile -->
+			<div class="col-xl-9 col-lg-9">
+
+				<div class="settings-widget card-info" style="margin-top: 20px;">
+					<div class="settings-menu p-0">
+						<div class="profile-heading">
+							<h3 id="other_user_username">User Videos</h3>
+							<p id="other_user_paragraph">Most Recent Videos by the User </p>
+						</div>
+						<div class="checkout-form pb-0">
+							<div class="wishlist-tab">
+								<ul class="nav">
+								</ul>
+							</div>
+
+							<div class="tab-content">
+								<div class="tab-pane fade show active" id="enroll-courses">
+									<div class="row" id="all_posts">
+
+										<!-- Course Grid -->
+
+										<!-- /Course Grid -->
+
+										<!-- Course Grid -->
+
+										<!-- /Course Grid -->
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="dash-pagination">
+					<div class="row align-items-center">
+						<div class="col-6">
+							<p class="pagination_list"></p>
+						</div>
+						<div class="col-6">
+							<ul class="pagination">
+								
+							</ul>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<!-- /Instructor Courses -->
+
+<!-- /Page Content -->
+{% endblock body %}
+
+{% block script %}
+<script>
+	const pathArray = window.location.pathname.split('/');
+	const username = pathArray[pathArray.length - 2];
+	let other_user = "";
+	console.log(username)
+	userApi = async () => {
+		await fetch(`${window.location.origin}/api/user/retrieve-by-username/?username=${username}`, {
+			"method": "get",
+			"headers": {
+				"content-type": "application/json",
+			}
+		}).then((response) => {
+			return response.json()
+		}).then((response) => {
+			if (response.success) {
+				document.getElementById("all-main").style.display="block"
+				sharebutton2(response.data.user.username)
+				other_user = response.data.user.id
+				document.getElementById("other_user_username").innerHTML=`${response.data.user.username}'s Videos`
+				console.log(response.data)
+
+				/////followers////
+				//if (response.is_following){
+				//	document.getElementById("follow-button").innerHTML=`<i class="fas fa-user-plus" data-follow-id="${response.follow_id}"></i> unfollow`
+				//}
+				//else{
+//document.getElementById("follow-button").innerHTML=`<i class="fas fa-user-plus"></i> follow`
+//				}
+				/////end followers////
+
+
+
+				document.getElementById("other_user_video").href=`/user-video/${response.data.user.username}`
+				document.getElementById("other_user_profile").href=`/${response.data.user.username}/`
+				//document.getElementById("link_following").href=`/following/${response.data.user.username}`
+                //document.getElementById("link_followers").href=`/followers/${response.data.user.username}`
+//
+				if (response.data.user.profile_picture == "") {
+					document.getElementById("other_profile_page_image").src = '/media/profile_pictures/default_profile_image.png'
+
+				}
+				else {
+
+					document.getElementById("other_profile_page_image").src = `${response.data.user.profile_picture}`
+				}
+
+
+				console.log(response.data.user.username)
+				if (response.data.user.username == "") {
+					//document.getElementById("profile_page_username").innerHTML = "Not Provided"
+					document.getElementById("other_profile_page_username").innerHTML = "username"
+
+
+
+				}
+				else {
+					//document.getElementById("profile_page_username").innerHTML = `${response.data.user.username}`
+					document.getElementById("other_profile_page_username").innerHTML = `@${response.data.user.username.length > 14 ? `${response.data.user.username.substring(0, 14)}...` : response.data.user.username}`;
+
+				}
+
+				getUserPosts(other_user);
+
+				/////folllow////
+				//if(authenticated){
+//
+				//	follow_unfollow(response.data.user.id)
+				//}
+				/////end folllow////
+
+				console.log("other_user_id", other_user)
+
+
+			}
+			else{
+
+				document.getElementById("all-main").innerHTML=`<div class="main-wrapper" style="margin-top:100px;">
+					
+					<div class="error-box">
+						<div class="error-logo">
+							<a href="index.html">
+								<img src="/static/img/logo.svg" class="img-fluid" alt="Logo">
+							</a>
+						</div>
+						<div class="error-box-img">
+							<img src="/static/img/error-01.png" alt="Img" class="img-fluid" >
+						</div>
+						<h3 class="h2 mb-3"> Oh No! Error 404</h3>
+						<p class="h4 font-weight-normal">This page you requested counld not found. May the force be with you!</p>
+						<a href="/" class="btn btn-primary">Back to Home</a>
+					</div>
+				
+				</div>`
+				document.getElementById("all-main").style.display="block"
+			}
+			console.log(response)
+
+			
+		})
+
+	}
+	userApi()
+
+	document.getElementById("Send_Message").addEventListener('click', create_conversation);
+
+	async function create_conversation() {
+		const user_authenticated = localStorage.getItem("jerry_project_access_token");
+
+		if (user_authenticated) {
+			try {
+				// Fetch user profile
+				const userResponse = await fetch(`${window.location.origin}/api/user/`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${user_authenticated}`
+					}
+				});
+
+				const userData = await userResponse.json();
+
+				if (userResponse.ok && userData.success) {
+					// Prepare conversation data
+					const data = {
+						"user1": other_user, // Make sure profileId is defined elsewhere in your code
+						"user2": userData.data.id
+					};
+
+					// Create conversation
+					const conversationResponse = await fetch(`${window.location.origin}/api/conversations/`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": `Bearer ${user_authenticated}`
+						},
+						body: JSON.stringify(data)
+					});
+
+					const conversationData = await conversationResponse.json();
+
+					if (conversationResponse.ok && conversationData.success) {
+						setTimeout(() => {
+							window.location.href = `/contact-list/?conversation_id=${conversationData.data.id}`;
+						}, 1000);
+					} else {
+						card.style.display = "flex";
+			card.style.borderLeft = "10px solid #3db5dc";
+
+			message_content.innerHTML = "You cannot create conversations yourself.";
+			message_type.innerHTML = "Info";
+			message_type.style.color = "#3db5dc";
+			message_icon_parent.style.color = "#3db5dc";
+			message_icon_child.classList = "fas fa-exclamation-circle";
+					}
+				} else {
+					console.log(userData);
+					showMessage("Failed to fetch user profile.", "error");
+				}
+			} catch (error) {
+				console.error('An error occurred:', error);
+				showMessage("An error occurred. Please try again.", "error");
+			}
+		} else {
+			card.style.display = "flex";
+			card.style.borderLeft = "10px solid #3db5dc";
+
+			message_content.innerHTML = "You are not logged in ";
+			message_type.innerHTML = "Info";
+			message_type.style.color = "#3db5dc";
+			message_icon_parent.style.color = "#3db5dc";
+			message_icon_child.classList = "fas fa-exclamation-circle";
+
+		}
+	}
+
+	////follow/////
+	//document.getElementById("follow-button").addEventListener('click', async () => {
+	//	let followButton = document.getElementById("follow-button");
+	//	let followIcon = followButton.querySelector('i'); // Select the <i> element within the button
+	//	let isFollowing = followIcon.getAttribute('data-follow-id') !== null; // Check if data-follow-id is present
+	//
+	//	if (authenticated) {
+	//		let url = `${window.location.origin}/api/follow/`;
+	//		let body = {
+	//			"to_user": other_user
+	//		};
+	//
+	//		// Handle Follow (POST)
+	//		if (!isFollowing) {
+	//			await fetch(url, {
+	//				method: "POST",
+	//				headers: {
+	//					"Content-Type": "application/json",
+	//					"Authorization": `Bearer ${authenticated}`
+	//				},
+	//				body: JSON.stringify(body)
+	//			}).then(response => response.json())
+	//			  .then(response => {
+	//				if (response.success) {
+	//					console.log(response);
+	//					// Store the Follow ID in the <i> tag
+	//					followIcon.setAttribute('data-follow-id', response.follow_id); // Assuming response contains follow_id
+	//					// Update the button text to UnFollow
+	//					followButton.innerHTML = `<i class="fas fa-user-plus" data-follow-id="${response.data.id}"></i> unfollow`;
+	//				} else {
+	//					handleError(response.message);
+	//				}
+	//			}).catch(error => {
+	//				console.log("Network error:", error);
+	//			});
+	//		}
+	//
+	//		// Handle Unfollow (DELETE)
+	//		else {
+	//			let followId = followIcon.getAttribute('data-follow-id');
+	//			console.log(followId)
+	//			if (followId) {
+	//				let deleteUrl = `${url}${followId}/`; // Append the followId to the URL
+	//				await fetch(deleteUrl, {
+	//					method: "DELETE",
+	//					headers: {
+	//						"Content-Type": "application/json",
+	//						"Authorization": `Bearer ${authenticated}`
+	//					}
+	//				}).then(response => response.json())
+	//				  .then(response => {
+	//					console.log(response)
+	//					if (response.success) {
+	//						console.log(response);
+	//						// Remove the Follow ID from the <i> tag after successful deletion
+	//						followIcon.removeAttribute('data-follow-id');
+	//						// Update the button text to Follow
+	//						followButton.innerHTML = `<i class="fas fa-user-plus"></i> follow`;
+	//					} else {
+	//						handleError(response.message);
+	//					}
+	//				}).catch(error => {
+	//					console.log("Network error:", error);
+	//				});
+	//			} else {
+	//				console.log("Error: Follow ID is not available for deletion.");
+	//			}
+	//		}
+	//	} else {
+	//		showLoginPrompt();
+	//	}
+	//});
+	
+	//function handleError(message) {
+	//	if (message.non_field_errors) {
+	//		card.style.display = "flex";
+	//		card.style.borderLeft = "10px solid #3db5dc";
+	//		message_content.innerHTML = message.non_field_errors;
+	//		message_type.innerHTML = "Info";
+	//		message_type.style.color = "#3db5dc";
+	//		message_icon_parent.style.color = "#3db5dc";
+	//		message_icon_child.classList = "fas fa-exclamation-circle";
+	//	}
+	//	console.log("Error occurred:", message);
+	//}
+	//
+	//function showLoginPrompt() {
+	//	card.style.display = "flex";
+	//	card.style.borderLeft = "10px solid #3db5dc";
+	//	message_content.innerHTML = "Please log in to follow creators.";
+	//	message_type.innerHTML = "Info";
+	//	message_type.style.color = "#3db5dc";
+	//	message_icon_parent.style.color = "#3db5dc";
+	//	message_icon_child.classList = "fas fa-exclamation-circle";
+	//}
+
+	//async function follow_unfollow(id){
+	//	await fetch(`${window.location.origin}/api/follow/user-is-following/?to_user=${id}`,{
+	//		"method":"get",
+	//		headers:{
+	//			"Content-Type": "application/json",
+	//						"Authorization": `Bearer ${authenticated}`
+	//		},
+	//		
+	//	}).then((response)=>{
+	//		return response.json()
+	//	}).then((response)=>{
+	//		if(response.success){
+	//			document.getElementById("follow-button").innerHTML=`<i class="fas fa-user-plus" data-follow-id="${response.data.id}"></i> unfollow`
+	//		}
+	//		else{
+	//			document.getElementById("follow-button").innerHTML=`<i class="fas fa-user-plus"></i> follow`
+	//			console.log("follow Unfollow",response)
+	//		}
+	//	})
+//
+	//}
+/////end follow////
+
+	let currentPage = 1; // Track the current page
+	let totalPages = 1;  // Total pages, initially set to 1
+
+	const getUserPosts = async (id, page = 1) => {
+		console.log("id",id)
+		await fetch(`${window.location.origin}/api/upload-video/user-approved-posts/?user_id=${id}&page=${page}`, {
+			method: "GET",
+		}).then(response => response.json())
+			.then(response => {
+				console.log(response)
+				if (response.results) {
+					console.log("User videos fetched successfully:", response);
+
+					// Update total pages and current page
+					totalPages = Math.ceil(response.count / 10);
+					console.log(totalPages) // Assuming 10 posts per page
+					currentPage = page;
+
+					// Display posts
+					displayPosts(response.results);
+
+					// Update pagination UI
+					updatePagination();
+				} else {
+					console.log("Failed to fetch user videos.");
+				}
+			}).catch(error => {
+				console.error("Error fetching user videos:", error);
+			});
+	};
+
+	const displayPosts = (data) => {
+		let str = "";
+
+		if (data.data.length === 0) {
+			str = `
+        <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+            <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+            <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
+                There are no approved Videos of this user.
+            </h4>
+        </div>`;
+		} else {
+			data.data.forEach(post => {
+				const timestamp = new Date(post.created_at);
+				const formattedDate = timestamp.toLocaleDateString('en-US', {
+					month: '2-digit',
+					day: '2-digit',
+					year: 'numeric'
+				});
+				const formattedTime = timestamp.toLocaleTimeString('en-US', {
+					hour: '2-digit',
+					minute: '2-digit',
+					hour12: true
+				});
+
+				const truncatedTitle = post.title.length > 60 ? `${post.title.substring(0, 60)}...` : post.title;
+				const videoSrc = post.preview || post.video;
+				const hoverAttributes = videoSrc ? 'onmouseover="this.play()" onmouseout="this.pause()"' : '';
+				const videoElement = videoSrc
+					? `<video style="width: 100%; height: 151px; object-fit: contain; object-position: center;" alt="Img" src="${videoSrc}" poster="${post.thumbnail}" ${hoverAttributes} muted></video>`
+					: '<div class="video-error">No video available</div>';
+
+				str += `
+           <div class="col-lg-12 col-md-12 d-flex">
+									<div class="course-box course-design list-course d-flex">
+										<div class="product">
+											<div class="product-img">
+												<a href="/video-view/${post.id}/">
+													${videoElement}
+												</a>
+												<div class="price" style="box-shadow: 0px 0px 10px 0px grey;">
+													<h3>$${post.price} </h3>
+												</div>
+											</div>
+											<div class="product-content">
+												<div class="head-course-title">
+													<h3 class="title"><a href="/video-view/${post.id}/">${post.title}</a></h3>
+													<div class="all-btn all-category d-flex align-items-center">
+														<a href="#" class="btn btn-primary">BUY NOW</a>
+													</div>
+												</div>
+												<div class="course-info border-bottom-0 pb-0 d-flex align-items-center">
+													
+													
+													
+												</div>
+												
+												
+																		
+													
+												<div class="course-group d-flex mb-0">
+													<div class="course-group-img d-flex">
+														
+														
+													</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>`;
+			});
+		}
+
+		document.getElementById('all_posts').innerHTML = str;
+	};
+
+	const updatePagination = () => {
+		const paginationList = document.getElementsByClassName("pagination_list")[0];
+		if (totalPages>1){
+			paginationList.innerHTML = `Page ${currentPage} of ${totalPages}`;
+
+		}
+
+		const pagination = document.querySelector('.pagination');
+		pagination.innerHTML = '';
+
+		// Add "Previous" button only if we're not on the first page
+		if (currentPage > 1) {
+			pagination.innerHTML += `<li><a  onclick="getUserPosts(${other_user}, ${currentPage - 1}) " style="box-shadow: 0px 0px 10px 0px gray;"><i class="bx bx-chevron-left" style="font-size:25px;"></i></a></li>`;
+		}
+
+		// Add "Next" button only if we're not on the last page
+		if (currentPage < totalPages) {
+			pagination.innerHTML += `<li><a  onclick="getUserPosts(${other_user}, ${currentPage + 1})" style="box-shadow: 0px 0px 10px 0px gray;"><i class="bx bx-chevron-right" style="font-size:25px;"></i></a></li>`;
+		}
+	};
+
+
+	function sharebutton2(username) {
+		const shareButtonElement = document.getElementById('share-button');
+
+		if (shareButtonElement) {
+			shareButtonElement.addEventListener('click', function (event) {
+				event.preventDefault();
+
+				const shareUrl = `${window.location.origin}/${username}/`;
+
+				if (navigator.share) {
+					navigator.share({
+						title: 'User profile',
+						text: 'Check out this Link!',
+						url: shareUrl, // Use the dynamic URL
+					}).then(() => {
+						console.log('Thanks for sharing!');
+					}).catch((error) => {
+						console.log('Something went wrong', error);
+					});
+				} else {
+					alert('Sharing not supported on this browser.');
+				}
+			});
+		}
+	}
+	// Initialize with the first page
+
+
+</script>
+{% endblock script %}

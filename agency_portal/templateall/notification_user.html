@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+{% block title %}
+  
+{% endblock title %}
+{% block style %}
+  
+{% endblock style %}
+{% block body %}
+  
+<!-- Breadcrumb -->
+			<div class="breadcrumb-bar breadcrumb-bar-info" style="margin-top:100px;">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 col-12">
+							<div class="breadcrumb-list">
+								<h2 class="breadcrumb-title">Notifications</h2>
+								<nav aria-label="breadcrumb" class="page-breadcrumb">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+										<li class="breadcrumb-item active" aria-current="page">Notifications</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Breadcrumb -->	
+			
+			<!-- Page Content -->
+			<div class="page-content">
+				<div class="container">
+					<div class="row">
+						
+						<!-- sidebar -->
+						<div class="col-xl-3 col-lg-3 theiaStickySidebar">
+							<div class="settings-widget dash-profile">
+								<div class="settings-menu">
+									<div class="profile-bg">
+										<div class="profile-img">
+											<a href="instructor-profile.html"><img src="assets/img/user/user-17.jpg" alt="Img"></a>
+										</div>
+									</div>
+									<div class="profile-group">
+										<div class="profile-name text-center">
+											<h4><a href="instructor-profile.html">Eugene Andre</a></h4>
+											<p>Instructor</p>
+											<a href="add-course.html" class="add-course btn-primary">Add New Course</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="settings-widget account-settings">
+								<div class="settings-menu">
+									<h3>Dashboard</h3>
+									<ul>
+										<li class="nav-item">
+											<a href="instructor-dashboard.html" class="nav-link">
+												<i class="bx bxs-tachometer"></i>Dashboard
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-profile.html" class="nav-link">
+												<i class="bx bxs-user"></i>My Profile
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-enrolled-course.html" class="nav-link">
+												<i class="bx bxs-graduation"></i>Enrolled Courses
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-wishlist.html" class="nav-link">
+												<i class="bx bxs-heart"></i>Wishlist
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-reviews.html" class="nav-link">
+												<i class="bx bxs-star"></i>Reviews
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-quiz.html" class="nav-link">
+												<i class="bx bxs-shapes"></i>My Quiz Attempts
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-orders.html" class="nav-link">
+												<i class="bx bxs-cart"></i>Order History
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-qa.html" class="nav-link">
+												<i class="bx bxs-bookmark-alt"></i>Question & Answer
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-referral.html" class="nav-link">
+												<i class="bx bxs-user-plus"></i>Referrals
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-chat.html" class="nav-link">
+												<i class="bx bxs-chat"></i>Messages
+											</a>
+										</li>
+										<li class="nav-item active">
+											<a href="instructor-notifications.html" class="nav-link">
+												<i class="bx bxs-bell"></i>Notifications
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-tickets.html" class="nav-link">
+												<i class="bx bxs-coupon"></i>Support Tickets
+											</a>
+										</li>
+									</ul>
+									<h3>Instructor</h3>
+									<ul>
+										<li class="nav-item">
+											<a href="instructor-course.html" class="nav-link ">
+												<i class="bx bxs-rocket"></i>My Courses
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-announcements.html" class="nav-link">
+												<i class="bx bxs-volume-full"></i>Announcements
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-withdraw.html" class="nav-link ">
+												<i class="bx bxs-wallet"></i>Withdrawls
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-quiz-attempts.html" class="nav-link">
+												<i class="bx bxs-shapes"></i>Quiz Attempts
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-assignment.html" class="nav-link ">
+												<i class="bx bxs-file"></i>Assignments
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-earnings.html" class="nav-link">
+												<i class="bx bxs-badge-dollar"></i>Earnings
+											</a>
+										</li>
+									</ul>
+									<h3>Account Settings</h3>
+									<ul>
+										<li class="nav-item">
+											<a href="instructor-settings.html" class="nav-link ">
+												<i class="bx bxs-cog"></i>Settings
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="index.html" class="nav-link">
+												<i class="bx bxs-log-out"></i>Logout
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>			
+						</div>
+						<!-- /Sidebar -->
+						
+						<!-- Instructor profile -->
+						<div class="col-xl-9 col-lg-9">	
+
+							<div class="settings-widget card-details mb-0">
+								<div class="settings-menu p-0">
+									<div class="profile-heading">
+										<h3>Notifications</h3>
+									</div>
+									<div class="checkout-form personal-address">
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="d-flex instructor-noti-head align-items-center">
+													<div class="icon-form mb-0">
+														<span class="form-icon"><i class="bx bx-calendar-edit"></i></span>
+														<input type="text" class="form-control bookingrange" placeholder="01 Jan 2024 - 01 Feb 2024">
+													</div>
+													<div class="noti-mark-btns">
+														<ul>
+															<li>
+																<a href="#" class="btn"><i class="feather-check me-2"></i> Mark all as read</a>
+															</li>
+															<li>
+																<a href="#" class="btn btn-delete"><i class="feather-trash-2 me-2"></i> Delete all</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+												<div class="notication-list">
+													<div class="notication-item">
+														<div class="row">
+															<div class="col-md-9">
+																<div class="notication-content">
+																	<span>
+																		<img src="assets/img/user/user2.jpg" class="img-fluid" alt="img">
+																	</span>
+																	<div class="notication-info">
+																		<p><span>Thompson</span> Hicks enroll a new course on Programming</p>
+																		<p class="notify-time">10 mins ago</p>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-3">
+																<div class="notification-btn text-end">
+																	<a href="javascript:void(0);" class="btn btn-danger">Delete</a>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="notication-item">
+														<div class="row">
+															<div class="col-md-9">
+																<div class="notication-content">
+																	<span>
+																		<img src="assets/img/user/user1.jpg" class="img-fluid" alt="img">
+																	</span>
+																	<div class="notication-info">
+																		<p><span>Shirley</span> Lis submitted the assignent on Complete <span> HTML, CSS and Javascript Course </span></p>
+																		<p class="notify-time">12 mins ago</p>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-3">
+																<div class="notification-btn text-end">
+																	<a href="javascript:void(0);" class="btn btn-danger">Delete</a>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="notication-item">
+														<div class="row">
+															<div class="col-md-9">
+																<div class="notication-content">
+																	<span>
+																		<img src="assets/img/user/user12.jpg" class="img-fluid" alt="img">
+																	</span>
+																	<div class="notication-info">
+																		<p><span>James </span> Schulte replied to your comment </p>
+																		<p class="notify-time">15 mins ago</p>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-3">
+																<div class="notification-btn text-end">
+																	<a href="javascript:void(0);" class="btn btn-danger">Delete</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>	
+						<!-- /Instructor profile -->
+						
+					</div>
+				</div>
+			</div>	
+			<!-- /Page Content -->
+			
+      
+    {% endblock body %}
+
+    {% block script %}
+      
+    {% endblock script %}

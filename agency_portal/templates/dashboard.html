@@ -1,0 +1,675 @@
+{% extends "base.html" %}
+{% block title %}
+Creator Dashboared
+{% endblock title %}
+{% block style %}
+
+{% endblock style %}
+{% block link %}
+<style>
+    input[type="radio"]+label {
+        font-size: 14px;
+        color: #555;
+        cursor: pointer;
+    }
+
+    input[type="radio"]:checked+label {
+        color: #007bff;
+    }
+
+    input[type="radio"]:focus {
+        outline: none;
+        box-shadow: 0 0 2px 2px rgba(0, 123, 255, 0.25);
+    }
+</style>
+{% endblock link %}
+{% block body %}
+
+<!-- /Header -->
+
+<!-- New Course -->
+
+<div id="approved" style="display:block;">
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper" style="margin-top: 100px;">
+
+        <!-- Header -->
+        <!-- /Header -->
+
+        <!-- Breadcrumb -->
+        <div class="breadcrumb-bar breadcrumb-bar-info">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div class="breadcrumb-list">
+                            <h2 class="breadcrumb-title">Dashboard</h2>
+                            <nav aria-label="breadcrumb" class="page-breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Breadcrumb -->
+
+        <!-- Page Content -->
+        <div class="page-content">
+            <div class="container">
+                <div class="row">
+
+                    <!-- sidebar -->
+                    <div class="col-xl-3 col-lg-3 theiaStickySidebar">
+                        <div class="settings-widget dash-profile">
+                            <div class="settings-menu">
+                                <div class="profile-bg">
+                                    <div class="profile-img">
+                                        <a href="/myprofile/" id="profile_picture_link2"><img id="profile_page_image"
+                                                src="/media/profile_picture/default_profile_image.png" alt="Img"></a>
+                                    </div>
+                                </div>
+                                <div class="profile-group">
+                                    <div class="profile-name text-center">
+                                        <h4 id="profile_page_username2"> Username</h4>
+                                        <a href="/create-order/" class="add-course btn-primary">
+                                            <i class="fas fa-upload"></i> Create New Order
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Sidebar -->
+
+                    <!-- Student Dashboard -->
+                    <div class="col-xl-9 col-lg-9">
+
+                        <!-- Dashboard Grid -->
+                        <div class="row justify-content-center">
+
+
+
+                            <div class="col-lg-4 col-md-6 d-flex">
+                                <div class="card dash-info flex-fill">
+                                    <div class="card-body">
+                                        <h5>Processed Orders</h5>
+                                        <h2 id="processed_orders"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 d-flex">
+                                <div class="card dash-info flex-fill">
+                                    <div class="card-body">
+                                        <h5>Pending Orders</h5>
+                                        <h2 id="pending_orders"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 d-flex">
+                                <div class="card dash-info flex-fill">
+                                    <div class="card-body">
+                                        <h5>Canceled Orders</h5>
+                                        <h2 id="canceled_orders"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 d-flex">
+                                <div class="card dash-info flex-fill">
+                                    <div class="card-body">
+                                        <h5>Delivered Orders</h5>
+                                        <h2 id="delivered_orders"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 d-flex">
+                                <div class="card dash-info flex-fill">
+                                    <div class="card-body">
+                                        <h5>Total Order</h5>
+                                        <h2 id="total_orders"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 d-flex">
+                                <div class="card dash-info flex-fill">
+                                    <div class="card-body">
+                                        <h5>Total Spent</h5>
+                                        <h2 id="total_amount_spent"></h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /Dashboard Grid -->
+
+                        <div class="dashboard-title">
+                            <h4>Order Status</h4>
+                        </div>
+                        <div class="row">
+
+                            <!-- Course Grid -->
+
+                            <div class="settings-widget card-info">
+                                <div class="settings-menu p-0">
+                                    <div class="profile-heading">
+                                        <h3>Order's Status</h3>
+                                        <p>Manage the status of your orders and view detail's here.</p>
+                                    </div>
+                                    <div class="checkout-form pb-0">
+                                        <div class="wishlist-tab">
+                                            <ul class="nav">
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="active" data-bs-toggle="tab"
+                                                        data-bs-target="#all">All Orders (<span
+                                                            id="all_orders_count"></span>)</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" data-bs-toggle="tab"
+                                                        data-bs-target="#pending">Pending Orders (<span
+                                                            id="pending_orders_count"></span>)</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" data-bs-toggle="tab"
+                                                        data-bs-target="#processed">Processed Orders (<span
+                                                            id="processed_orders_count"></span>)</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" data-bs-toggle="tab"
+                                                        data-bs-target="#delivered">Delivered Orders (<span
+                                                            id="delivered_orders_count"></span>)</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" data-bs-toggle="tab"
+                                                        data-bs-target="#canceled">Canceled Orders (<span
+                                                            id="canceled_orders_count"></span>)</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show active" id="all">
+                                                <div class="row">
+
+                                                    <div class="table-responsive custom-table">
+
+                                                        <!-- Referred Users-->
+                                                        <table class="table table-nowrap mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Customer Name</th>
+                                                                    <th>Delivery Address</th>
+                                                                    <th>Special Instructions</th>
+                                                                    <th>Order Total Price</th>
+                                                                    <th>Status</th>
+                                                                    <th>Created At</th>
+
+                                                                    <th>View Details</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="orders-all">
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="processed">
+                                                <div class="row">
+                                                    <div class="table-responsive custom-table">
+
+                                                        <!-- Referred Users-->
+                                                        <table class="table table-nowrap mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Customer Name</th>
+                                                                    <th>Delivery Address</th>
+                                                                    <th>Special Instructions</th>
+                                                                    <th>Order Total Price</th>
+                                                                    <th>Status</th>
+                                                                    <th>Created At</th>
+
+                                                                    <th>View Details</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="orders-processed">
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                    <!-- Course Grid -->
+                                                    <!-- /Course Grid -->
+
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="pending">
+                                                <div class="row">
+                                                    <div class="table-responsive custom-table">
+
+                                                        <!-- Referred Users-->
+                                                        <table class="table table-nowrap mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Customer Name</th>
+                                                                    <th>Delivery Address</th>
+                                                                    <th>Special Instructions</th>
+                                                                    <th>Order Total Price</th>
+                                                                    <th>Status</th>
+                                                                    <th>Created At</th>
+
+                                                                    <th>View Details</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="orders-pending">
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                    <!-- Course Grid -->
+                                                    <!-- /Course Grid -->
+
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="delivered">
+                                                <div class="row" >
+
+                                                    <!-- Course Grid -->
+                                                    <div class="table-responsive custom-table">
+
+                                                        <!-- Referred Users-->
+                                                        <table class="table table-nowrap mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Customer Name</th>
+                                                                    <th>Delivery Address</th>
+                                                                    <th>Special Instructions</th>
+                                                                    <th>Order Total Price</th>
+                                                                    <th>Status</th>
+                                                                    <th>Created At</th>
+                                                                    <th>View Details</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="orders-delivered">
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                    <!-- /Course Grid -->
+
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="canceled">
+                                                <div class="row" >
+
+                                                    <!-- Course Grid -->
+                                                    <div class="table-responsive custom-table">
+
+                                                        <!-- Referred Users-->
+                                                        <table class="table table-nowrap mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Customer Name</th>
+                                                                    <th>Delivery Address</th>
+                                                                    <th>Special Instructions</th>
+                                                                    <th>Order Total Price</th>
+                                                                    <th>Status</th>
+                                                                    <th>Created At</th>
+
+                                                                    <th>View Details</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="orders-canceled">
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                    <!-- /Course Grid -->
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="dash-pagination">
+                                    <div class="row align-items-center">
+                                        <div class="col-6">
+                                            <p class="pagination_list">Page 1 of 2</p>
+                                        </div>
+                                        <div class="col-6">
+                                            <ul class="pagination">
+                                                <li class="active">
+                                                    <a href="#">1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">2</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"><i class="bx bx-chevron-right"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                            <!-- /Instructor Courses -->
+
+                        </div>
+                        <!-- /Course Grid -->
+
+                    </div>
+                </div>
+
+                <!-- Student Dashboard -->
+
+            </div>
+        </div>
+    </div>
+    <!-- /Page Content -->
+
+    <!-- Footer -->
+</div>
+
+
+<!-- /New Course -->
+
+{% endblock body %}
+<!-- Footer -->
+{% block script %}
+<script>
+    let user_id = 0;
+    let totalPages = 0;
+
+    let username = "";
+    if (authenticated) {
+
+        userApi = async () => {
+            await fetch(`${window.location.origin}/api/user/get-user-single/`, {
+                "method": "get",
+                "headers": {
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${authenticated}`
+                }
+            }).then((response) => {
+                return response.json()
+            }).then((response) => {
+                if (response.success) {
+                    user_id = response.data.id
+                    username = response.data.username
+                    userprofileid=response.data.id
+								console.log(response.data.image);
+								document.getElementById("profile_image").src = `${response.data.profile_picture}`;
+								document.getElementById("profile_image2").src = `${response.data.profile_picture}`;
+								document.getElementById("profile_username").innerHTML = `${response.data.username}`;
+					document.getElementById("profile_page_image").src=response.data.profile_picture
+
+								
+                    document.getElementById("profile_page_username2").innerHTML = `${response.data.username}`;
+								
+                    getUserPosts(1)
+                    //followers_following();
+                }
+                console.log(response)
+            })
+        }
+        userApi()
+
+    }
+    else {
+        window.location.href = "/"
+    }
+
+    const getUserPosts = async () => {
+        await fetch(`${window.location.origin}/api/orders/?search=${username}&no_pagination=true`, {
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                "Authorization": `Bearer ${authenticated}`
+
+            }
+        }).then(response => response.json())
+            .then(response => {
+                if (response.success) {
+                    console.log("User videos fetched successfully:", response);
+
+                    // Update total pages and current page
+                    canceled_count = 0
+                    delivered_count = 0
+                    processed_count = 0
+                    pending_count = 0
+                    total_amount_spent = 0
+
+                    // Display posts
+                    response.data.forEach((data) => {
+                        if (data.status == "Canceled") {
+                            canceled_count++
+                        }
+                        else if (data.status == "Delivered") {
+                            total_amount_spent = total_amount_spent + parseInt(data.order_total_price)
+                            delivered_count++
+                        }
+                        else if (data.status == "Processed") {
+                            total_amount_spent = total_amount_spent + parseInt(data.order_total_price)
+                            processed_count++
+                        }
+                        else {
+                            total_amount_spent = total_amount_spent + parseInt(data.order_total_price)
+                            pending_count++
+
+                        }
+                    })
+                    document.getElementById("total_orders").innerHTML = String(response.data.length).padStart(2, '0');
+                    document.getElementById("pending_orders").innerHTML = String(pending_count).padStart(2, '0');
+                    document.getElementById("delivered_orders").innerHTML = String(delivered_count).padStart(2, '0');
+                    document.getElementById("canceled_orders").innerHTML = String(canceled_count).padStart(2, '0');
+                    document.getElementById("processed_orders").innerHTML = String(processed_count).padStart(2, '0');
+                    document.getElementById("total_amount_spent").innerHTML = `$${String(total_amount_spent).padStart(2, '0')}`;
+
+
+                    document.getElementById("all_orders_count").innerHTML = String(response.data.length).padStart(2, '0');
+                    document.getElementById("pending_orders_count").innerHTML = String(pending_count).padStart(2, '0');
+                    document.getElementById("delivered_orders_count").innerHTML = String(delivered_count).padStart(2, '0');
+                    document.getElementById("canceled_orders_count").innerHTML = String(canceled_count).padStart(2, '0');
+                    document.getElementById("processed_orders_count").innerHTML = String(processed_count).padStart(2, '0');
+
+                    displayPosts(response.data);
+
+
+                    // Update pagination UI
+                    updatePagination();
+                } else {
+                    console.log("Failed to fetch user posts.");
+                }
+            }).catch(error => {
+                console.error("Error fetching user posts:", error);
+            });
+    };
+
+
+    const displayPosts = (data) => {
+        console.log(data);
+        let canceled = "";
+        let delivered = "";
+        let processed = "";
+        let pending = "";
+        let all = "";
+
+        let canceledCount = 0;
+        let deliveredCount = 0;
+        let processedCount = 0;
+        let pendingCount = 0;
+        let totalAmountSpent = 0;
+
+        data.forEach(data => {
+            // Handle the special instructions if not provided
+            let special_instruction = data.special_instructions ? data.special_instructions : "Not Provided";
+
+            // Function to truncate text to a max length
+            const truncateText = (text, maxLength) => {
+                if (text && text.length > maxLength) {
+                    return text.substring(0, maxLength) + '...';
+                }
+                return text;
+            };
+
+const dateObject = new Date(data.order_date);
+
+					const formattedDate = dateObject.toLocaleDateString(); // "11/27/2024" (default format, depends on locale)
+					const formattedTime = dateObject.toLocaleTimeString();
+            let customerName = truncateText(data.customer_name, 50);
+            let deliveryAddress = truncateText(data.delivery_address, 50);
+            special_instruction = truncateText(special_instruction, 50);
+
+            // HTML structure for the post
+            const postHTML = (status) => `
+                <tr>
+                    <td style="text-align:left;"><a href="/view-order/${data.id}/" style="color:#ff4667;">${customerName}</a></td>
+                    <td style="text-align:left;">${deliveryAddress}</td>
+                    <td style="text-align:center;">${special_instruction}</td>
+                    <td style="text-align:center;">$${data.order_total_price}</td>
+                    <td>${data.status}</td>
+                    <td>${formattedDate} ${formattedTime}</td>
+
+                    <td>
+                        <ul class="nav">
+                            <li>
+                                <a href="/view-order/${data.id}/" class="btn btn-success-dark"
+                                   style="height: 50px;background-color:#f24262;border:none;color:white;">
+                                    View Details
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            `;
+
+            if (data.status === "Canceled") {
+                canceled += postHTML("Canceled");
+                all += postHTML("Canceled");
+                canceledCount++;
+            } else if (data.status === "Delivered") {
+                delivered += postHTML("Delivered");
+                all += postHTML("Delivered");
+
+                deliveredCount++;
+                totalAmountSpent += parseInt(data.order_total_price);
+            } else if (data.status === "Processed") {
+                processed += postHTML("Processed");
+                all += postHTML("Processed");
+
+                processedCount++;
+                totalAmountSpent += parseInt(data.order_total_price);
+            } else {
+                pending += postHTML("Pending");
+                all += postHTML("Pending");
+
+                pendingCount++;
+                totalAmountSpent += parseInt(data.order_total_price);
+            }
+        });
+
+        // Update the DOM with the generated HTML for each status
+        if (!all) {
+            document.getElementById('all').innerHTML = `
+                <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+                    <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                    <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
+                        There are no orders.
+                    </h4>
+                </div>`;
+        } else {
+            document.getElementById('orders-all').innerHTML = all;
+        }
+    
+        // For the 'canceled' section, check if there is content
+        if (!canceled) {
+            document.getElementById('canceled').innerHTML += `
+                <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+                    <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                    <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
+                        There are no canceled orders.
+                    </h4>
+                </div>`;
+        } else {
+            document.getElementById('orders-canceled').innerHTML = canceled;
+        }
+    
+        // For the 'delivered' section, check if there is content
+        if (!delivered) {
+            document.getElementById('delivered').innerHTML += `
+                <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+                    <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                    <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
+                        There are no delivered orders.
+                    </h4>
+                </div>`;
+        } else {
+            document.getElementById('orders-delivered').innerHTML = delivered;
+        }
+    
+        // For the 'processed' section, check if there is content
+        if (!processed) {
+            document.getElementById('processed').innerHTML += `
+                <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+                    <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                    <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
+                        There are no processed orders.
+                    </h4>
+                </div>`;
+        } else {
+            document.getElementById('orders-processed').innerHTML = processed;
+        }
+    
+        // For the 'pending' section, check if there is content
+        if (!pending) {
+            document.getElementById('pending').innerHTML += `
+                <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+                    <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                    <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
+                        There are no pending orders.
+                    </h4>
+                </div>`;
+        } else {
+            document.getElementById('orders-pending').innerHTML = pending;
+        }
+
+        // Update the counts for each status
+        //document.getElementById('canceled_count').innerHTML = canceledCount;
+        //document.getElementById('delivered_count').innerHTML = deliveredCount;
+        //document.getElementById('processed_count').innerHTML = processedCount;
+        //document.getElementById('pending_count').innerHTML = pendingCount;
+        //document.getElementById('total_amount_spent').innerHTML = `$${totalAmountSpent}`;
+
+        // Handle pagination (add or update pagination elements if necessary)
+        //updatePagination();
+    };
+
+    const updatePagination = () => {
+        const paginationList = document.getElementsByClassName("pagination_list")[0];
+        if (totalPages > 1) {
+
+            paginationList.innerHTML = `Page ${currentPage} of ${totalPages}`;
+        }
+
+        const pagination = document.querySelector('.pagination');
+        pagination.innerHTML = '';
+
+        // Add "Previous" button only if we're not on the first page
+        if (currentPage > 1) {
+            pagination.innerHTML += `<li><a onclick="getUserPosts(${currentPage - 1}); document.getElementById('tabel_list').scrollIntoView({ behavior: 'smooth' });" style="box-shadow: 0px 0px 10px 0px gray;"><i class="bx bx-chevron-left" style="font-size:25px;"></i></a></li>`;
+        }
+
+        // Add "Next" button only if we're not on the last page
+        if (currentPage < totalPages) {
+            pagination.innerHTML += `<li><a onclick="getUserPosts(${currentPage + 1}); document.getElementById('tabel_list').scrollIntoView({ behavior: 'smooth' });" style="box-shadow: 0px 0px 10px 0px gray;" ><i class="bx bx-chevron-right" style="font-size:25px;"></i></a></li>`;
+        }
+
+    };
+</script>
+{% endblock script %}

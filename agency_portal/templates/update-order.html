@@ -1,0 +1,1369 @@
+{% extends "base.html" %}
+{% block link %}
+
+{% endblock link %}
+{% block title %}
+Upload-Video
+{% endblock title %}
+{% block style %}
+<style>
+    .footer{
+        display: none;
+    }
+    /* HTML: <div class="loader"></div> */
+    /* HTML: <div class="loader"></div> */
+    .loader {
+        width: 60px;
+        aspect-ratio: 4;
+        --_g: no-repeat radial-gradient(circle closest-side, #049dff 90%, #0000);
+        background:
+            var(--_g) 0% 50%,
+            var(--_g) 50% 50%,
+            var(--_g) 100% 50%;
+        background-size: calc(100%/3) 100%;
+        animation: l7 1s infinite linear;
+    }
+
+    @keyframes l7 {
+        33% {
+            background-size: calc(100%/3) 0%, calc(100%/3) 100%, calc(100%/3) 100%
+        }
+
+        50% {
+            background-size: calc(100%/3) 100%, calc(100%/3) 0%, calc(100%/3) 100%
+        }
+
+        66% {
+            background-size: calc(100%/3) 100%, calc(100%/3) 100%, calc(100%/3) 0%
+        }
+    }
+
+    .progress {
+        width: 150px;
+        height: 150px;
+        line-height: 150px;
+        background: none;
+        margin: 0 auto;
+        box-shadow: none;
+        position: relative;
+        overflow: visible;
+    }
+
+    .progress:after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 5px solid #fff;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .progress>span {
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+    }
+
+    .progress .progress-left {
+        left: 0;
+    }
+
+    .progress .progress-bar {
+        width: 100%;
+        height: 100%;
+        background: none;
+        border-width: 5px;
+        border-style: solid;
+        position: absolute;
+        top: 0;
+    }
+
+    .progress .progress-left .progress-bar {
+        left: 100%;
+        border-top-right-radius: 80px;
+        border-bottom-right-radius: 80px;
+        border-left: 0;
+        -webkit-transform-origin: center left;
+        transform-origin: center left;
+    }
+
+    .progress .progress-right {
+        right: 0;
+    }
+
+    .progress .progress-right .progress-bar {
+        left: -100%;
+        border-top-left-radius: 80px;
+        border-bottom-left-radius: 80px;
+        border-right: 0;
+        -webkit-transform-origin: center right;
+        transform-origin: center right;
+        animation: loading-1 1.8s linear forwards;
+    }
+
+    .progress .inner-circle,
+    .progress .progress-value {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 5px solid #8e8e8e;
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 50px;
+        text-align: center;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 1;
+    }
+
+    .progress .inner-circle:after {
+        content: "";
+        width: 5px;
+        height: 60px;
+        background: #8e8e8e;
+        margin: 0 auto;
+        position: absolute;
+        top: -60px;
+        left: 0;
+        right: 0;
+        z-index: 2;
+        transition: all 10s linear 0s;
+    }
+
+    .progress.blue .progress-bar {
+        border-color: #049dff;
+    }
+
+    .progress.blue .progress-value {
+        color: #049dff;
+    }
+
+    .progress.blue .progress-left .progress-bar {
+        animation: loading-2 1.5s linear forwards 1.8s;
+    }
+
+    .progress.blue .inner-circle {
+        animation: loading-6 3.8s ease forwards;
+    }
+
+    .progress.yellow .progress-bar {
+        border-color: #fdba04;
+    }
+
+    .progress.yellow .progress-value {
+        color: #fdba04;
+    }
+
+    .progress.yellow .progress-left .progress-bar {
+        animation: loading-3 1s linear forwards 1.8s;
+    }
+
+    .progress.yellow .inner-circle {
+        animation: loading-7 3.8s ease forwards;
+    }
+
+    .progress.pink .progress-bar {
+        border-color: #ed687c;
+    }
+
+    .progress.pink .progress-value {
+        color: #ed687c;
+    }
+
+    .progress.pink .progress-left .progress-bar {
+        animation: loading-4 0.4s linear forwards 1.8s;
+    }
+
+    .progress.pink .inner-circle {
+        animation: loading-8 3.8s ease forwards;
+    }
+
+    .progress.green .progress-bar {
+        border-color: #1abc9c;
+    }
+
+    .progress.green .progress-value {
+        color: #1abc9c;
+    }
+
+    .progress.green .progress-left .progress-bar {
+        animation: loading-5 1.2s linear forwards 1.8s;
+    }
+
+    .progress.green .inner-circle {
+        animation: loading-9 3.8s ease forwards;
+    }
+
+    @keyframes loading-1 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+    }
+
+    @keyframes loading-2 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(144deg);
+            transform: rotate(144deg);
+        }
+    }
+
+    @keyframes loading-3 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+    }
+
+    @keyframes loading-4 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(36deg);
+            transform: rotate(36deg);
+        }
+    }
+
+    @keyframes loading-5 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(126deg);
+            transform: rotate(126deg);
+        }
+    }
+
+    @keyframes loading-6 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        50% {
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(324deg);
+            transform: rotate(324deg);
+        }
+    }
+
+    @keyframes loading-7 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        50% {
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+        }
+    }
+
+    @keyframes loading-8 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        50% {
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(216deg);
+            transform: rotate(216deg);
+        }
+    }
+
+    @keyframes loading-9 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        50% {
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(306deg);
+            transform: rotate(306deg);
+        }
+    }
+
+    :root {
+        --arrow-bg: rgba(255, 255, 255, 0.3);
+        --arrow-icon: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg);
+        --option-bg: white;
+        --select-bg: rgba(255, 255, 255, 0.2);
+    }
+
+    @media only screen and (max-width: 990px) {
+        .progress {
+            margin-bottom: 20px;
+        }
+    }
+
+    /*:root {
+        --arrow-bg: rgba(255, 255, 255, 0.3);
+        --arrow-icon: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg);
+        --option-bg: white;
+        --select-bg: rgba(255, 255, 255, 0.2);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        background: linear-gradient(35deg, red, purple);
+      }*/
+    select {
+        /* Reset */
+        appearance: none;
+        border: 0;
+        outline: 0;
+        font: inherit;
+        /* Personalize */
+        width: 20rem;
+        padding: 1rem 4rem 1rem 1rem;
+        background: var(--arrow-icon) no-repeat right 0.8em center / 1.4em,
+            linear-gradient(to left, var(--arrow-bg) 3em, var(--select-bg) 3em);
+        color: white;
+        border-radius: 0.25em;
+        box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+
+        /* Remove IE arrow */
+        &::-ms-expand {
+            display: none;
+        }
+
+        /* Remove focus outline */
+        &:focus {
+            outline: none;
+        }
+
+        /* <option> colors */
+        option {
+
+            border-radius: 35px;
+            width: 250px;
+            background: #fe4565;
+            color: white;
+        }
+    }
+</style>
+{% endblock style %}
+
+{% block body %}
+
+
+<!-- New Course -->
+<section class="page-content course-sec" style="margin-top: 100px;">
+    <div class="container" id="row1">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="add-course-header">
+                    <h2>Update Order</h2>
+                    <div class="add-course-btns">
+                        <ul class="nav">
+                            <li>
+                                <a href="/dashboard/" class="btn btn-black profile-update">Back to Dashboard</a>
+                            </li>
+                            <!-- <li>
+                                <a href="javascript:void(0);" class="btn btn-success-dark" id="post_save" style="height: 50px;">Save</a>
+                            </li> -->
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" style="position: relative;">
+                    <!-- Course Wizard -->
+                    <div class="widget-set">
+                        <div class="widget-setcount">
+                            <ul id="progressbar">
+                                <li class="progress-active">
+                                    <p><span></span> Update Order</p>
+                                </li>
+                                <!-- <li>
+                                    <p><span></span> Post Media</p>
+                                </li> -->
+                                <!-- <li>
+												<p><span></span> Curriculum</p>												
+											</li> -->
+                                <!-- <li>
+                                    <p><span></span> Price</p>
+                                </li> -->
+                            </ul>
+                        </div>
+                        <!-- <div id="progress" style="display: block;">
+                            <div id="mainprogress" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                aria-valuemax="100" style="--value: 0"></div>
+
+
+                        </div> -->
+                        <div class="widget-content multistep-form" id="post_form">
+                            <fieldset id="first">
+                                <div class="add-course-info">
+                                    <div class="add-course-inner-header">
+                                        <h4>Order</h4>
+                                    </div>
+                                    <div class="add-course-form" style="padding-bottom: 0px;">
+                                        <form action="#">
+                                            <div class="input-block">
+                                                <label class="add-course-label">Cutomer Name</label>
+                                                <input type="text" id="customer_name" class="form-control"
+                                                    placeholder="Customer Full Name">
+                                            </div>
+                                            <div class="input-block">
+                                                <label class="add-course-label">Devlivery Address </label>
+                                                <input type="text" id="delivery_address" class="form-control"
+                                                    placeholder="Delivery Address">
+                                            </div>
+                                            <!-- <div class="input-block">
+                                                <div id="order_item" style="display: flex;">
+
+                                                    <span class="drop-detail">
+                                                        <select id="categorySelect" class="form-select select">
+                                                            <option value="Male">Male</option>
+                                                            <option value="Male">Male</option>
+                                                            
+                                                            <option value="Male">Male</option>
+                                                            
+                                                        </select>
+                                                    </span>
+                                                <span class="drop-detail">
+                                                    <select id="categorySelect2"
+                                                    class="form-select select" disabled>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Male">Male</option>
+
+                                                        <option value="Male">Male</option>
+
+                                                    </select>
+                                                </span>
+                                            </div> -->
+                                            <div class="input-block" id="order-items">
+                                                
+                                                <!-- Order Form 1 -->
+                                                <div class="order-form" id="orderForm1">
+                                                    <div id="orderItemsContainer1">
+                                                    </div>
+                                                    <button class="addItemBtn" id="addItemBtn1" style="margin-left: 10px; border: none; background: #fe4565; color: white; height: 40px; width: 40px; padding: 10px; border-radius: 20px; justify-content: center; display: flex; justify-content: center; align-items: center; margin-top: auto; margin-bottom: auto;">
+                                                        <img src="/static/img/plus.png" style="width: 30px; height:30px;" />
+                                                    </button>
+                                                </div>
+                                            
+                                                <!-- Order Form 2 -->
+                                                
+                                            </div>
+                                            <div class="input-block">
+                                                <label class="add-course-label">Special Request </label>
+                                                <input type="text" id="special_request" class="form-control"
+                                                    placeholder="Delivery Address">
+                                            </div>
+
+                                            <div >
+                                                <h1 style="color: #685F78;">
+                                                    Total Order Price:- <span id="total-price">$0.00</span>
+                                                </h1>
+                                                
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+                                    <div class="widget-btn">
+                                        <ul class="nav">
+                                            <!-- <li>
+                                            <a href="/myprofile/" class="btn btn-black">Back to Profile</a>
+                                        </li> -->
+                                            <li>
+                                                <a href="javascript:void(0);" class="btn btn-success-dark"
+                                                    id="post_save" style="height: 50px;">Update Order</a>
+                                            </li>
+
+                                        </ul>
+                                        <!-- <a class="btn btn-black">Back</a> -->
+                                        <!-- <a class="btn btn-info-light next_btn">Continue</a> -->
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+
+                    </div>
+                    <div class="progress-bar-container" style="position: absolute;
+    z-index: 2000;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white; display:none;">
+                        <div class="row" style="display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="progress blue">
+                                    <span class="progress-left">
+                                        <span class="progress-bar"></span>
+                                    </span>
+                                    <span class="progress-right">
+                                        <span class="progress-bar"></span>
+                                    </span>
+                                    <div class="inner-circle"></div>
+                                    <div class="progress-value"><span id="percent-complete">15</span>%</div>
+                                </div>
+                            </div>
+                            <h3 style="margin-top: 15px;
+    color: #049dff;position:relative;">Uploading your video. Please wait while we process your request <div
+                                    class="loader" style="position: absolute;
+    top: 9px;
+    right: 30px;"></div>
+                            </h3>
+                        </div>
+
+                    </div>
+                    <!-- /Course Wizard -->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container" id="row2" style="display:none">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="add-course-header">
+                    <h2>Update Video</h2>
+                    <div class="add-course-btns">
+                        <ul class="nav">
+                            <li>
+                                <a href="/dashboard/" class="btn btn-black profile-update">Back to Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="/create-order/" class="btn btn-success-dark"
+                                    onclick="reversefunction()">Update Order</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- Course Wizard -->
+                    <div class="widget-set">
+                        <div class="widget-setcount">
+                            <ul id="progressbar">
+
+                            </ul>
+                        </div>
+                        <div class="widget-content multistep-form">
+                            <fieldset class="field-card" style="display: block;">
+                                <div class="add-course-info">
+                                    <div class="add-course-msg">
+                                        <i class="fas fa-circle-check"></i>
+                                        <h4>Your Order Has Been Successfully Submitted</h4>
+            <p>Thank you for updating your order. Our team is processing your request and will take care of the necessary steps to fulfill it. Thank You/p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <!-- /Course Wizard -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</div>
+
+<!-- /New Course -->
+{% endblock body %}
+{% block script %}
+<script>
+    const url = window.location.href; // Get the full URL
+const match = url.match(/\/update-order\/(\d+)\//); // Regex to extract the ID
+const orderId = match ? match[1] : null; // Get the first captured group (ID) or null
+console.log(orderId);
+if (authenticated) {
+
+    userApi = async () => {
+        await fetch(`${window.location.origin}/api/user/get-user-single/`, {
+            "method": "get",
+            "headers": {
+                "content-type": "application/json",
+                "Authorization": `Bearer ${authenticated}`
+            }
+        }).then((response) => {
+            return response.json()
+        }).then((response) => {
+            if (response.success) {
+                user_id = response.data.id
+                username = response.data.username
+                userprofileid=response.data.id
+                            console.log(response.data.image);
+                            document.getElementById("profile_image").src = `${response.data.profile_picture}`;
+                            document.getElementById("profile_image2").src = `${response.data.profile_picture}`;
+                            document.getElementById("profile_username").innerHTML = `${response.data.username}`;
+                document.getElementById("profile_page_image").src=response.data.profile_picture
+
+                            
+                document.getElementById("profile_page_username2").innerHTML = `${response.data.username}`;
+                            
+                getUserPosts(1)
+                //followers_following();
+            }
+            console.log(response)
+        })
+    }
+    userApi()
+
+}
+else {
+    window.location.href = "/"
+}
+    let category_data=`<option value="Select Menu-0" selected>Select Menu</option>`
+    if (authenticated){
+        fetch_category()
+        fetchOrder(orderId)
+    }
+    else{
+        window.location.href="/"
+    }
+    let itemCounter=1
+
+
+    function fetchOrder(id){
+        fetch(`${window.location.origin}/api/orders/${id}/`,{
+            "method":"GET",
+            "headers":{
+                "content-type": "application/json",
+                    "Authorization": `Bearer ${authenticated}`
+            }
+            
+        }).then((response)=>{
+            return response.json()
+        }).then((response)=>{
+            if (response.success){
+                document.getElementById("customer_name").value=response.data.customer_name
+                document.getElementById("delivery_address").value=response.data.delivery_address
+                document.getElementById("special_request").value=response.data.special_instructions
+
+                document.getElementById("total-price").innerHTML=`$${response.data.order_total_price}`
+
+
+                response.data.items.forEach((data)=>{
+                    const container = document.getElementById("orderItemsContainer1");
+        const LabelItem = document.createElement("label");
+        LabelItem.classList.add("add-course-label");
+        LabelItem.innerHTML=`Order Item`
+
+
+        
+        // Create a new order item dynamically
+        const newOrderItem = document.createElement("div");
+        newOrderItem.classList.add("order-item");
+        newOrderItem.style.display = "flex";
+        newOrderItem.style.justifyContent = "center";
+        newOrderItem.style.alignItems = "center";
+
+
+        newOrderItem.style.flexWrap = "wrap";
+
+        newOrderItem.style.marginBottom = "10px";
+    
+        // Generate unique IDs for category and subcategory
+        const categoryId = `category-${itemCounter}`;
+        console.log(categoryId)
+        const subCategoryId = `subcategory-${itemCounter}`;
+        console.log(category_data)
+        newOrderItem.innerHTML = `
+        <span id="orderitemid-${data.id}" style="display:none;">${data.id}</span>
+        <span id="orderid-${data.order}" style="display:none;">${data.order}</span>
+            <span class="drop-detail" style="background: #fe4565;width: 300px;height: 56px; margin-top:10px;">
+                <select id="${categoryId}" onchange=fetch_subcategory(${itemCounter})  style="width: 300px; border-radius: 24px;">
+                    <option selected value="${data.category_name}-${data.category}">${data.category_name}</option>
+                    ${fetch_update_category(itemCounter,data.category)}
+                </select>
+            </span>
+            <span class="drop-detail" style="background: #fe4565;width: 300px;height: 56px;margin-top:10px;">
+                <select id="${subCategoryId}" onchange="fetch_single_subcategory(${itemCounter})" style="width: 300px; border-radius: 24px;">
+                    <option selected value="${data.subcategory_name}-${data.subcategory}">${data.subcategory_name}</option>
+                    ${fetch_update_subcategory(itemCounter,data.category,data.subcategory)}
+
+                    
+                </select>
+            </span>
+            <div style="display: flex;margin-top:10px;width:300px;justify-content:center;align-items:center;">
+
+            <input type="number" id="quantity-${itemCounter}" class="form-input quantity-input" min="1" value="${data.quantity}" placeholder="Quantity"
+                style="margin-left: 10px; width: 54px; text-align: center;" oninput="checkQuantity(this)"/>
+            <span class="price-display" style="margin-left: 10px; padding: 5px; display: flex; justify-content: center; align-items: center;" id="price-${itemCounter}" >$${data.order_item_total_price}</span>
+
+            <button class="delete-item-btn" id="${data.id}" data-available="true" style="margin-left: 10px; border: none; background: #fe4565; color: white; height: 40px; width: 40px; padding: 10px; border-radius: 20px; justify-content: center; display: flex; justify-content: center; align-items: center; margin-top: auto; margin-bottom: auto;">
+                <img src="/static/img/trash.png" style="width: 30px; height:30px;">
+            </button>
+        </div>
+        `;
+        
+        // Add delete functionality to the button
+        newOrderItem.querySelector(".delete-item-btn").addEventListener("click", function (e) {
+            e.preventDefault();
+        
+            // Condition to check if the item is available for deletion
+            const isAvailableForDeletion = newOrderItem.querySelector(".delete-item-btn").dataset.available === 'true';
+            console.log(isAvailableForDeletion)
+            if (isAvailableForDeletion) {
+                console.log(newOrderItem.querySelector(".delete-item-btn").id)
+                // If available, call the delete API
+                fetch(`${window.location.origin}/api/order-item/${newOrderItem.querySelector(".delete-item-btn").id}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        "content-type": "application/json",
+                    "Authorization": `Bearer ${authenticated}`
+                        // Add any necessary headers (e.g., authorization token)
+                    },
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // If API call was successful, remove the item from DOM
+                        newOrderItem.remove();
+                        LabelItem.remove();
+                        updateTotalOrderPrice()
+
+                    } else {
+                        // Handle API failure
+                        console.log('Failed to delete item');
+                    }
+                })
+                .catch(error => {
+                    console.log('Error deleting item:', error);
+                });
+            } else {
+                // If not available for deletion, show a message or do nothing
+                newOrderItem.remove();
+                        LabelItem.remove();
+
+                updateTotalOrderPrice()
+
+                
+            }
+        });
+        
+        
+        
+    
+        // Append to the container
+        container.appendChild(LabelItem);
+        container.appendChild(newOrderItem);
+        let quantityField=document.getElementById(`quantity-${itemCounter}`)
+        console.log(itemCounter)
+        console.log(quantityField)
+        let price=data.price
+        const priceField = document.getElementById(`price-${itemCounter}`);
+        
+        quantityField.addEventListener("input", () => {
+                        const quantity = quantityField.value; // Ensure numeric value
+                        const totalPrice = quantity * price;
+                        priceField.innerHTML = `$${totalPrice.toFixed(2)}`; // Update price field with calculated total
+                        updateTotalOrderPrice();
+                    });
+        itemCounter++; // Increment the counter for the next item
+
+                })
+            }
+
+
+            else{
+                if (response.detail){
+                    card.style.display = "flex";
+					card.style.borderLeft = "10px solid #3db5dc";
+					message_content.innerHTML = "No Order found with this id";
+					message_type.innerHTML = "Info";
+					message_type.style.color = "#3db5dc";
+					message_icon_parent.style.color = "#3db5dc";
+					message_icon_child.classList = "fas fa-exclamation-circle";
+
+                    setInterval(()=>{
+                        window.location.href="/dashboard"
+                    },2500)
+                }
+            }
+        })
+    }
+
+
+    document.getElementById("addItemBtn1").addEventListener("click", function (e) {
+        e.preventDefault();
+        const container = document.getElementById("orderItemsContainer1");
+        const LabelItem = document.createElement("label");
+        LabelItem.classList.add("add-course-label");
+        LabelItem.innerHTML=`Order Item`
+
+
+        
+        // Create a new order item dynamically
+        const newOrderItem = document.createElement("div");
+        newOrderItem.classList.add("order-item");
+        newOrderItem.style.display = "flex";
+        newOrderItem.style.justifyContent = "center";
+        newOrderItem.style.alignItems = "center";
+
+
+        newOrderItem.style.flexWrap = "wrap";
+
+        newOrderItem.style.marginBottom = "10px";
+    
+        // Generate unique IDs for category and subcategory
+        const categoryId = `category-${itemCounter}`;
+        console.log(categoryId)
+        const subCategoryId = `subcategory-${itemCounter}`;
+        console.log(category_data)
+        newOrderItem.innerHTML = `
+            
+            <span class="drop-detail" style="background: #fe4565;width: 300px;height: 56px; margin-top:10px;">
+                <select id="${categoryId}" onchange=fetch_subcategory(${itemCounter})  style="width: 300px; border-radius: 24px;">
+                    ${category_data}
+                </select>
+            </span>
+            <span class="drop-detail" style="background: #fe4565;width: 300px;height: 56px;margin-top:10px;">
+                <select id="${subCategoryId}" onchange="fetch_single_subcategory(${itemCounter})" style="width: 300px; border-radius: 24px;opacity:0.5" disabled>
+                    <option selected value="0">Select SubMenu</option>
+                    <option value="1">No Wrapper</option>
+                    <option value="2">No JS</option>
+                    <option value="3">Nice!</option>
+                </select>
+            </span>
+            <div style="display: flex;margin-top:10px;width:300px;justify-content:center;align-items:center;">
+
+            <input type="number" id="quantity-${itemCounter}" class="form-input quantity-input" min="1" value="1" placeholder="Quantity"
+                style="margin-left: 10px; width: 54px; text-align: center;opacity:0.5" oninput="checkQuantity(this)" disabled />
+            <span class="price-display" style="margin-left: 10px; padding: 5px; display: flex; justify-content: center; align-items: center;opacity:0.5;" disabled id="price-${itemCounter}" >$0.00</span>
+
+            <button class="delete-item-btn" style="margin-left: 10px; border: none; background: #fe4565; color: white; height: 40px; width: 40px; padding: 10px; border-radius: 20px; justify-content: center; display: flex; justify-content: center; align-items: center; margin-top: auto; margin-bottom: auto;">
+                <img src="/static/img/trash.png" style="width: 30px; height:30px;">
+            </button>
+        </div>
+        `;
+        itemCounter++; // Increment the counter for the next item
+        
+        
+        // Add delete functionality to the button
+        newOrderItem.querySelector(".delete-item-btn").addEventListener("click", function (e) {
+            e.preventDefault();
+            newOrderItem.remove();
+            LabelItem.remove()
+            updateTotalOrderPrice()
+        });
+    
+        // Append to the container
+        container.appendChild(LabelItem);
+        container.appendChild(newOrderItem);
+
+    });
+    function checkQuantity(input) {
+        input.value = input.value.replace('.', '');
+
+    // If the value is less than or equal to 0, set it to 1
+    if (parseInt(input.value) <= 0 ) {
+        input.value = "1";
+    }
+    }
+    function handleDeleteItem(event) {
+        event.preventDefault(); // Prevent any default behavior, like page navigation or form submission
+        console.log('Delete button clicked!');
+    
+        // Remove the order item
+        const orderItem = event.target.closest('.order-item');
+        if (orderItem) {
+            orderItem.remove();
+        }
+    }
+    function fetch_category(){
+        fetch(`${window.location.origin}/api/category/?no_pagination=true`,{
+            "method":"GET",
+            "headers":{
+                "content-type": "application/json",
+						"Authorization": `Bearer ${authenticated}`
+            }
+
+        }).then((response)=>{
+            return response.json()
+        }).then((response)=>{
+            console.log(response)
+            count=1
+            response.data.forEach((data)=>{
+                category_data+=`<option value='${data.name}-${data.id}'>${data.name}</option>`
+                count++
+            })
+            console.log(category_data)
+            //document.getElementById("category-1").innerHTML=category_data
+        })
+    }
+    function fetch_subcategory(category_id){
+        console.log(category_id)
+        let category=document.getElementById(`category-${category_id}`)
+        if (category.value=="Select Menu-0"){
+            document.getElementById(`subcategory-${category_id}`).disabled=true
+            document.getElementById(`subcategory-${category_id}`).value="Select SubMenu-0"
+
+            document.getElementById(`subcategory-${category_id}`).style.opacity="0.5"
+
+            document.getElementById(`quantity-${category_id}`).disabled=true
+            document.getElementById(`quantity-${category_id}`).style.display="0.5"
+
+            document.getElementById(`price-${category_id}`).disabled=true
+            document.getElementById(`price-${category_id}`).style.display="0.5"
+
+
+        }
+        else{
+            real_category_value=category.value.split("-")[1]
+            fetch(`${window.location.origin}/api/subcategory/?category=${real_category_value}&no_pagination=true`,{
+                method:"GET",
+                "headers":{
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${authenticated}`
+                }
+                
+            }).then((response)=>{
+                return response.json()
+            }).then((response)=>{
+                console.log(response)
+                if (response.success==true){
+                    str='<option selected value="Select SubMenu-0">Select SubMenu</Option>'
+                    response.data.forEach((data)=>{
+                        str+=`<option value="${data.name}-${data.id}">${data.name}</Option>`
+                    })
+                    document.getElementById(`subcategory-${category_id}`).innerHTML=str
+                    document.getElementById(`subcategory-${category_id}`).style.opacity=1
+                    console.log(document.getElementById(`subcategory-${category_id}`).disabled)
+                    document.getElementById(`subcategory-${category_id}`).disabled=false
+                    console.log(document.getElementById(`subcategory-${category_id}`).disabled)
+
+
+                    //document.getElementById(`quantity-${category_id}`).disabled=false
+                    //document.getElementById(`quantity-${category_id}`).style.opacity=1
+//
+                    //document.getElementById(`price-${category_id}`).disabled=false
+                    //document.getElementById(`price-${category_id}`).style.opacity=1
+
+
+                }
+            })
+        }
+    }
+
+    function fetch_single_subcategory(subcategory_id) {
+        const subcategory = document.getElementById(`subcategory-${subcategory_id}`);
+        const quantityField = document.getElementById(`quantity-${subcategory_id}`);
+        const priceField = document.getElementById(`price-${subcategory_id}`);
+    
+        if (subcategory.value === "Select SubMenu-0") {
+            // Disable and visually indicate disabled state
+            quantityField.disabled = true;
+            quantityField.style.opacity = "0.5";
+            priceField.disabled = true;
+            priceField.style.opacity = "0.5";
+        } else {
+            real_subcategory_value=subcategory.value.split("-")[1]
+            // Fetch the subcategory details
+            fetch(`${window.location.origin}/api/subcategory/?no_pagination=true&search=${subcategory.value.split("-")[0]}`, {
+                method: "GET",
+                headers: {
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${authenticated}`
+                }
+            })
+            .then((response) => response.json())
+            .then((response) => {
+                if (response.success === true) {
+                    // Extract price from the response (assuming first item is the correct one)
+                    const subcategoryData = response.data[0]; // Adjust if needed
+                    const price = subcategoryData.price;
+    
+                    // Enable quantity and price fields
+                    quantityField.disabled = false;
+                    quantityField.value = "1";
+
+                    quantityField.style.opacity = "1";
+                    priceField.disabled = false;
+                    priceField.style.opacity = "1";
+    
+                    // Set the price field value
+                    priceField.innerHTML = `$${price}`;
+    
+                    // Add event listener to update price on quantity change
+                    quantityField.addEventListener("input", () => {
+                        const quantity = quantityField.value; // Ensure numeric value
+                        const totalPrice = quantity * price;
+                        priceField.innerHTML = `$${totalPrice.toFixed(2)}`; // Update price field with calculated total
+                        updateTotalOrderPrice();
+                    });
+                }
+            });
+        }
+    }
+    function updateTotalOrderPrice() {
+        let totalOrderPrice = 0;
+    
+        // Loop through all subcategories to calculate total order price
+        const allPriceFields = document.querySelectorAll('[id^="price-"]');
+        allPriceFields.forEach((priceField) => {
+            const priceText = priceField.innerHTML.trim();
+            const priceValue = parseFloat(priceText.replace('$', '').replace(',', ''));
+            if (!isNaN(priceValue)) {
+                totalOrderPrice += priceValue;
+            }
+        });
+    
+        // Update total order price displayed at the bottom
+        const totalPriceElement = document.getElementById('total-price'); // Ensure this element exists in your HTML
+        totalPriceElement.innerHTML = `$${totalOrderPrice.toFixed(2)}`;
+    }
+    let customer_name=document.getElementById("customer_name")
+    let delivery_address=document.getElementById("delivery_address")
+    let special_request=document.getElementById("special_request")
+
+
+
+    document.getElementById("post_save").onclick = async (e) => {
+
+        e.preventDefault();
+        card.style.display = "none"
+        // Disable the button and show the spinner
+        const postSaveButton = document.getElementById("post_save");
+        if (postSaveButton.disabled) {
+            return;
+        }
+        postSaveButton.innerHTML = `<div class="spinner-border text-light" role="status"></div>`;
+        postSaveButton.disabled = true;
+        postSaveButton.style.backgroundColor = "#159F46";
+        postSaveButton.style.color = "white";
+
+        // Show the circular progress bar
+        const progressBarContainer = document.querySelector('.progress-bar-container');
+        progressBarContainer.style.display = "flex";  // Show the progress bar
+        const progressValue = document.getElementById("percent-complete");
+
+        // Simulate progress increment
+        let progress = 10;  // Start at 15%
+        const progressInterval = setInterval(() => {
+            progress += 24;
+            if (progress > 79) {
+                clearInterval(progressInterval);
+            } else {
+                progressValue.textContent = progress;
+            }
+        }, 1000);  // Simulate progress increment every 500ms
+
+        // Prepare the data to be sent
+        
+        //let formData = new FormData();
+        //formData.append("user", profileId);
+//
+        //formData.append("cutomer_name", customer_name.value);
+        //formData.append("delivery_address",delivery_address.value );
+        //formData.append("special_request", special_request.value);
+//
+    
+    let items = [];
+    const orderItems = document.querySelectorAll('.order-item');  // Get all order item elements
+    
+
+for (let i = 0; i < orderItems.length; i++) {
+    const itemElement = orderItems[i];
+    
+    // Get the item details from the DOM elements
+    const itemId = itemElement.dataset.itemId;  // Assuming it's in the data-item-id attribute
+    const itemQuantity = itemElement.querySelector('.quantity-input').value;  // Get quantity from input field
+    const itemPrice = itemElement.querySelector('.price-display').textContent.replace("$","");  // Get price from text (could be in <span> or <p>)
+
+    const orderitemid=itemElement.querySelector('span[id^="orderitemid"]')
+    const orderid=itemElement.querySelector('span[id^="orderid"]')
+    // Get the category and subcategory
+    const category = itemElement.querySelector('select[id^="category"]').value;  // Get selected category
+    const subcategory = itemElement.querySelector('select[id^="subcategory"]').value;  // Get selected subcategory
+    const category_id = category.split('-')[1];
+    const subcategory_id = subcategory.split('-')[1];
+
+    console.log(category_id)
+    console.log(subcategory_id)
+    
+    // Check if category and subcategory are valid
+    if (category_id == 0) {
+        alert("Please select a menu option. This field cannot be left empty.");
+        postSaveButton.innerHTML = `Update Order`;
+        postSaveButton.disabled = false;
+        progressBarContainer.style.display = "none";
+        clearInterval(progressInterval); //
+        return;  // Exit the function to stop further execution
+    }
+
+    if (subcategory_id == 0) {
+        
+        postSaveButton.innerHTML = `Update Order`;
+        postSaveButton.disabled = false;
+        progressBarContainer.style.display = "none";
+        clearInterval(progressInterval); //
+        alert("Please select a Sub-menu option. This field cannot be left empty.");
+        return;  // Exit the function to stop further execution
+    }
+    if (itemQuantity==""){
+        postSaveButton.innerHTML = `Update Order`;
+        postSaveButton.disabled = false;
+        progressBarContainer.style.display = "none";
+        clearInterval(progressInterval); //
+        alert("Please provide quantity of order item. This field cannot be left empty.");
+        return;
+    }
+    
+    // Calculate unit price
+    const unitPrice = itemPrice / itemQuantity;
+
+    // Add the item to the list
+    
+    if (orderid && orderitemid){
+        items.push({
+            id:parseInt(orderitemid.innerHTML),
+            order:parseInt(orderid.innerHTML),
+            itemId: itemId,
+            category: parseInt(category_id),
+            subcategory: parseInt(subcategory_id),
+            quantity: itemQuantity,
+            order_item_total_price: itemPrice,
+            price: unitPrice,
+        });
+    }
+    else{
+        items.push({
+            itemId: itemId,
+            category: parseInt(category_id),
+            subcategory: parseInt(subcategory_id),
+            quantity: itemQuantity,
+            order_item_total_price: itemPrice,
+            price: unitPrice,
+        });
+    }
+}
+
+// Prepare the data for the API request
+let data = {
+    "customer_name":customer_name.value,
+    'delivery_address': delivery_address.value,
+    "special_instructions": special_request.value,
+    "order_total_price": document.getElementById("total-price").textContent.replace("$", ""),
+    "items": items,
+};
+
+customer_name.style.border = "1px solid grey";
+delivery_address.style.border = "1px solid grey";
+
+console.log(data);
+
+// Make the API request
+try {
+    const response = await fetch(`${window.location.origin}/api/orders/${orderId}/`, {
+        method: "PATCH",
+        headers: {
+            "content-type": "Application/json",
+            "Authorization": `Bearer ${authenticated}`,
+        },
+        body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+        // Complete the progress bar on success
+        clearInterval(progressInterval);
+        progressValue.textContent = 100;
+
+        // Hide progress bar after a brief delay
+        setTimeout(() => {
+            progressBarContainer.style.display = "none";
+        }, 1000);
+
+        // Handle success
+        document.getElementById('row1').style.display = "none";
+        document.getElementById("row2").style.display = "block";
+        card.style.display = "none";
+    } else {
+        // Handle errors
+        let errorMessage = "An error occurred";
+        if (result.message.customer_name) {
+            errorMessage = result.message.customer_name[0];
+            customer_name.style.border = "2px solid red";
+        } else if (result.message.delivery_address) {
+            errorMessage = result.message.delivery_address[0];
+            delivery_address.style.border = "2px solid red";
+        } else if (result.message.special_request) {
+            errorMessage = result.message.special_request[0];
+        } else if (result.message.non_field_errors) {
+            errorMessage = result.message.non_field_errors[0];
+        } else if (result.message.items) {
+            if (result.message.items[0].non_field_errors) {
+                errorMessage = result.message.items[0].non_field_errors[0];
+            }
+        }
+
+        message_content.innerHTML = errorMessage;
+        card.style.display = "flex";
+        card.style.borderLeft = "10px solid red";
+        message_type.innerHTML = "Error";
+        message_type.style.color = "red";
+        message_icon_parent.style.color = "red";
+        message_icon_child.classList = "fas fa-times-circle";
+        document.getElementById('post_form').style.display = "block";
+    }
+} catch (error) {
+    // Handle network or unexpected errors
+    console.error('Error:', error);
+    message_content.innerHTML = "Failed to upload the video. Please try again later.";
+    card.style.display = "flex";
+    card.style.borderLeft = "10px solid red";
+    message_type.innerHTML = "Error";
+    message_type.style.color = "red";
+    message_icon_parent.style.color = "red";
+    message_icon_child.classList = "fas fa-times-circle";
+    document.getElementById('post_form').style.display = "block";
+} finally {
+    // Re-enable the button and hide the progress bar after completion
+    postSaveButton.innerHTML = `Update Order`;
+    postSaveButton.disabled = false;
+    progressBarContainer.style.display = "none";
+    clearInterval(progressInterval); // Ensure progress simulation stops
+}}
+
+
+function reversefunction(e) {
+    window.location.reload()
+}
+async function fetch_update_category(setid,id){
+    console.log(id)
+    await fetch(`${window.location.origin}/api/category/exclude-category/?categoryid=${id}`,{
+        "method":"GET",
+        headers: {
+            "content-type": "Application/json",
+            "Authorization": `Bearer ${authenticated}`,
+        },
+    }).then((response)=>{
+        return response.json()
+    }).then((response)=>{
+        if (response.success){
+            str=``
+            response.data.forEach((data)=>{
+                        str+=`<option value="${data.name}-${data.id}">${data.name}</Option>`
+            })
+            const categorySelect = document.getElementById(`category-${setid}`);  // Get the select element using id
+            categorySelect.innerHTML += str;  // Append new options to existing options
+
+        }
+        else{
+    message_content.innerHTML = response.message;
+
+            card.style.display = "flex";
+    card.style.borderLeft = "10px solid red";
+    message_type.innerHTML = "Error";
+    message_type.style.color = "red";
+    message_icon_parent.style.color = "red";
+    message_icon_child.classList = "fas fa-times-circle";
+    document.getElementById('post_form').style.display = "block";
+        }
+    })
+}
+async function fetch_update_subcategory(setid,cat_id,subcat_id){
+    await fetch(`${window.location.origin}/api/subcategory/filter_subcategories/`,{
+        "method":"POST",
+        headers: {
+            "content-type": "Application/json",
+            "Authorization": `Bearer ${authenticated}`,
+        },
+        body:JSON.stringify({
+            "category_id":cat_id,
+            "subcategory_id":subcat_id
+
+        })
+    }).then((response)=>{
+        return response.json()
+    }).then((response)=>{
+        if (response.success){
+            str=``
+            response.data.forEach((data)=>{
+                        str+=`<option value="${data.name}-${data.id}">${data.name}</Option>`
+            })
+            const categorySelect = document.getElementById(`subcategory-${setid}`);  // Get the select element using id
+            categorySelect.innerHTML += str;  // Append new options to existing options
+
+        }
+        else{
+    message_content.innerHTML = response.message;
+
+            card.style.display = "flex";
+    card.style.borderLeft = "10px solid red";
+    message_type.innerHTML = "Error";
+    message_type.style.color = "red";
+    message_icon_parent.style.color = "red";
+    message_icon_child.classList = "fas fa-times-circle";
+    document.getElementById('post_form').style.display = "block";
+        }
+    })
+}
+</script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+{% endblock script %}

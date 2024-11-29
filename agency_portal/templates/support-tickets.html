@@ -1,0 +1,932 @@
+{% extends "base.html" %}
+{% block title %}
+
+{% endblock title %}
+{% block link %}
+
+{% endblock link %}
+{% block style %}
+<style>
+	/* Style for Dropzone preview images and videos */
+	.dropzone .dz-preview .dz-image,
+	.dropzone .dz-preview .dz-video {
+		border: 2px solid #007bff;
+		/* Change the border color and width as desired */
+		border-radius: 5px;
+		/* Optional: adds rounded corners */
+		padding: 5px;
+		/* Optional: add some padding */
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		/* Optional: adds a subtle shadow */
+	}
+
+	/* Style for the remove button */
+	.remove-btn {
+		background-color: red;
+		/* Change the background color */
+		color: white;
+		/* Text color */
+		border: none;
+		/* Remove border */
+		padding: 5px 10px;
+		/* Padding for the button */
+		cursor: pointer;
+		/* Change cursor to pointer */
+		margin-top: 5px;
+		/* Space between button and file preview */
+	}
+</style>
+{% endblock style %}
+{% block body %}
+
+<!-- /Header -->
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar breadcrumb-bar-info" style="margin-top: 125px;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-12">
+				<div class="breadcrumb-list">
+					<h2 class="breadcrumb-title">Support Tickets</h2>
+					<nav aria-label="breadcrumb" class="page-breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Support Tickets</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Breadcrumb -->
+
+<!-- Page Content -->
+<div class="page-content">
+	<div class="container">
+		<div class="row">
+
+			<!-- sidebar -->
+			<div class="col-xl-3 col-lg-3 theiaStickySidebar">
+				<div class="settings-widget dash-profile">
+					<div class="settings-menu">
+						<div class="profile-bg">
+							<div class="profile-img">
+								<a href="/myprofile/" class="profile-update" id="profile_picture_link2"><img
+										id="profile_page_image" src="/media/profile_picture/default_profile_image.png"
+										alt="Img"></a>
+							</div>
+						</div>
+						<div class="profile-group">
+							<div class="profile-name text-center">
+								<h4 id="profile_page_username2"> Username</h4>
+								<a href="/create-order/" class="add-course btn-primary">
+									<i class="fas fa-upload"></i> Create New Order
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Sidebar -->
+
+			<!-- Student Tickets -->
+			<div class="col-xl-9 col-lg-9">
+
+				<div class="settings-widget card-details">
+					<div class="settings-menu p-0">
+						<div class="profile-heading">
+							<h3>Support Tickets</h3>
+						</div>
+						<div class="checkout-form">
+
+							<!-- Support Information -->
+							<div class="row">
+								<div class="col-md-4 col-sm-6">
+									<div class="card support-box">
+										<div class="card-body">
+											<h3 id="total_ticket">00</h3>
+											<p>Total Tickets</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 col-sm-6">
+									<div class="card support-box">
+										<div class="card-body">
+											<h3 id="total_opened">00</h3>
+											<p>Opened Tickets</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 col-sm-6">
+									<div class="card support-box">
+										<div class="card-body">
+											<h3 id="total_closed">00</h3>
+											<p>Closed Tickets</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /Support Information -->
+
+							<div class="filter-grp ticket-grp d-flex align-items-center justify-content-between">
+								<div>
+									<h3>Support Tickets</h3>
+									<p>You can find all of your order Invoices.</p>
+								</div>
+								<div class="ticket-btn-grp">
+									<a href="#" data-bs-toggle="modal" data-bs-target="#add-tickets">Add New Ticket</a>
+								</div>
+							</div>
+
+							<div class="wishlist-tab">
+								<ul class="nav">
+									<li class="nav-item">
+										<a href="javascript:void(0);" class="active" data-bs-toggle="tab"
+											data-bs-target="#all" id="countall"></a>
+									</li>
+									<li class="nav-item">
+										<a href="javascript:void(0);" data-bs-toggle="tab" data-bs-target="#open"
+											id="countopen"></a>
+									</li>
+									<li class="nav-item">
+										<a href="javascript:void(0);" data-bs-toggle="tab" data-bs-target="#inprogress"
+											id="countinprogress"></a>
+									</li>
+									<li class="nav-item">
+										<a href="javascript:void(0);" data-bs-toggle="tab" data-bs-target="#closed"
+											id="countclosed"></a>
+									</li>
+								</ul>
+							</div>
+
+							<!-- Tab Contant -->
+							<div class="tab-content">
+
+								<!-- All -->
+								<div class="tab-pane show active" id="all">
+									<div class="table-responsive custom-table">
+
+										<!-- Referred Users-->
+										<table class="table table-nowrap mb-0">
+											<thead>
+												<tr>
+													<th>Ticket ID</th>
+													<th>Date</th>
+													<th>Subject</th>
+													<th>Priority</th>
+													<th>Category</th>
+													<th>Status</th>
+													<th>Delete</th>
+
+												</tr>
+											</thead>
+											<tbody id="allstr">
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- /All -->
+
+								<!-- Open -->
+								<div class="tab-pane fade" id="open">
+									<div class="table-responsive custom-table">
+
+										<!-- Referred Users-->
+										<table class="table table-nowrap mb-0">
+											<thead>
+												<tr>
+													<th>Ticket ID</th>
+													<th>Date</th>
+													<th>Subject</th>
+													<th>Priority</th>
+													<th>Category</th>
+													<th>Status</th>
+													<th>Delete</th>
+
+												</tr>
+											</thead>
+											<tbody id="openstr">
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- /Open -->
+
+								<!-- Inprogress -->
+								<div class="tab-pane fade" id="inprogress">
+									<div class="table-responsive custom-table">
+
+										<table class="table table-nowrap mb-0">
+											<thead>
+												<tr>
+													<th>Ticket ID</th>
+													<th>Date</th>
+													<th>Subject</th>
+													<th>Priority</th>
+													<th>Category</th>
+													<th>Status</th>
+													<th>Delete</th>
+
+												</tr>
+											</thead>
+											<tbody id="inprogressstr">
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- /Inprogress -->
+
+								<!-- Close -->
+								<div class="tab-pane fade" id="closed">
+									<div class="table-responsive custom-table">
+
+										<table class="table table-nowrap mb-0">
+											<thead>
+												<tr>
+													<th>Ticket ID</th>
+													<th>Date</th>
+													<th>Subject</th>
+													<th>Priority</th>
+													<th>Category</th>
+													<th>Status</th>
+													<th>Delete</th>
+
+												</tr>
+											</thead>
+											<tbody id="closedstr">
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- /Close -->
+
+							</div>
+							<!-- Tab Contant -->
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- Student Tickets -->
+
+		</div>
+	</div>
+</div>
+<!-- /Page Content -->
+
+<!-- Modal -->
+<div class="modalStyle modal fade" id="addpaymentMethod" tabindex="-1" aria-labelledby="addpaymentMethod"
+	aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Add New Payment Method</h5>
+				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i
+						class="fa-regular fa-circle-xmark"></i></button>
+			</div>
+			<div class="modal-body">
+				<div class="addpaymethod-form">
+					<form>
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="wallet-method">
+									<label class="radio-inline custom_radio me-4">
+										<input type="radio" name="optradio" checked="">
+										<span class="checkmark"></span> Credit or Debit card
+									</label>
+									<label class="radio-inline custom_radio">
+										<input type="radio" name="optradio">
+										<span class="checkmark"></span> PayPal
+									</label>
+								</div>
+								<div class="input-block">
+									<label class="form-control-label">Card Number</label>
+									<input type="text" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="input-block">
+									<label class="form-label">Month</label>
+									<select class="form-select" name="sellist1">
+										<option>Month</option>
+										<option>Brazil</option>
+										<option>French</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="input-block">
+									<label class="form-label">Year</label>
+									<select class="form-select" name="sellist1">
+										<option>Year</option>
+										<option>India</option>
+										<option>America</option>
+										<option>London</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="input-block">
+									<label class="form-control-label">CVV Code </label>
+									<input type="text" class="form-control" placeholder="XXXX">
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<div class="input-block mb-0">
+									<label class="form-control-label">Name on Card</label>
+									<input type="text" class="form-control" placeholder="Address">
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer me-auto">
+				<button type="button" class="btn btn-modal-style btn-theme">Save changes</button>
+				<button type="button" class="btn btn-modal-style btn-cancel" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Footer -->
+
+<!-- /Footer -->
+
+<div class="modal fade" id="add-tickets">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+			<div class="page-wrapper-new p-0">
+				<div class="content">
+					<div class="modal-header border-0 custom-modal-header">
+						<div class="page-title">
+							<h4>Add New Ticket</h4>
+						</div>
+						<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="feather-x"></i>
+						</button>
+					</div>
+					<div class="modal-body custom-modal-body">
+						<form>
+							<div class="tickets-add-list">
+								<div class="settings-inner-blk add-course-info p-0">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="input-block">
+												<label class="form-label">Ticket Title</label>
+												<input type="text" class="form-control" id="ticket_title">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="input-block">
+												<label class="form-label">Category</label>
+												<select class="form-select select country-select" name="sellist1"
+													id="ticket_category">
+													<option>Technical</option>
+													<option>Account</option>
+
+													<option>Billing</option>
+													<option>General</option>
+
+
+												</select>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="input-block">
+												<label class="form-label">Priority</label>
+												<select class="form-select select country-select" name="sellist1"
+													id="ticket_priority">
+													<option>Low</option>
+													<option>High</option>
+													<option>Medium</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="input-block">
+												<label class="form-label" id="ticket_description">Description</label>
+												<div id="editor3"></div>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="input-block ">
+												<label class="form-label">Attachment</label>
+												<div class="file-drop">
+													<div>
+														<p class="dropzone" id="attachment-dropzone"
+															enctype="multipart/form-data">Drag & Drop files </p>
+													</div>
+												</div>
+												<div class="accept-drag-file">
+													<p>Accept File Type: doc,docx,jpg,jpeg,png,txt,pdf</p>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer-btn">
+								<button type="submit" class="btn btn-primary" id="ticket_submit">Submit</button>
+								<button type="button" class="btn btn-outline-primary"
+									data-bs-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+
+{% endblock body %}
+
+<!-- /Main Wrapper -->
+{% block script %}
+<script>
+	var user_id = 0;
+
+	document.addEventListener("DOMContentLoaded", function () {
+
+		document.getElementsByClassName("footer-top")[0].style.opacity = 1
+		ClassicEditor
+			.create(document.querySelector('#editor3'), {
+				removePlugins: [
+					'Image',
+					'ImageToolbar',
+					'ImageCaption',
+					'ImageStyle',
+					'ImageUpload',
+					'EasyImage',
+					'CKFinder',
+					'MediaEmbed'
+				]
+			})
+			.then(editor => {
+				console.log("done");
+
+				// Attach the editor instance to a global variable for later use
+				window.editorInstance = editor;
+			})
+			.catch(error => {
+				console.error('There was a problem initializing the editor.', error);
+			});
+		let ticket_title = document.getElementById('ticket_title');
+		let ticket_description = document.getElementById('editor3');
+		let ticket_category = document.getElementById('ticket_category');
+		let ticket_priority = document.getElementById('ticket_priority');
+		let ticket_attachment_dropzone = document.getElementById('attachment-dropzone');
+
+		if (authenticated) {
+			document.getElementById('ticket_submit').addEventListener("click", function (e) {
+				e.preventDefault()
+				fetch_support_tickets(user_id);
+			});
+
+			const userApi = async () => {
+				await fetch(`${window.location.origin}/api/user/get-user-single/`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${authenticated}`
+					}
+				})
+					.then((response) => response.json())
+					.then((response) => {
+						if (response.success) {
+							userprofileid=response.data.id
+								console.log(response.data.image);
+								document.getElementById("profile_image").src = `${response.data.profile_picture}`;
+								document.getElementById("profile_image2").src = `${response.data.profile_picture}`;
+								document.getElementById("profile_username").innerHTML = `${response.data.username}`;
+								document.getElementById("profile_page_username2").innerHTML = `${response.data.username}`;
+
+								
+					document.getElementById("profile_page_image").src=response.data.profile_picture
+
+								
+							user_id = response.data.id;
+							fetch_support_ticket_user(response.data.username)
+						}
+						console.log(response);
+					});
+			};
+
+			userApi();
+		} else {
+			console.log("You are not logged in.");
+		}
+
+		async function fetch_support_tickets(id) {
+			card.style.display = "none";
+			ticket_description.style.border = "none"
+
+			let data = new FormData();
+			data.append("title", ticket_title.value);
+			data.append("user", id);
+			data.append("priority", ticket_priority.value);
+			data.append("category", ticket_category.value);
+			data.append("description", window.editorInstance.getData());
+
+			const dropzoneFiles = ticket_attachment_dropzone.dropzone.getAcceptedFiles();
+			dropzoneFiles.forEach((file) => {
+				data.append("attachments", file); // Append file directly to 'attachments'
+			});
+
+
+
+			console.log("Data to be sent:", data);
+
+			await fetch(`${window.location.origin}/api/support-ticket/`, {
+				method: "POST",
+				headers: {
+					"Authorization": `Bearer ${authenticated}`
+				},
+				body: data // Send FormData directly
+			})
+				.then((response) => response.json())
+				.then((response) => {
+					if (response.success) {
+
+						card.style.display = "flex";
+						card.style.borderLeft = "10px solid green";
+
+						message_content.innerHTML = "Your support ticket is created. An email has been sent to our admin, and our team will assist you soon. Thank you!";
+
+						// Use Bootstrap's modal hide <method></method>
+						document.getElementById("add-tickets").style.display = "none" // This will properly hide the modal
+						document.getElementById("add-tickets").classList.remove("show")
+						document.getElementById("add-tickets").setAttribute("aria-hidden", "true")
+						document.getElementById("add-tickets").removeAttribute("role")
+						document.getElementById("add-tickets").removeAttribute("aria-modal") // This will properly hide the modal
+						// This will properly hide the modal
+						// This will properly hide the modal
+
+
+						message_type.innerHTML = "Success";
+						message_type.style.color = "green";
+						message_icon_parent.style.color = "green";
+						message_icon_child.classList = "fas fa-check-circle";
+						setTimeout(() => {
+							card.style.display = "none";
+							window.location.reload()
+						}, 3000)
+
+						ticket_title.value = ""
+						window.editorInstance.setData('');
+						ticket_attachment_dropzone.dropzone.removeAllFiles(true);
+
+					}
+					else {
+						if (response.message.title) {
+							message_content.innerHTML = response.message.title[0];
+
+						}
+						else if (response.message.category) {
+
+							message_content.innerHTML = response.message.category[0];
+
+						}
+						else if (response.message.priority) {
+
+
+							message_content.innerHTML = response.message.priority[0];
+
+						}
+						else if (response.message.description) {
+							ticket_description.style.border = "2px solid red"
+							ticket_description.style.display = "block"
+
+							message_content.innerHTML = response.message.description[0];
+
+						}
+						else if (response.message.attachments) {
+							message_content.innerHTML = response.message.attachments[0];
+						}
+						else if (response.message.non_field_errors) {
+
+							message_content.innerHTML = response.message.non_field_errors[0];
+
+						}
+						else if (response.message) {
+
+							message_content.innerHTML = response.message[0];
+
+						}
+
+						card.style.display = "flex";
+						card.style.borderLeft = "10px solid red";
+						message_type.innerHTML = "Error";
+						message_type.style.color = "red";
+						message_icon_parent.style.color = "red";
+						message_icon_child.classList = "fas fa-times-circle";
+					}
+					console.log("Response:", response);
+				});
+		}
+	});
+	Dropzone.options.attachmentDropzone = {
+		autoProcessQueue: false, // Disable automatic upload
+		url: `${window.location.origin}/api/support-ticket/`, // Set the correct URL here
+		init: function () {
+			const myDropzone = this;
+			this.on("uploadprogress", function (file, progress) {
+				// Do nothing on upload progress to avoid showing loading state
+			});
+
+			this.on("addedfile", function (file) {
+				// Show remove button when a file is added
+				const removeButton = Dropzone.createElement("<button class='remove-btn' style='background: #ff4667;color: white;border: none;border-radius: 10px;padding: 8px;'>Remove</button>");
+				const _this = this; // Reference to the Dropzone instance
+
+				removeButton.addEventListener("click", function (e) {
+					e.preventDefault();
+					e.stopPropagation();
+					_this.removeFile(file); // Remove file from Dropzone
+				});
+
+				file.previewElement.appendChild(removeButton); // Append remove button to the file preview
+			});
+
+			this.on("removedfile", function (file) {
+				console.log("File removed:", file.name);
+				// Any additional logic on file removal can be added here
+			});
+		}
+	};
+	async function fetch_support_ticket_user(username) {
+		await fetch(`${window.location.origin}/api/support-ticket/?user_username=${username}&no_pagination=true&ordering=-id`, {
+			"method": "GET",
+			"headers": {
+				"Authorization": `Bearer ${authenticated}`
+			}
+		}).then((response) => {
+			return response.json()
+		}).then((response) => {
+			console.log(response)
+			if (response.success) {
+				if (response.data) {
+
+					allstr = ""
+					countall = 0
+
+					openstr = ""
+					countopen = 0
+
+					inprogressstr = ""
+					countinprogress = 0
+
+					closedstr = ""
+					countclosed = 0
+
+					console.log(response.data.length)
+					response.data.forEach((data) => {
+						if (data.title && data.title.length > 50) {
+							// Get the first 50 characters and add ellipsis
+							title = data.title.substring(0, 50) + '...';
+						} else {
+							title = data.title; // Use the title as is if it's within the limit
+						}
+						console.log("status", data.status)
+						console.log(data.status == "Closed")
+						const timestamp = data.created_at;
+						const date = new Date(timestamp);
+						const options = { year: 'numeric', month: 'long', day: 'numeric' };
+						const formattedDate = date.toLocaleDateString('en-US', options);
+						let ticket_status = ""
+						if (data.status == "InProgress") {
+							ticket_status = `<td><span class="status-badge badge-soft-warning">${data.status}</span></td>`
+						}
+						else if (data.status == "Open") {
+							ticket_status = `<td><span class="status-badge badge-soft-danger">${data.status}</span></td>`
+
+						}
+						else {
+							ticket_status = `<td><span class="status-badge badge-soft-success">${data.status}</span></td>`
+
+						}
+
+
+						let ticket_priority = ""
+						if (data.priority == "Low") {
+							ticket_priority = `<td><span class="status-badge badge-soft-danger">${data.priority}</span></td>`
+						}
+						else if (data.priority == "Medium") {
+							ticket_priority = `<td><span class="status-badge badge-soft-warning">${data.priority}</span></td>`
+
+						}
+						else {
+							ticket_priority = `<td><span class="status-badge badge-soft-success">${data.priority}</span></td>`
+
+						}
+
+						allstr += `<tr>
+													<td><a href="javascript:void(0);" class="tab-title">${data.ticket_id}</a>
+													</td>
+													<td>${formattedDate}</td>
+													<td>${title}</td>
+													
+													${ticket_priority}
+													<td>${data.category}</td>
+													${ticket_status}
+													<td><button class="btn btn-primary"  style="color: white;
+    background: #ff4667;" onclick=support_ticket_delete(${data.id},"${data.ticket_id}")>Delete</button></td>
+
+												</tr>`
+
+						countall++
+
+						if (data.status == "Open") {
+							openstr += `<tr>
+													<td><a href="javascript:void(0);" class="tab-title">${data.ticket_id}</a>
+													</td>
+													<td>${formattedDate}</td>
+													<td>${title}</td>
+													
+													${ticket_priority}
+													<td>${data.category}</td>
+													${ticket_status}
+													<td><button class="btn btn-primary"  style="color: white;
+    background: #ff4667;" onclick=support_ticket_delete(${data.id},"${data.ticket_id}")>Delete</button></td>
+												</tr>`
+
+							countopen++
+						}
+						if (data.status == "InProgress") {
+							inprogressstr += `<tr>
+													<td><a href="javascript:void(0);" class="tab-title">${data.ticket_id}</a>
+													</td>
+													<td>${formattedDate}</td>
+													<td>${title}</td>
+													
+													${ticket_priority}
+													<td>${data.category}</td>
+													${ticket_status}
+													<td><button class="btn btn-primary"  style="color: white;
+    background: #ff4667;" onclick=support_ticket_delete(${data.id},"${data.ticket_id}")>Delete</button></td>
+												</tr>`
+
+							countinprogress++
+						}
+						if (data.status == "Closed") {
+							console.log("yes")
+							closedstr += `<tr>
+													<td><a href="javascript:void(0);" class="tab-title">${data.ticket_id}</a>
+													</td>
+													<td>${formattedDate}</td>
+													<td>${title}</td>
+													
+													${ticket_priority}
+													<td>${data.category}</td>
+													${ticket_status}
+													<td><button class="btn btn-primary"  style="color: white;
+    background: #ff4667;" onclick=support_ticket_delete(${data.id},"${data.ticket_id}")>Delete</button></td>
+												</tr>`
+
+							countclosed++
+						}
+
+
+					})
+					// Example of how to structure the empty states for all sections
+					console.log("closedstr", closedstr)
+
+					if (allstr == "") {
+						document.getElementById("allstr").innerHTML = `
+        <tr>
+            <td colspan="7" style="padding: 53px 10px; text-align: center;">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                    <h4 style="margin: 10px; color: gray;">
+                        There are no Support Tickets.
+                    </h4>
+                </div>
+            </td>
+        </tr>`;
+					} else {
+						document.getElementById("allstr").innerHTML = allstr;
+					}
+
+					if (openstr == "") {
+						document.getElementById("openstr").innerHTML = `
+        <tr>
+            <td colspan="7" style="padding: 53px 10px; text-align: center;">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                    <h4 style="margin: 10px; color: gray;">
+                        There are no Support Tickets having status 'Open'.
+                    </h4>
+                </div>
+            </td>
+        </tr>`;
+					} else {
+						document.getElementById("openstr").innerHTML = openstr;
+					}
+
+					if (inprogressstr == "") {
+						document.getElementById("inprogressstr").innerHTML = `
+        <tr>
+            <td colspan="7" style="padding: 53px 10px; text-align: center;">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                    <h4 style="margin: 10px; color: gray;">
+                        Support Tickets having status 'InProgress'.
+                    </h4>
+                </div>
+            </td>
+        </tr>`;
+					} else {
+						document.getElementById("inprogressstr").innerHTML = inprogressstr;
+					}
+
+					if (closedstr == "") {
+						document.getElementById("closedstr").innerHTML = `
+        <tr>
+            <td colspan="7" style="padding: 53px 10px; text-align: center;">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                    <h4 style="margin: 10px; color: gray;">
+                        There are no Support Tickets having status 'Closed'.
+                    </h4>
+                </div>
+            </td>
+        </tr>`;
+					} else {
+						document.getElementById("closedstr").innerHTML = closedstr;
+					}
+
+					document.getElementById("countall").innerHTML = `All(${countall})`
+					document.getElementById("countopen").innerHTML = `Open(${countopen})`
+					document.getElementById("countinprogress").innerHTML = `InProgress(${countinprogress})`
+					document.getElementById("countclosed").innerHTML = `Closed(${countclosed})`
+
+					function formatNumber(num) {
+						return num < 10 ? '0' + num : num;
+					}
+
+					document.getElementById('total_ticket').innerHTML = formatNumber(countall);
+					document.getElementById('total_opened').innerHTML = formatNumber(countopen);
+					document.getElementById('total_closed').innerHTML = formatNumber(countclosed);
+
+
+
+
+				}
+			}
+		})
+	}
+	document.getElementsByClassName("footer-top")[0].classList.remove("aos");
+	document.getElementsByClassName("footer-top")[0].setAttribute("data-aos", "");
+
+	async function support_ticket_delete(id, ticket_id) {
+		card.style.display = "none"
+		check = confirm(`Are you sure to delete this ${ticket_id} support_ticket`)
+		if (check) {
+
+			await fetch(`${window.location.origin}/api/support-ticket/${id}/`, {
+				method: "DELETE",
+				headers: {
+					"Authorization": `Bearer ${authenticated}`
+
+				}
+
+			}).then((response) => {
+				return response.json()
+			}).then((response) => {
+				if (response.success) {
+					console.log(response)
+					card.style.display = "flex";
+					card.style.borderLeft = "10px solid green"
+					message_content.innerHTML = `Support Ticket ${ticket_id} successfully deleted`
+					message_type.innerHTML = "Success";
+					message_type.style.color = "green";
+					message_icon_parent.style.color = "green";
+					message_icon_child.classList = "fas fa-check-circle";
+					setTimeout(() => {
+						card.style.display = "none";
+					}, 2500)
+					fetch_support_ticket_user(user_id)
+
+				}
+				else {
+					message_content.innerHTML = "Something went wrong ! try again later";
+					card.style.display = "flex";
+					card.style.borderLeft = "10px solid red";
+					message_type.innerHTML = "Oops";
+					message_type.style.color = "red";
+					message_icon_parent.style.color = "red";
+					message_icon_child.classList = "fas fa-times-circle";
+				}
+			})
+		}
+
+	}
+</script>
+{% endblock script %}
+<!-- jQuery -->

@@ -1,0 +1,299 @@
+{% extends "base.html" %}			
+{% block title %}
+  profile-edit
+{% endblock title %}
+{% block link %}
+
+  
+{% endblock link %}
+
+{% block style %}
+  
+{% endblock style %}
+
+{% block body %}
+  
+
+			<!-- Breadcrumb -->
+			<div class="breadcrumb-bar breadcrumb-bar-info" style="margin-top:100px;">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 col-12">
+							<div class="breadcrumb-list">
+								<h2 class="breadcrumb-title">Edit Profile</h2>
+								<nav aria-label="breadcrumb" class="page-breadcrumb">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item"><a href="/dashboard/">Dashboard</a></li>
+										<li class="breadcrumb-item active" aria-current="page">Edit Profile</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Breadcrumb -->	
+			
+			<!-- Page Content -->
+			<div class="page-content">
+				<div class="container">
+					<div class="row">
+						
+						<!-- sidebar -->
+						<div class="col-xl-3 col-lg-3 theiaStickySidebar">
+							<div class="settings-widget dash-profile">
+								<div class="settings-menu">
+									<div class="profile-bg">
+										<div class="profile-img">
+											<a href="/myprofile/" id="profile_picture_link2" class="profile-update"><img id="profile_page_image"
+												src="/media/profile_picture/default_profile_image.png" alt="Img"></a>
+										</div>
+									</div>
+									<div class="profile-group">
+										<div class="profile-name text-center">
+											<h4 id="profile_page_username2"> Username</h4>
+											
+											<a href="/upload-video/" class="add-course btn-primary">
+												<i class="fas fa-upload"></i> Create New Order
+											  </a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /Sidebar -->
+						
+						<!-- Instructor Settings -->
+						<div class="col-xl-9 col-lg-9">	
+
+							<div class="settings-widget card-details">
+								<div class="settings-menu p-0">
+									<div class="profile-heading">
+										<h3>Edit Profile</h3>
+										<p>You have full control to manage your own Profile</p>
+									</div>
+									
+									<form action="#">
+										<div class="course-group profile-upload-group mb-0 d-flex">									
+											<div class="course-group-img profile-edit-field d-flex align-items-center">
+												<a href="" class="profile-pic" id="profile_picture_link"><img src="/static/img/user/user-17.jpg" alt="Img" class="img-fluid" id="profile_picture"></a>
+												<div class="profile-upload-head">
+													<h4 id="avatar_username"></a></h4>
+													<p>PNG, JPEG, and JPG are only supported</p>
+													<div class="new-employee-field">
+														<div class="d-flex align-items-center mt-2">
+															<div class="image-upload mb-0">
+																<input type="file" id="file-input" accept=".png, .jpeg, .jpg">
+																<div class="image-uploads">
+																	<i class="bx bx-cloud-upload"></i>
+																</div>
+															</div>
+															<div id="file-name" class="ml-3" style="display: none;padding-left: 5px;" >No file chosen</div>
+															<div class="img-delete ml-3" style="display: none;" >
+																<a href="#" id="delete-button" class="delete-icon"><i class="bx bx-trash"></i></a>
+															</div>
+														</div>
+													</div>
+
+												</div>
+											</div>											
+										</div>
+										<div class="checkout-form settings-wrap">
+											<div class="edit-profile-info">
+												<h5>Personal Details</h5>
+												<p>Edit your personal information</p>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="input-block">
+														<label class="form-label">User Name</label>
+														<input type="text" class="form-control" id="username">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="input-block">
+														<label class="form-label">Email Address</label>
+														<input type="email" class="form-control" id="email">
+													</div>
+												</div>
+
+												<div class="col-md-12">
+													<button class="btn btn-primary" type="submit" id="profile_update">Update Profile</button>
+												</div>
+											</div>
+										</div>
+									</form>								
+								</div>
+							</div>
+						</div>	
+						<!-- /Instructor Settings -->
+						
+					</div>
+				</div>
+			</div>	
+{% endblock body %}
+
+			<!-- /Page Content -->
+
+			{% block script %}
+			<script>
+				let userprofileid=0;
+				const fileInput = document.getElementById('file-input');
+				const fileNameElement = document.getElementById('file-name');
+				const deleteButton = document.getElementById('delete-button');
+				const imgDeleteDiv = document.querySelector('.img-delete');
+				const updateButton = document.getElementById('profile_update');
+			
+				if (authenticated) {
+					console.log("called");
+					let token = authenticated;
+					const userApi = async () => {
+						await fetch(`${window.location.origin}/api/user/get-user-single`, {
+							"method": "get",
+							"headers": {
+								"content-type": "application/json",
+								"Authorization": `Bearer ${token}`
+							}
+						}).then((response) => response.json())
+						.then((response) => {
+							if (response.success) {
+
+								userprofileid=response.data.id
+								console.log(response.data.image);
+								document.getElementById("profile_image").src = `${response.data.profile_picture}`;
+								document.getElementById("profile_image2").src = `${response.data.profile_picture}`;
+								document.getElementById("profile_username").innerHTML = `${response.data.username}`;
+								document.getElementById("profile_page_username2").innerHTML = `${response.data.username}`;
+
+					document.getElementById("profile_page_image").src=response.data.profile_picture
+
+								
+								if (response.data.username !== '') {
+									document.getElementById("username").value = response.data.username;
+									document.getElementById("avatar_username").innerHTML = response.data.username;
+								} else {
+									document.getElementById("username").placeholder = "Not Provided";
+								}
+
+								if (response.data.email !== '') {
+									document.getElementById("email").value = response.data.email;
+								} else {
+									document.getElementById("email").placeholder = "Not Provided";
+								}
+			
+			
+			
+								if (response.data.profile_picture) {
+									document.getElementById("profile_picture").src = response.data.profile_picture;
+									document.getElementById("profile_picture_link").href = response.data.profile_picture;
+
+								}
+							}
+							console.log(response);
+						});
+					};
+					updateButton.addEventListener('click', async function(event) {
+						event.preventDefault()
+						card.style.display="none"
+				document.getElementById('username').style.border="0.5px solid grey"
+						const formData = new FormData();
+						formData.append('username', document.getElementById('username').value);
+						formData.append('email', document.getElementById('email').value);
+				
+						if (fileInput.files.length > 0) {
+							formData.append('profile_picture', fileInput.files[0]);
+						}
+				
+						try {
+							const response = await fetch(`${window.location.origin}/api/user/${userprofileid}/`, {
+								method: 'PATCH',
+								headers: {
+									'Authorization': `Bearer ${authenticated}`
+								},
+								body: formData
+							}).then((response)=>{
+								return response.json()
+							}).then((response)=>{
+								if(response.success){
+									console.log('Profile updated successfully');
+									card.style.display = "flex";
+								card.style.borderLeft = "10px solid green";
+		
+								message_content.innerHTML = response.message;
+								message_type.innerHTML = "Success";
+								message_type.style.color = "green";
+								message_icon_parent.style.color = "green";
+								message_icon_child.classList = "fas fa-check-circle";
+		
+								userApi()
+								setTimeout(()=>{
+									card.style.display = "none";
+
+								},2000)
+		
+								}
+								else{
+									if(response.message.username){
+	
+										message_content.innerHTML = response.message.username[0];
+										document.getElementById('username').style.border="1px solid red"
+									}
+									if(response.message.profile_picture){
+										message_content.innerHTML = response.message.profile_picture[0];
+		
+									}
+									if(response.message.email){
+										message_content.innerHTML = response.message.email[0];
+										document.getElementById('email').style.border="1px solid red"
+	
+									}
+									if(response.message.non_field_errors){
+	
+										message_content.innerHTML = response.message.non_field_errors[0];
+									}
+								card.style.display = "flex";
+								card.style.borderLeft = "10px solid red";
+								message_type.innerHTML = "Error";
+								message_type.style.color = "red";
+								message_icon_parent.style.color = "red";
+								message_icon_child.classList = "fas fa-times-circle";
+								}
+							})
+						} catch (error) {
+							console.error('Error updating profile:', error);
+						}
+					});
+					userApi();
+				}
+				else{
+					window.location.href="login"
+				}
+			
+				// JavaScript to handle file input, display file name, and delete file
+				fileInput.addEventListener('change', function(event) {
+					if (fileInput.files.length > 0) {
+						const fileName = fileInput.files[0].name;
+						fileNameElement.textContent = fileName;
+						imgDeleteDiv.style.display = 'block';
+						fileNameElement.style.display = "block"; // Show the delete button
+					} else {
+						fileNameElement.textContent = '';
+						imgDeleteDiv.style.display = 'none';
+						fileNameElement.style.display = "none"; // Hide the delete button
+					}
+				});
+			
+				deleteButton.addEventListener('click', function(event) {
+					event.preventDefault();
+					fileInput.value = ''; // Clear the file input
+					fileNameElement.textContent = ''; // Reset the file name display
+					imgDeleteDiv.style.display = 'none'; // Hide the delete button
+				});
+			
+				// JavaScript to handle profile update
+				
+				
+		
+			</script>
+			{% endblock script %}
+			

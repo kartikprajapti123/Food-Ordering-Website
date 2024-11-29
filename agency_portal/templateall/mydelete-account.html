@@ -1,0 +1,276 @@
+{% extends "base.html" %}		
+{% block title %}
+  
+{% endblock title %}			
+{% block style %}
+  
+{% endblock style %}
+{% block body %}
+			<!-- Breadcrumb -->
+			<div class="breadcrumb-bar breadcrumb-bar-info">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 col-12">
+							<div class="breadcrumb-list">
+								<h2 class="breadcrumb-title">Settings</h2>
+								<nav aria-label="breadcrumb" class="page-breadcrumb">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+										<li class="breadcrumb-item active" aria-current="page">Delete Account</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Breadcrumb -->	
+			
+			<!-- Page Content -->
+			<div class="page-content">
+				<div class="container">
+					<div class="row">
+						
+						<!-- sidebar -->
+						<div class="col-xl-3 col-lg-3 theiaStickySidebar">
+							<div class="settings-widget dash-profile">
+								<div class="settings-menu">
+									<div class="profile-bg">
+										<div class="profile-img">
+											<a href="/myprofile/" class="profile-update"><img id="profile_page_image"
+												src="/media/profile_pictures/default_profile_image.png" alt="Img"></a>
+										</div>
+									</div>
+									<div class="profile-group">
+										<div class="profile-name text-center">
+											<h4 id="profile_page_username2"> Username</h4>
+											<a href="#" class="add-course btn-primary" id="share-button">
+												<i class="fas fa-share-alt"></i> Share Profile URL
+											</a>
+											<a href="/upload-video/" class="add-course btn-primary">
+												<i class="fas fa-upload"></i> Upload New Video
+											  </a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="settings-widget account-settings">
+								<div class="settings-menu">
+									<h3>Creators' Corner</h3>
+									<ul>
+										<li class="nav-item">
+											<a href="/creator/" class="nav-link" id="creator_check">
+											</a>
+										</li>
+										<li class="nav-item ">
+											<a href="/myprofile/" class="nav-link profile-update">
+												<i class="bx bxs-user"></i>My Profile
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="/myvideo/" class="nav-link">
+												<i class="bx bxs-tachometer"></i>My videos
+											</a>
+										</li>
+										<!-- <li class="nav-item">
+											<a href="instructor-enrolled-course.html" class="nav-link">
+												<i class="bx bxs-graduation"></i>Enrolled Courses
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-wishlist.html" class="nav-link">
+												<i class="bx bxs-heart"></i>Wishlist
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-reviews.html" class="nav-link">
+												<i class="bx bxs-star"></i>Reviews
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-quiz.html" class="nav-link">
+												<i class="bx bxs-shapes"></i>My Quiz Attempts
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-orders.html" class="nav-link">
+												<i class="bx bxs-cart"></i>Order History
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-qa.html" class="nav-link">
+												<i class="bx bxs-bookmark-alt"></i>Question & Answer
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-referral.html" class="nav-link">
+												<i class="bx bxs-user-plus"></i>Referrals
+											</a>
+										</li> -->
+										<li class="nav-item">
+											<a href="/contact-list/" class="nav-link">
+												<i class="bx bxs-chat"></i>Messages
+											</a>
+										</li>
+									
+										<!-- <li class="nav-item">
+											<a href="instructor-notifications.html" class="nav-link">
+												<i class="bx bxs-bell"></i>Notifications
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-tickets.html" class="nav-link">
+												<i class="bx bxs-coupon"></i>Support Tickets
+											</a>
+										</li> -->
+									</ul>
+									<!-- <h3>Instructor</h3>
+									<ul>
+										<li class="nav-item">
+											<a href="instructor-course.html" class="nav-link ">
+												<i class="bx bxs-rocket"></i>My Courses
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-announcements.html" class="nav-link">
+												<i class="bx bxs-volume-full"></i>Announcements
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-withdraw.html" class="nav-link ">
+												<i class="bx bxs-wallet"></i>Withdrawls
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-quiz-attempts.html" class="nav-link">
+												<i class="bx bxs-shapes"></i>Quiz Attempts
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-assignment.html" class="nav-link ">
+												<i class="bx bxs-file"></i>Assignments
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-earnings.html" class="nav-link">
+												<i class="bx bxs-badge-dollar"></i>Earnings
+											</a>
+										</li>
+									</ul> -->
+									<h3>Account Settings</h3>
+									<ul>
+										<li class="nav-item active">
+											<a href="/myprofileedit/" class="nav-link ">
+												<i class="bx bxs-cog"></i>Settings
+											</a>
+										</li>
+										<li class="nav-item">
+											<div  class="nav-link" onClick="LogoutApi()"><a href="#">
+			
+												<i class="bx bxs-log-out"></i>Logout
+											</a>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- /Sidebar -->
+						
+						<!-- Instructor Settings -->
+						<div class="col-xl-9 col-lg-9">	
+
+							<div class="settings-widget card-details">
+								<div class="settings-menu p-0">
+									<div class="profile-heading">
+										<h3>Settings</h3>
+										<p>You have full control to manage your own account settings</p>
+									</div>
+									<div class="settings-page-head">
+										<ul class="settings-pg-links">
+											<li><a href="/myprofileedit/"><i class="bx bx-edit"></i>Edit Profile</a></li>
+											<li><a href="/mychangepassword/"><i class="bx bx-lock"></i>Change Password</a></li>
+                                            <li><a href="/mydelete-account/" class="active"><i class="bx bx-error-alt"></i>Delete Account</a></li>
+											<!-- <li><a href="instructor-setting-notifications.html"><i class="bx bx-bell"></i>Notifications</a></li> -->
+											<!-- <li><a href="instructor-setting-withdraw.html"><i class="bx bx-wallet-alt"></i>Withdraw</a></li> -->
+											
+										</ul>
+									</div>
+									<div class="checkout-form settings-wrap">
+										<div class="edit-profile-info">
+											<h5>Click Delete button to remove your account</h5>
+										</div>
+										<div class="del-acc">
+											<h6>Warning</h6>
+											<p>If you choose to delete your account, all associated content and data will be permanently removed.</p>
+										</div>
+										<a href="#" class="btn btn-primary" id="delete_account">Delete My Account</a>
+									</div>						
+								</div>
+							</div>
+						</div>	
+						<!-- /Instructor Settings -->
+						
+					</div>
+				</div>
+			</div>	
+			<!-- /Page Content -->
+			{% endblock body %}
+			{% block script %}
+              <script>
+				console.log(profileId)
+				if(authenticated){
+					document.getElementById("delete_account").onclick = async (e) => {
+						e.preventDefault();
+						card.style.display="none"
+						check=confirm("Are you sure to delete your accout It will delete your data")
+						if(check){
+
+							await fetch(`${window.location.origin}/api/user/${profileId}/`, {
+								method: "delete",
+								headers: 
+								{
+									"content-type": "application/json",
+									"Authorization": `Bearer ${authenticated}`
+								},
+							}).then((response)=>{
+								return response.json()
+							}).then((response)=>{
+								if(response.success){
+									card.style.display = "flex";
+										card.style.borderLeft = "10px solid green";
+				
+										message_content.innerHTML = response.message;
+										message_type.innerHTML = "Success";
+										message_type.style.color = "green";
+										message_icon_parent.style.color = "green";
+										message_icon_child.classList = "fas fa-check-circle";
+			
+										localStorage.removeItem("jerry_project_access_token")
+										localStorage.removeItem("jerry_project_refresh_token")
+
+			
+									setTimeout(()=>{
+										window.location.href="/"
+									},2500)
+									
+									
+								}
+								else{
+									message_content.innerHTML = response.message;
+									card.style.display = "flex";
+									card.style.borderLeft = "10px solid red";
+									message_type.innerHTML = "Error";
+									message_type.style.color = "red";
+									message_icon_parent.style.color = "red";
+										message_icon_child.classList = "fas fa-times-circle";
+								}
+							})
+						}
+					}
+				}
+				
+		
+			</script>
+            {% endblock script %}
+			<!-- Footer -->

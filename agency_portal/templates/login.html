@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<title>Login</title>
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.svg">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+	<!-- Fontawesome CSS -->
+	<link rel="stylesheet" href="/static/plugins/fontawesome/css/fontawesome.min.css">
+	<link rel="stylesheet" href="/static/plugins/fontawesome/css/all.min.css">
+
+	<!-- Owl Carousel CSS -->
+	<link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="/static/css/owl.theme.default.min.css">
+
+	<!-- Feathericon CSS -->
+	<link rel="stylesheet" href="/static/plugins/feather/feather.css">
+
+	<!-- Main CSS -->
+	<link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+	<link rel="stylesheet" href="/static/css/message_box.css">
+
+</head>
+
+<body>
+
+	<!-- Main Wrapper -->
+	<div class="main-wrapper log-wrap">
+
+		<div class="row">
+
+			<!-- Login Banner -->
+			<div class="col-md-6 login-bg">
+				<div class="owl-carousel login-slide owl-theme">
+					<!-- Slide 1 -->
+					<div class="welcome-login">
+						<div class="login-banner">
+							<img src="/static/img/login-img.png" class="img-fluid" alt="Welcome to AgelessEatsKitchen.com">
+						</div>
+						<div class="mentor-course text-center">
+							<h2>Welcome to AgelessEatsKitchen.com</h2>
+							<p>Your trusted platform for high-quality frozen foods. Connect with us to streamline your agency's food sourcing and enjoy seamless, professional service.</p>
+						</div>
+					</div>
+					<!-- Slide 2 -->
+					<div class="welcome-login">
+						<div class="login-banner">
+							<img src="/static/img/login-img.png" class="img-fluid" alt="Quality Frozen Foods Delivered to You">
+						</div>
+						<div class="mentor-course text-center">
+							<h2>Reliable Frozen Food Delivery</h2>
+							<p>Experience a dependable supply chain with AgelessEatsKitchen.com. We provide agencies with premium frozen food products, ensuring timely delivery and consistent quality.</p>
+						</div>
+					</div>
+					<!-- Slide 3 -->
+					<div class="welcome-login">
+						<div class="login-banner">
+							<img src="/static/img/login-img.png" class="img-fluid" alt="Your Professional Partner in Frozen Foods">
+						</div>
+						<div class="mentor-course text-center">
+							<h2>Your Professional Partner in Frozen Foods</h2>
+							<p>Join a network of agencies that trust AgelessEatsKitchen.com for their frozen food needs. With exceptional service and a commitment to quality, we help your business grow.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- /Login Banner -->
+
+			<div class="col-md-6 login-wrap-bg">
+
+				<!-- Login -->
+				<div class="login-wrapper">
+					<div class="loginbox">
+						<div class="w-100">
+							<div class="img-logo">
+								<img src="/static/img/share_your_clips_logo.png" class="img-fluid" alt="Logo">
+								<div class="back-home">
+									<a href="/">Back to Home</a>
+								</div>
+							</div>
+							<h1>Sign into Your Account</h1>
+							<!-- Success messagae start  -->
+							<div class="wrapper-success" id="message-box">
+								<div id="card">
+									<div class="icon" id="message-icon-parent"><i class="fas fa-times-circle " id="message-icon-child"></i></div>
+									<div class="subject">
+										<h3 id="message-type">Success</h3>
+										<p id="message-content">Anyone with access can view your invited visitors</p>
+									</div>
+									<div class="icon-times" id="message_close"><i class="fas fa-times"></i></div>
+								</div>
+							</div>
+
+							<!-- Success messagae end  -->
+							<form id="loginform">
+
+								<div class="input-block">
+									<label class="form-control-label">Email</label>
+									<input type="email" class="form-control" placeholder="Enter your email address" id="email" required="true">
+								</div>
+								<div class="input-block">
+									<label class="form-control-label">Password</label>
+									<div class="pass-group">
+										<input type="password" class="form-control pass-input" placeholder="Enter your password" id="password" required="true">
+										<span class="feather-eye toggle-password"></span>
+									</div>
+								</div>
+								<div class="forgot">
+									<span><a class="forgot-link" href="/forgot-password/">Forgot Password ?</a></span>
+								</div>
+								<div class="d-grid">
+									<button class="btn btn-primary btn-start" type="submit" role="submit">Sign In</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="google-bg text-center">
+						<!-- <span><a href="#">Or sign in with</a></span> -->
+						<!-- <div class="sign-google"> -->
+							<!-- <ul> -->
+                                <!-- <li id="googleSignInButton"><a href="#"><img src="/static/img/net-icon-01.png" class="img-fluid" alt="Logo"> -->
+                                        <!-- Sign In using Google</a></li> -->
+                                        <!-- <button id="googleSignInButton">Sign in with Google</button> -->
+
+                            <!-- </ul> -->
+						<!-- </div> -->
+						<p class="mb-0">New User ? <a href="/register/">Create an Account</a></p>
+					</div>
+				</div>
+				<!-- /Login -->
+
+			</div>
+
+		</div>
+
+	</div>
+	<!-- /Main Wrapper -->
+
+	<!-- jQuery -->
+	<script src="/static/js/jquery-3.7.1.min.js"></script>
+
+	<!-- Bootstrap Core JS -->
+	<script src="/static/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Owl Carousel -->
+	<script src="/static/js/owl.carousel.min.js"></script>
+
+	<!-- Custom JS -->
+	<script src="/static/js/script.js"></script>
+
+</body>
+<script>
+	email = document.getElementById("email");
+	password = document.getElementById("password");
+
+	message_box = document.getElementById("message_box");
+	message_content = document.getElementById("message-content");
+	message_type = document.getElementById("message-type");
+	message_icon_parent = document.getElementById("message-icon-parent");
+	message_icon_child = document.getElementById("message-icon-child");
+
+	card = document.getElementById("card");
+
+	authenticated=localStorage.getItem('sunita_website_access_token')
+	if(authenticated){
+		window.location.href="/dashboard/"
+	}
+
+	function getCSRFToken() {
+		let cookieValue = null;
+		if (document.cookie && document.cookie !== '') {
+			const cookies = document.cookie.split(';');
+			for (let i = 0; i < cookies.length; i++) {
+				const cookie = cookies[i].trim();
+				if (cookie.substring(0, 'csrftoken'.length + 1) === ('csrftoken' + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring('csrftoken'.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+
+	document.getElementById('loginform').addEventListener('submit', async function (e) {
+		e.preventDefault();
+		card.style.display = "none"
+
+		let data = {
+			email: email.value,
+			password: password.value,
+		};
+
+		await fetch(`${window.location.origin}/api/login/`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"X-CSRFToken": getCSRFToken()
+			},
+			body: JSON.stringify(data)
+		}).then(response => response.json())
+			.then(response => {
+				console.log(response);
+				if (response.success) {
+					scrollToTop();
+					card.style.display = "flex";
+					card.style.borderLeft = "10px solid green";
+
+					message_content.innerHTML = response.message;
+					message_type.innerHTML = "Success";
+					message_type.style.color = "green";
+					message_icon_parent.style.color = "green";
+					message_icon_child.classList = "fas fa-check-circle";
+
+					localStorage.setItem("sunita_website_access_token", response.token.access_token);
+					localStorage.setItem("sunita_website_refresh_token", response.token.refresh_token);
+
+					valueReset();
+
+					setTimeout(() => {
+						window.location.href = "/";
+					}, 2000);
+				} else {
+					console.log(response.message);
+
+					message_content.innerHTML = response.message;
+					card.style.display = "flex";
+					card.style.borderLeft = "10px solid red";
+
+					message_type.innerHTML = "Error";
+					message_type.style.color = "red";
+					message_icon_parent.style.color = "red";
+					message_icon_child.classList = "fas fa-times-circle";
+					scrollToTop();
+				}
+			}).catch(error => {
+				console.error('Error:', error);
+			});
+	});
+
+	document.getElementById("message_close").onclick = () => {
+		card.style.display = "none";
+	};
+
+	function valueReset() {
+		email.value = "";
+		password.value = "";
+	}
+
+	function scrollToTop() {
+		window.scrollTo(0, 0);
+	}
+
+	
+	document.getElementById("message_close").addEventListener('click', () => {
+        const card = document.getElementById("card");
+        if (card) {
+            card.style.display = "none"; // Hide the card
+            // Or, if you want to completely remove the card from the DOM:
+            // card.remove();
+        }
+    });
+
+
+	function handleCredentialResponse(response) {
+        console.log('Encoded JWT ID token: ' + response.credential);
+    
+        // Send the ID token to your Django backend
+        fetch(`${window.location.origin}/api/google-authentication/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            token: response.credential
+          })
+        })
+        .then(response => response.json())
+        .then(response => {
+          console.log(response.message);
+          console.log(response);
+                if (response.success) {
+					scrollToTop();
+
+                    
+
+                    card.style.display = "flex";
+                    card.style.borderLeft = "10px solid green";
+
+                    message_content.innerHTML = response.message;
+                    message_type.innerHTML = "Success";
+                    message_type.style.color = "green";
+                    message_icon_parent.style.color = "green";
+                    message_icon_child.classList = "fas fa-check-circle";
+
+					localStorage.setItem("jerry_project_access_token", response.token.access_token);
+					localStorage.setItem("jerry_project_refresh_token", response.token.refresh_token);
+
+
+					setTimeout(()=>{
+						window.location.href=`/`
+					},2000)
+                } else {
+                    console.log(response.message);
+
+                    scrollToTop();
+                    message_content.innerHTML = response.message
+                    card.style.display = "flex";
+                    card.style.borderLeft = "10px solid red";
+                    message_type.innerHTML = "Error";
+                    message_type.style.color = "red";
+                    message_icon_parent.style.color = "red";
+                    message_icon_child.classList = "fas fa-times-circle";
+
+                    localStorage.setItem("jerry_project_access_token", response.token.access_token);
+					localStorage.setItem("jerry_project_refresh_token", response.token.refresh_token);
+
+                    
+                }
+          // Handle the response from your backend
+          
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+    
+      window.onload = function() {
+        google.accounts.id.initialize({
+          client_id: '54695427378-fv4t9gku3lbpe9mdggk5utouqi9f74k0.apps.googleusercontent.com',
+          callback: handleCredentialResponse
+
+        });
+    
+        google.accounts.id.renderButton(
+          document.getElementById('googleSignInButton'),
+          { theme: 'outline', size: 'large' }
+        );
+      };
+
+</script>
+
+</html>
