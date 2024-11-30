@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-ly2-sg)(ha_**-&rogjul_=$n_#+62z=$agstn$z-i21&ctw-j
 DEBUG = config("DEBUG")
 
 ALLOWED_HOSTS = ["*"]
-
+import os
 
 # Application definition
 
@@ -64,7 +64,7 @@ ROOT_URLCONF = 'agency_portal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
