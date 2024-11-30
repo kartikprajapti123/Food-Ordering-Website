@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ly2-sg)(ha_**-&rogjul_=$n_#+62z=$agstn$z-i21&ctw-j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG")
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*",'46.202.176.225']
 import os
 
 # Application definition
