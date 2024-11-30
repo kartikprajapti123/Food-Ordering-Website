@@ -66,7 +66,7 @@ class UserViewSet(ModelViewSet):
     def update(self, request, *args, **kwargs):
         instance=self.get_object()
         data=request.data 
-        serializer=self.serializer_class(instance=instance,data=data)
+        serializer=self.serializer_class(instance=instance,data=data,partial=True)
         
         if serializer.is_valid():
             serializer.save()
