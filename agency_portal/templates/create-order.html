@@ -689,12 +689,9 @@ Upload-Video
 								document.getElementById("profile_image").src = `${response.data.profile_picture}`;
 								document.getElementById("profile_image2").src = `${response.data.profile_picture}`;
 								document.getElementById("profile_username").innerHTML = `${response.data.username}`;
-					document.getElementById("profile_page_image").src=response.data.profile_picture
 
 								
-                    document.getElementById("profile_page_username2").innerHTML = `${response.data.username}`;
 								
-                    getUserPosts(1)
                     //followers_following();
                 }
                 console.log(response)
@@ -830,11 +827,14 @@ Upload-Video
             document.getElementById(`subcategory-${category_id}`).style.opacity="0.5"
 
             document.getElementById(`quantity-${category_id}`).disabled=true
-            document.getElementById(`quantity-${category_id}`).style.display="0.5"
+            document.getElementById(`quantity-${category_id}`).style.opacity="0.5"
+            document.getElementById(`quantity-${category_id}`).value = "0";
+            document.getElementById(`price-${category_id}`).innerHTML = "$0.00";
 
             document.getElementById(`price-${category_id}`).disabled=true
-            document.getElementById(`price-${category_id}`).style.display="0.5"
+            document.getElementById(`price-${category_id}`).style.opacity="0.5"
 
+            updateTotalOrderPrice()
 
         }
         else{
@@ -883,8 +883,15 @@ Upload-Video
             // Disable and visually indicate disabled state
             quantityField.disabled = true;
             quantityField.style.opacity = "0.5";
+            quantityField.value = "0";
+            priceField.innerHTML = "$0.00";
+
             priceField.disabled = true;
             priceField.style.opacity = "0.5";
+
+            updateTotalOrderPrice();
+
+
         } else {
             real_subcategory_value=subcategory.value.split("-")[1]
             // Fetch the subcategory details
@@ -920,6 +927,8 @@ Upload-Video
                         priceField.innerHTML = `$${totalPrice.toFixed(2)}`; // Update price field with calculated total
                         updateTotalOrderPrice();
                     });
+                    updateTotalOrderPrice();
+
                 }
             });
         }

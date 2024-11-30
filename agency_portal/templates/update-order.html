@@ -965,10 +965,16 @@ else {
             document.getElementById(`subcategory-${category_id}`).style.opacity="0.5"
 
             document.getElementById(`quantity-${category_id}`).disabled=true
-            document.getElementById(`quantity-${category_id}`).style.display="0.5"
+            document.getElementById(`quantity-${category_id}`).style.opacity="0.5"
 
             document.getElementById(`price-${category_id}`).disabled=true
-            document.getElementById(`price-${category_id}`).style.display="0.5"
+            document.getElementById(`price-${category_id}`).style.opacity="0.5"
+
+            document.getElementById(`quantity-${category_id}`).value = "0";
+            document.getElementById(`price-${category_id}`).innerHTML = "$0.00";
+
+            updateTotalOrderPrice();
+
 
 
         }
@@ -1020,6 +1026,11 @@ else {
             quantityField.style.opacity = "0.5";
             priceField.disabled = true;
             priceField.style.opacity = "0.5";
+
+            quantityField.value = "0";
+            priceField.innerHTML = "$0.00";
+            updateTotalOrderPrice()
+
         } else {
             real_subcategory_value=subcategory.value.split("-")[1]
             // Fetch the subcategory details
@@ -1055,6 +1066,7 @@ else {
                         priceField.innerHTML = `$${totalPrice.toFixed(2)}`; // Update price field with calculated total
                         updateTotalOrderPrice();
                     });
+                    updateTotalOrderPrice();
                 }
             });
         }
