@@ -12,7 +12,7 @@ from django.utils.timezone import now
 from menukit.models import Category,SubCategory
 from datetime import timedelta
 from rest_framework.decorators import action
-
+from datetime import datetime
 
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.filter(deleted=False).order_by("-created_at")
@@ -212,8 +212,11 @@ class OrderViewSet(ModelViewSet):
                 queryset = queryset.filter(order_date__gte=today - timedelta(days=365))
 
         if start_date:
+            start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
             queryset = queryset.filter(order_date__gte=start_date)
+
         if end_date:
+            end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
             queryset = queryset.filter(order_date__lte=end_date)
 
         status_order = {
