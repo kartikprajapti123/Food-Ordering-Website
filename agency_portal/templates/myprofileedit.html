@@ -184,6 +184,8 @@
 			
 			
 								if (response.data.profile_picture) {
+									document.getElementById("profile_picture_link").href = response.data.profile_picture;
+
 									document.getElementById("profile_picture").src = response.data.profile_picture;
 									document.getElementById("profile_picture_link").href = response.data.profile_picture;
 
