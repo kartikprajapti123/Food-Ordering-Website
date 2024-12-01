@@ -29,7 +29,7 @@ from django.contrib.auth.hashers import check_password
 
 faker=Faker()
 class UserViewSet(ModelViewSet):
-    queryset=User.objects.filter(deleted=0)
+    queryset=User.objects.filter(deleted=0,is_active=True)
     serializer_class=UserSerializer
     pagination_class=mypagination
     filter_backends=[SearchFilter,OrderingFilter]
@@ -120,15 +120,23 @@ class UserViewSet(ModelViewSet):
             )
      
      
-    @action(detail=False,methods=["GET"],url_path="get-user-single")
-    def get_user_single(self,request,*args,**kwargs):
-        instance=User.objects.filter(id=request.user.id)
-        if instance.exists():
-            instance=instance.first()
+    @action(detail=False, methods=["GET"], url_path="get-user-single")
+    def get_user_single(self, request, *args, **kwargs):
+        # Get the current logged-in user
+        try:
+            instance = User.objects.get(id=request.user.id)  # Get the user by ID
+        except User.DoesNotExist:
+            return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Check if the user is active
+        if not instance.is_active:
+            return Response({"detail": "User is not active"}, status=status.HTTP_400_BAD_REQUEST)
+ 
+        if instance:
             serializer=UserSerializer(instance)
             return Response({"success":True,"data":serializer.data},status=status.HTTP_200_OK)
         else:
-            return Response({"success":False,"message":"Invalid Token"},status=status.HTTP_400_BAD_REQUEST)
+            return Response({"success":False,"message":"No user found ! Please login again"},status=status.HTTP_400_BAD_REQUEST)
             
     @action(detail=False,methods=["GET"],url_path="get-user-multiple")
     def get_user_multiple(self,request,*args,**kwargs):

@@ -33,6 +33,10 @@ class Support_ticket(models.Model):
 
     def __str__(self):
         return f"{self.ticket_id} - {self.title} "
+    
+    class Meta:
+        verbose_name="Manage Support Ticket"
+        verbose_name_plural="Manage Support Tickets"
 
 class Attachment(models.Model):
     support_ticket = models.ForeignKey(Support_ticket, related_name="attachments", on_delete=models.CASCADE)

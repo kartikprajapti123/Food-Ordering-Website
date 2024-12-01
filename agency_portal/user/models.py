@@ -65,6 +65,8 @@ class User(AbstractUser):
     class Meta:
         db_table='user'
         ordering=['id']
+        verbose_name = "Manage Agency"  # This changes the singular name in the admin panel
+        verbose_name_plural = "Manage Agencies"
         
     def __str__(self):
         return self.username if self.username else self.email

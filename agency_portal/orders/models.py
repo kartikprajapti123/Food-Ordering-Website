@@ -24,6 +24,9 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order #{self.order_number} - {self.user.username}"
+    class Meta:
+        verbose_name="Manage Order"
+        verbose_name_plural="Manage Orders"
 
 
 class OrderItem(models.Model):
