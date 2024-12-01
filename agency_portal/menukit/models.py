@@ -13,10 +13,10 @@ class Category(models.Model):
 
 
 class SubCategory(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories')
-    ingrediants = models.CharField(max_length=255, null=True)
-    price = models.IntegerField(null=True)
     name = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories',verbose_name="Menu")
+    price = models.IntegerField(null=True)
+    ingrediants = models.CharField(max_length=255, null=True,blank=True,default="")
     deleted = models.IntegerField(default=0)
 
     class Meta:

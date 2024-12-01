@@ -8,6 +8,16 @@ from orders.models import Order,OrderItem
 from support_ticket.models import Support_ticket,Attachment
 from django.contrib.auth.models import Group
 
+from django.contrib import admin
+from django.contrib.admin import AdminSite
+
+class CustomAdminSite(AdminSite):
+    site_header = "AgelessEatsKitchen.com Admin"  # Custom header text for the admin panel
+    site_title = "AgelessEatsKitchen Admin"  # Title text in the browser tab
+    index_title = "Welcome to AgelessEatsKitchen Admin"  # Title for the index page in the admin panel
+
+# Register the custom admin site
+admin.site = CustomAdminSite()
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'deleted')  # Display columns
@@ -58,7 +68,7 @@ class OrderAdmin(admin.ModelAdmin):
     """
     Admin panel for managing Orders, with only the 'status' field editable.
     """
-    list_display = ('order_number', 'user', 'status', 'order_total_price', 'order_date', 'deleted')
+    list_display = ('order_number', 'user', 'status','customer_name', 'order_total_price', 'order_date')
     list_filter = ('status', 'order_date', 'deleted', 'user')  # Filters for status, date, and user
     search_fields = ('order_number', 'user__username', 'customer_name', 'delivery_address')  # Search bar fields
     ordering = ('-order_date',)
@@ -218,7 +228,7 @@ class CustomUserAdmin(UserAdmin):
 # Unregister default models
 # admin.site.unregister(OutstandingToken)
 # admin.site.unregister(BlacklistedToken)
-admin.site.unregister(Group)
+# admin.site.unregister(Group)
 # admin.site.unregister(OutstandingToken)
 # admin.site.unregister(BlacklistedToken)
 
