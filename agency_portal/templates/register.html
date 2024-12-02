@@ -367,7 +367,9 @@
         fetch(`${window.location.origin}/api/google-authentication/`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+				"X-CSRFToken": getCSRFToken()
+
           },
           body: JSON.stringify({
             token: response.credential
@@ -390,8 +392,9 @@
                     message_type.style.color = "green";
                     message_icon_parent.style.color = "green";
                     message_icon_child.classList = "fas fa-check-circle";
-                    localStorage.setItem("sunita_project_access_token", response.token.access_token);
-					localStorage.setItem("sunita_project_refresh_token", response.token.refresh_token);
+                    localStorage.setItem("sunita_website_access_token", response.token.access_token);
+					localStorage.setItem("sunita_website_refresh_token", response.token.refresh_token);
+
 
 					setTimeout(()=>{
 						window.location.href=`/`

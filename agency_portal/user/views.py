@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 # Create your views here.
 import requests
 from rest_framework.filters import SearchFilter,OrderingFilter
@@ -80,25 +79,28 @@ class UserViewSet(ModelViewSet):
             # Get the token from the request body
             token = request.data.get('refresh_token')
             print("Refresh token received:", token)
+
             if token:
                 try:
                     # Convert to RefreshToken object
                     refresh_token = RefreshToken(token)
 
-                    # Fetch the outstanding token
-                    outstanding_token = OutstandingToken.objects.filter(token=str(refresh_token)).first()
-                    print("Outstanding token:", outstanding_token)
+                    # Get the user associated with the token
+                    user_id = refresh_token.payload.get('user_id')
+                    user = User.objects.filter(id=user_id).first()
 
-                    if outstanding_token:
-                        # Blacklist the token
-                        BlacklistedToken.objects.create(token=outstanding_token)
+                    if user:
+                        # Deactivate the user (make them inactive)
+                        user.is_active = False
+                        user.save()
+
                         return Response(
-                            {'success': True, 'message': 'Logout successfully done.'},
+                            {'success': True, 'message': 'User logged out and deactivated successfully.'},
                             status=status.HTTP_200_OK
                         )
                     else:
                         return Response(
-                            {'success': False, 'message': 'Invalid token or already blacklisted.'},
+                            {'success': False, 'message': 'User not found or invalid token.'},
                             status=status.HTTP_400_BAD_REQUEST
                         )
                 except Exception as e:
@@ -118,7 +120,6 @@ class UserViewSet(ModelViewSet):
                 {'success': False, 'message': 'An unexpected error occurred.'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-     
      
     @action(detail=False, methods=["GET"], url_path="get-user-single")
     def get_user_single(self, request, *args, **kwargs):
@@ -242,6 +243,7 @@ class VerifyEmailViewset(ModelViewSet):
         access_token = str(refresh_token.access_token)
 
         user.otp = otp
+        user.is_active=True
         user.save()
 
         return Response(
@@ -357,7 +359,8 @@ class LoginViewSet(ModelViewSet):
             )
         
         if check_password(password, user.password) and user.email_verified:
-                print(user)
+                user.is_active=True
+                user.save()
                 refresh_token = RefreshToken.for_user(user)
                 access_token = str(refresh_token.access_token)
 
@@ -526,7 +529,6 @@ class ChangePasswordViewSet(ModelViewSet):
             {"success": True, "message": "Password changed successfully"},
             status=status.HTTP_200_OK,
         )
-
 
 
 class LoginWithGoogleViewSet(ModelViewSet):

@@ -10,6 +10,9 @@ from django.contrib.auth.models import Group
 
 from django.contrib import admin
 from django.contrib.admin import AdminSite
+from rest_framework_simplejwt.token_blacklist import models
+
+# Unregister Blacklisted and Outstanding tokens
 
 class CustomAdminSite(AdminSite):
     site_header = "AgelessEatsKitchen.com Admin"  # Custom header text for the admin panel
@@ -232,7 +235,12 @@ class CustomUserAdmin(UserAdmin):
 # admin.site.unregister(OutstandingToken)
 # admin.site.unregister(BlacklistedToken)
 
+# Unregister Blacklisted and Outstanding tokens
+if admin.site.is_registered(BlacklistedToken):
+    admin.site.unregister(BlacklistedToken)
 
+if admin.site.is_registered(OutstandingToken):
+    admin.site.unregister(OutstandingToken)
 # Register your custom models
 
 admin.site.register(Category,CategoryAdmin)

@@ -75,6 +75,13 @@ My Orders
         border-radius: 12px;
         justify-content: center;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex
+        ;
+            justify-content: center;
+            align-items: center;
+
+        gap: 10px;
+        
     }
 
     /* Dropdown Container */
@@ -88,6 +95,10 @@ My Orders
         justify-content: center;
         align-items: center;
         margin: 5px;
+        
+        display: flex
+        ;
+            max-width: 400px;
     }
 
     /* Dropdown Styling */
@@ -254,8 +265,6 @@ My Orders
                                                     <option value="Delivered">Delivered</option>
                                                     <option value="Canceled">Canceled</option>
                                                 </select>
-                                            </span>
-                                            <span class="drop-detail">
                                                 <select id="filter-time-period">
                                                     <option value="">All Time</option>
                                                     <option value="last_week">Last Week</option>
@@ -267,15 +276,20 @@ My Orders
                                             <span style="display: flex
 ;
     flex-direction: row;
-    justify-content: space-evenly;">
-    
-            <label for="filter-start-date" style="margin: auto;margin-left:10px;">Start:</label>
-            <input type="date" id="filter-start-date" />
-        
+    flex-wrap:wrap;
+    justify-content:center;">
+    <span style="display: flex;justify-content:center;margin-bottom:5px;">
+
+        <label for="filter-start-date" style="margin: auto;margin-left:10px;">Start:</label>
+        <input type="date" id="filter-start-date" />
+    </span>
+        <span style="display: flex;justify-content:center;margin-bottom:5px;">
+
             <label for="filter-end-date" style="margin: auto;margin-left:10px;">End:</label>
             <input type="date" id="filter-end-date" />
+        </span>
                                             </span>
-                                            <span>
+                                            <span style="text-align:center;"> 
                                                 <button onclick="applyFilters()" style="margin-left:10px;">Apply Filter</button>
 
                                             </span>
@@ -316,7 +330,7 @@ My Orders
 
                                         <div class="tab-content">
                                             <div class="tab-pane fade show active">
-                                                <div class="row">
+                                                <div class="row" id="all">
 
                                                     <div class="table-responsive custom-table">
 
@@ -340,7 +354,7 @@ My Orders
                                                             <tbody id="orders-all">
                                                             </tbody>
                                                         </table>
-                                                        <div id="all"></div>
+                                                        <!-- <div id="all"></div> -->
 
                                                     </div>
 
@@ -546,18 +560,45 @@ My Orders
                 <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
                     <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
                     <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
-                        There are no orders.
+                       No orders were found matching the applied filter criteria.
                     </h4>
                 </div>`;
 
-            document.getElementById('orders-all').innerHTML = "";
-            document.getElementById("all").style.display = "block"
-            document.getElementsByClassName("table-responsive")[0].style.overflow = "hidden";
+            //document.getElementById('orders-all').innerHTML = "";
+            document.getElementById('all').style.display = `block`
+
+            //document.getElementsByClassName("table-responsive")[0].style.overflow = "hidden";
 
         } else {
-            document.getElementById('orders-all').innerHTML = all;
-            document.getElementsByClassName("table-responsive")[0].style.overflow = "scroll";
+            document.getElementById('all').innerHTML = `<div class="table-responsive custom-table">
 
+                                                        <!-- Referred Users-->
+                                                        <table class="table table-nowrap mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Customer Name</th>
+                                                                    <th>Delivery Address</th>
+                                                                    <th>Special Instructions</th>
+                                                                    <th>Order Total Price</th>
+                                                                    <th>Status</th>
+                                                                    <th>Created At</th>
+
+                                                                    <th>View Details</th>
+                                                                    <th>Edit</th>
+                                                                    <th>Delete</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="orders-all">
+                                                                ${all}
+                                                            </tbody>
+                                                        </table>
+                                                        <!-- <div id="all"></div> -->
+
+                                                    </div>`;
+            //document.getElementsByClassName("table-responsive")[0].style.overflow = "scroll";
+            document.getElementById('all').style.display = `block`
+            
         }
 
 
