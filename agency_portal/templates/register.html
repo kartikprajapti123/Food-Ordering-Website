@@ -390,8 +390,8 @@
                     message_type.style.color = "green";
                     message_icon_parent.style.color = "green";
                     message_icon_child.classList = "fas fa-check-circle";
-                    localStorage.setItem("jerry_project_access_token", response.token.access_token);
-					localStorage.setItem("jerry_project_refresh_token", response.token.refresh_token);
+                    localStorage.setItem("sunita_project_access_token", response.token.access_token);
+					localStorage.setItem("sunita_project_refresh_token", response.token.refresh_token);
 
 					setTimeout(()=>{
 						window.location.href=`/`
@@ -408,8 +408,6 @@
                     message_icon_parent.style.color = "red";
                     message_icon_child.classList = "fas fa-times-circle";
 
-                    localStorage.setItem("jerry_project_access_token", response.token.access_token);
-					localStorage.setItem("jerry_project_refresh_token", response.token.refresh_token);
 
                     
                 }

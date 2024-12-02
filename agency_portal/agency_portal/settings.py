@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     
 ]
 
+# Cross-Origin-Opener-Policy: same-origin-allow-popups
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
