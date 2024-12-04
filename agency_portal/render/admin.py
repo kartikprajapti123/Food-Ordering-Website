@@ -213,7 +213,7 @@ class OrderAdmin(admin.ModelAdmin):
 
             # Initialize Html2Image and generate the image
             try:
-                hti = Html2Image(output_path=output_dir)
+                hti = Html2Image(browser="chrome",output_path=output_dir)
                 hti.screenshot(html_str=html_content, save_as=f"{order.order_number}.png")
             except Exception as e:
                 raise ImproperlyConfigured(f"Error generating receipt for order {order.order_number}: {e}")
