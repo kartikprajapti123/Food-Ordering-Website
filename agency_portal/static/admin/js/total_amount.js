@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("JavaScript is running on this page!");
     function calculateTotalAmount() {
         let totalAmount = 0;
         console.log(totalAmount)
@@ -13,14 +14,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 totalAmount += amount;
             }
         });
-
+        console.log(totalAmount)
         // Update the total amount display
         const totalAmountElement = document.getElementById("total-amount");
+        console.log(totalAmount)
         if (totalAmountElement) {
             
             totalAmountElement.textContent = totalAmount.toFixed(2);
             console.log(totalAmount)
         }
+        console.log(totalAmount)
     }
 
     // Calculate total on page load
