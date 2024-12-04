@@ -34,6 +34,8 @@ import os
 
 from django.core.exceptions import ImproperlyConfigured
 from html2image import Html2Image
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 class CustomAdminSite(AdminSite):
     site_header = (
@@ -186,27 +188,29 @@ class OrderAdmin(admin.ModelAdmin):
 
     
 
-    def generate_receipt_image(self,html_content, output_path):
-        # Set up Chrome options for headless mode
+
+    def generate_receipt_image(html_content, output_path):
         chrome_options = Options()
         chrome_options.add_argument("--headless")  # Run Chrome in headless mode
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--disable-gpu")  # Disable GPU hardware acceleration
+        chrome_options.add_argument("--no-sandbox")  # Disable sandbox for Docker environments
+        chrome_options.add_argument("--disable-dev-shm-usage")  # Avoid crashes in low-memory environments
+        chrome_options.add_argument("--disable-gpu")  # Disable GPU acceleration, useful for environments with limited GPU
+        chrome_options.add_argument("--remote-debugging-port=9222")  # Enable debugging port
+        chrome_options.add_argument("--disable-software-rasterizer")  # Disable software rasterizer
 
-        # Initialize WebDriver with Chrome options
-        driver = webdriver.Chrome(options=chrome_options)
+        # Automatically download and set up the correct chromedriver
+        driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
-        # Open HTML content
+        # Load the HTML content into Chrome
         driver.get("data:text/html;charset=utf-8," + html_content)
 
-        # Wait for the page to load (if necessary)
-        # time.sleep(2)  # Adjust the sleep time based on your HTML content's complexity
+        # Wait for the page to load (optional)
+        import time
+        time.sleep(2)
 
         # Save the screenshot
         driver.save_screenshot(output_path)
 
-        # Close the browser after capturing the screenshot
         driver.quit()
 
     def download_receipt(self,request, pk):
