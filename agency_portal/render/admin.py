@@ -29,7 +29,6 @@ from django.conf import settings
 import os
 import imgkit
 from django.core.exceptions import ImproperlyConfigured
-from html2image import Html2Image
 
 class CustomAdminSite(AdminSite):
     site_header = (
@@ -42,7 +41,6 @@ class CustomAdminSite(AdminSite):
 from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponse
-from html2image import Html2Image
 import os
 
 # Register the custom admin site
@@ -477,7 +475,7 @@ class OrderInline(admin.TabularInline):
     model = Order
     extra = 0  # No extra empty forms by default
     fields = ("order_number", "order_date", "status", "order_total_price")
-    readonly_fields = ("order_number", "order_date", "status", "order_total_price")
+    readonly_fields = ("order_date", "status", "order_total_price")
 
     def has_add_permission(self, request, obj=None):
         return False  # Prevent adding new orders from the client admin page
