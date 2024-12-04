@@ -3,6 +3,10 @@ from rest_framework_simplejwt.token_blacklist.models import (
     OutstandingToken,
     BlacklistedToken,
 )
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import time
+import os
 from django.http import Http404
 from menukit.models import Category, SubCategory
 from django.contrib import admin
@@ -180,12 +184,34 @@ class OrderAdmin(admin.ModelAdmin):
         ]
         return custom_urls + urls
 
-    def download_receipt(self, request, pk):
-        """
-        Generate and serve a receipt as an image for the given order.
-        """
+    
+
+    def generate_receipt_image(self,html_content, output_path):
+        # Set up Chrome options for headless mode
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")  # Run Chrome in headless mode
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--disable-gpu")  # Disable GPU hardware acceleration
+
+        # Initialize WebDriver with Chrome options
+        driver = webdriver.Chrome(options=chrome_options)
+
+        # Open HTML content
+        driver.get("data:text/html;charset=utf-8," + html_content)
+
+        # Wait for the page to load (if necessary)
+        # time.sleep(2)  # Adjust the sleep time based on your HTML content's complexity
+
+        # Save the screenshot
+        driver.save_screenshot(output_path)
+
+        # Close the browser after capturing the screenshot
+        driver.quit()
+
+    def download_receipt(self,request, pk):
         try:
-            # Get the order or raise Http404 if not found
+            # Get the order object from your database (replace with actual logic)
             order = get_object_or_404(Order, pk=pk)
 
             # Generate HTML content for the receipt
@@ -205,33 +231,18 @@ class OrderAdmin(admin.ModelAdmin):
             output_dir = os.path.join(settings.MEDIA_ROOT, "generated_receipts")
             output_path = os.path.join(output_dir, f"{order.order_number}.png")
 
-            # Ensure the directory exists, create if it doesn't
-            try:
-                os.makedirs(output_dir, exist_ok=True)
-            except OSError as e:
-                raise ImproperlyConfigured(f"Failed to create directory {output_dir}: {e}")
+            # Ensure the directory exists
+            os.makedirs(output_dir, exist_ok=True)
 
-            try:
-                # Set custom browser path if needed
-                os.environ["CHROME_PATH"] = "/usr/bin/chromium-browser"
-                hti = Html2Image(browser_executable="/usr/bin/chromium-browser", output_path=output_dir)
-                hti.screenshot(html_str=html_content, save_as=f"{order.order_number}.png")
-            except Exception as e:
-                raise ImproperlyConfigured(f"Error generating receipt for order {order.order_number}: {e}")
+            # Generate the receipt image
+            self.generate_receipt_image(html_content, output_path)
 
             # Serve the generated image as a file download
             try:
                 return FileResponse(open(output_path, "rb"), as_attachment=True, filename=f"{order.order_number}.png")
             except FileNotFoundError:
                 raise Http404(f"Receipt not found for order {order.order_number}.")
-        except ImproperlyConfigured as e:
-            # Return a 500 error in case of server configuration issues
-            return HttpResponse(f"Error: {e}", status=500)
-        except Http404 as e:
-            # Handle 404 errors if the order or the file is not found
-            return HttpResponse(f"Error: {e}", status=404)
         except Exception as e:
-            # Catch any unexpected errors
             return HttpResponse(f"Unexpected error: {e}", status=500)
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
