@@ -21,7 +21,12 @@ from django.utils.safestring import mark_safe
 from django.template.loader import (
     render_to_string,
 )  # Unregister Blacklisted and Outstanding tokens
-
+from django.urls import path, reverse
+from django.shortcuts import get_object_or_404
+from django.http import FileResponse
+from django.conf import settings
+import os
+from html2image import Html2Image
 
 class CustomAdminSite(AdminSite):
     site_header = (
@@ -162,20 +167,20 @@ class OrderAdmin(admin.ModelAdmin):
         Override the `get_urls` method to add custom URLs.
         """
         urls = super().get_urls()
-        print("urls ",urls)
         custom_urls = [
             # Custom URL pattern for downloading receipts
             path(
                 "<int:pk>/download_receipt/",
                 self.admin_site.admin_view(self.download_receipt),
                 name="order_download_receipt",
-            )
-            # Custom URL to replace the change view UR
+            ),
         ]
-        print("Custom_ urls ",custom_urls+urls)
         return custom_urls + urls
 
     def download_receipt(self, request, pk):
+        """
+        Generate and serve a receipt as an image for the given order.
+        """
         order = get_object_or_404(Order, pk=pk)
 
         # Generate HTML content for the receipt
@@ -185,49 +190,36 @@ class OrderAdmin(admin.ModelAdmin):
             <body>
                 <h1>Receipt for Order {order.order_number}</h1>
                 <p>Client Name: {order.client.name}</p>
-                <p>Total Price: {order.order_total_price}</p>
+                <p>Total Price: ₹{order.order_total_price}</p>
                 <p>Order Date: {order.order_date}</p>
             </body>
             </html>
         """
 
-        # Define the output directory and file path
-        output_dir = os.path.join(os.getcwd(), f"generated_receipts/{order.order_number}")
+        # Define the output directory within the media folder
+        output_dir = os.path.join(settings.MEDIA_ROOT, "generated_receipts", str(order.order_number))
         os.makedirs(output_dir, exist_ok=True)  # Ensure directory exists
-        os.chmod(output_dir, 0o755)  # Make the directory accessible (rwxr-xr-x)
 
+        # Define the file path for the generated image
         output_path = os.path.join(output_dir, f"{order.order_number}.png")
 
-        # Initialize Html2Image with the valid output path
-        hti = Html2Image(output_path=output_path)
-
-        # Convert HTML to image
+        # Initialize Html2Image and generate the image
+        hti = Html2Image(output_path=output_dir)
         hti.screenshot(html_str=html_content, save_as=f"{order.order_number}.png")
 
-        # Set file permissions to be readable by anyone
-        os.chmod(output_path, 0o644)  # Make the file accessible (rw-r--r--)
-
-        # Send the image as a response
-        response = HttpResponse(content_type="image/png")
-        response["Content-Disposition"] = f"attachment; filename={order.order_number}.png"
-
-        # Read the file and write it to the response
-        with open(output_path, "rb") as f:
-            response.write(f.read())
-
-        return response
-
+        # Serve the generated image as a file download
+        return FileResponse(open(output_path, "rb"), as_attachment=True, filename=f"{order.order_number}.png")
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
         """
         Override the change view to add the download receipt URL to the context.
         """
         extra_context = extra_context or {}
-        # Correctly format the URL for download
-        extra_context["download_receipt_url"] = f"{object_id}/download_receipt/"
-
+        # Add the download receipt URL to the context for the admin template
+        extra_context["download_receipt_url"] = reverse(
+            "admin:order_download_receipt", args=[object_id]
+        )
         return super().change_view(request, object_id, form_url, extra_context)
-
 
 
 class OrderItemAdmin(admin.ModelAdmin):
