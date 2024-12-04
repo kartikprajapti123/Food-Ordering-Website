@@ -202,7 +202,7 @@ class OrderAdmin(admin.ModelAdmin):
             """
 
             # Define the output directory and file path
-            output_dir = os.path.join(settings.MEDIA_ROOT, "generated_receipts", str(order.order_number))
+            output_dir = os.path.join(settings.MEDIA_ROOT, "generated_receipts")
             output_path = os.path.join(output_dir, f"{order.order_number}.png")
 
             # Ensure the directory exists, create if it doesn't
