@@ -2,5 +2,5 @@
 
 {% block object-tools %}
     {{ block.super }}
-    <a class="button" href="http://localhost:8000/admin/orders/order/{{ download_receipt_url }}" target="_blank">Download Receipt</a>
+    <a class="button" href="{{ download_receipt_url }}" target="_blank">Download Receipt</a>
 {% endblock %}

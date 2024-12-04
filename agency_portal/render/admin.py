@@ -215,9 +215,9 @@ class OrderAdmin(admin.ModelAdmin):
         Override the change view to add the download receipt URL to the context.
         """
         extra_context = extra_context or {}
-        # Add the download receipt URL to the context for the admin template
+        # Add the download receipt URL to the context with the correct `pk`
         extra_context["download_receipt_url"] = reverse(
-            "admin:order_download_receipt", args=[object_id]
+            "admin:order_download_receipt", kwargs={"pk": object_id}
         )
         return super().change_view(request, object_id, form_url, extra_context)
 
