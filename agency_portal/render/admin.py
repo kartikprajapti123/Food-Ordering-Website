@@ -202,7 +202,8 @@ class OrderAdmin(admin.ModelAdmin):
 
         # Define the file path for the generated image
         output_path = os.path.join(output_dir, f"{order.order_number}.png")
-
+        print(f"Output directory: {output_dir}")
+        print(f"Output path: {output_path}")
         # Initialize Html2Image and generate the image
         hti = Html2Image(output_path=output_dir)
         hti.screenshot(html_str=html_content, save_as=f"{order.order_number}.png")
