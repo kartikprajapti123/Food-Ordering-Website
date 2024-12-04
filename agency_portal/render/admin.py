@@ -210,15 +210,15 @@ class OrderAdmin(admin.ModelAdmin):
                 os.makedirs(output_dir, exist_ok=True)
             except OSError as e:
                 raise ImproperlyConfigured(f"Failed to create directory {output_dir}: {e}")
-            
+
             try:
                 # Set custom browser path if needed
                 os.environ["CHROME_PATH"] = "/usr/bin/chromium-browser"
                 hti = Html2Image(browser="chrome", output_path=output_dir)
-                hti.screenshot(html_str=html_content, save_as=f"{order.order_number}.png")
+                hti.screenshot(html_str=html_content, save_as=f"{order.order_number}.png",debug=True)
             except Exception as e:
                 raise ImproperlyConfigured(f"Error generating receipt for order {order.order_number}: {e}")
-            
+
             # Serve the generated image as a file download
             try:
                 return FileResponse(open(output_path, "rb"), as_attachment=True, filename=f"{order.order_number}.png")
