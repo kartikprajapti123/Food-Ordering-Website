@@ -214,8 +214,8 @@ class OrderAdmin(admin.ModelAdmin):
             try:
                 # Set custom browser path if needed
                 os.environ["CHROME_PATH"] = "/usr/bin/chromium-browser"
-                hti = Html2Image(browser="chrome", output_path=output_dir)
-                hti.screenshot(html_str=html_content, save_as=f"{order.order_number}.png",debug=True)
+                hti = Html2Image(browser="chrome", output_path=output_dir,debug=True)
+                hti.screenshot(html_str=html_content, save_as=f"{order.order_number}.png")
             except Exception as e:
                 raise ImproperlyConfigured(f"Error generating receipt for order {order.order_number}: {e}")
 
