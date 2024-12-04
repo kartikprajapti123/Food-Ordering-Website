@@ -3,6 +3,7 @@ from rest_framework_simplejwt.token_blacklist.models import (
     OutstandingToken,
     BlacklistedToken,
 )
+from django.http import Http404
 from menukit.models import Category, SubCategory
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -26,6 +27,8 @@ from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from django.conf import settings
 import os
+
+from django.core.exceptions import ImproperlyConfigured
 from html2image import Html2Image
 
 class CustomAdminSite(AdminSite):
@@ -181,40 +184,54 @@ class OrderAdmin(admin.ModelAdmin):
         """
         Generate and serve a receipt as an image for the given order.
         """
-        order = get_object_or_404(Order, pk=pk)
+        try:
+            # Get the order or raise Http404 if not found
+            order = get_object_or_404(Order, pk=pk)
 
-        # Generate HTML content for the receipt
-        html_content = f"""
-            <html>
-            <head><title>Receipt</title></head>
-            <body>
-                <h1>Receipt for Order {order.order_number}</h1>
-                <p>Client Name: {order.client.name}</p>
-                <p>Total Price: ₹{order.order_total_price}</p>
-                <p>Order Date: {order.order_date}</p>
-            </body>
-            </html>
-        """
+            # Generate HTML content for the receipt
+            html_content = f"""
+                <html>
+                <head><title>Receipt</title></head>
+                <body>
+                    <h1>Receipt for Order {order.order_number}</h1>
+                    <p>Client Name: {order.client.name}</p>
+                    <p>Total Price: ₹{order.order_total_price}</p>
+                    <p>Order Date: {order.order_date}</p>
+                </body>
+                </html>
+            """
 
-        # Define the output directory within the media folder
-        output_dir = os.path.join(settings.MEDIA_ROOT, "generated_receipts", str(order.order_number))
-        os.makedirs(output_dir, exist_ok=True)  # Ensure directory exists
+            # Define the output directory and file path
+            output_dir = os.path.join(settings.MEDIA_ROOT, "generated_receipts", str(order.order_number))
+            output_path = os.path.join(output_dir, f"{order.order_number}.png")
 
-        # Define the file path for the generated image
-        output_path = os.path.join(output_dir, f"{order.order_number}.png")
-        print(f"Output directory xyz: {output_dir}")
-        print(f"Output path xyz: {output_path}")
-        # Initialize Html2Image and generate the image
-        print(f"html2 image satrtuing")
-        
-        hti = Html2Image(output_path=output_dir)
-        print(f"hti: {hti}")
-        
-        hti.screenshot(html_str=html_content, save_as=f"{order.order_number}.png")
-        print(f"screenshort setted: done")
+            # Ensure the directory exists, create if it doesn't
+            try:
+                os.makedirs(output_dir, exist_ok=True)
+            except OSError as e:
+                raise ImproperlyConfigured(f"Failed to create directory {output_dir}: {e}")
 
-        # Serve the generated image as a file download
-        return FileResponse(open(output_path, "rb"), as_attachment=True, filename=f"{order.order_number}.png")
+            # Initialize Html2Image and generate the image
+            try:
+                hti = Html2Image(output_path=output_dir)
+                hti.screenshot(html_str=html_content, save_as=f"{order.order_number}.png")
+            except Exception as e:
+                raise ImproperlyConfigured(f"Error generating receipt for order {order.order_number}: {e}")
+
+            # Serve the generated image as a file download
+            try:
+                return FileResponse(open(output_path, "rb"), as_attachment=True, filename=f"{order.order_number}.png")
+            except FileNotFoundError:
+                raise Http404(f"Receipt not found for order {order.order_number}.")
+        except ImproperlyConfigured as e:
+            # Return a 500 error in case of server configuration issues
+            return HttpResponse(f"Error: {e}", status=500)
+        except Http404 as e:
+            # Handle 404 errors if the order or the file is not found
+            return HttpResponse(f"Error: {e}", status=404)
+        except Exception as e:
+            # Catch any unexpected errors
+            return HttpResponse(f"Unexpected error: {e}", status=500)
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
         """
