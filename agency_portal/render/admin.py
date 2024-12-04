@@ -125,6 +125,11 @@ class OrderAdmin(admin.ModelAdmin):
 
     class Media:
         js = ("admin/js/total_amount.js",)
+        
+    change_form_template = "admin/orders/Order/change_form.html"
+    change_list_template = "admin/orders/Order/change_list.html"
+    
+    
 
     def get_client_name(self, obj):
         return obj.client.name if obj.client else None
