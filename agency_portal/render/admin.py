@@ -205,6 +205,8 @@ class OrderAdmin(admin.ModelAdmin):
         print(f"Output directory: {output_dir}")
         print(f"Output path: {output_path}")
         # Initialize Html2Image and generate the image
+        print(f"html2 image satrtuing")
+        
         hti = Html2Image(output_path=output_dir)
         print(f"hti: {hti}")
         
