@@ -189,7 +189,7 @@ class OrderAdmin(admin.ModelAdmin):
     
 
 
-    def generate_receipt_image(html_content, output_path):
+    def generate_receipt_image(self,html_content, output_path):
         chrome_options = Options()
         chrome_options.add_argument("--headless")  # Run Chrome in headless mode
         chrome_options.add_argument("--no-sandbox")  # Disable sandbox for Docker environments
