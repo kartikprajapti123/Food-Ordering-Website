@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(totalAmount)
         // Update the total amount display
         const totalAmountElement = document.getElementById("total-amount");
-        console.log(totalAmount)
+        console.log(totalAmountElement)
         if (totalAmountElement) {
             
             totalAmountElement.textContent = totalAmount.toFixed(2);
