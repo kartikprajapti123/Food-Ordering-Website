@@ -189,7 +189,7 @@ class OrderAdmin(admin.ModelAdmin):
     
 
 
-    def generate_receipt_image(self,html_content, output_path):
+    def generate_receipt_image(self, html_content, output_path):
         chrome_options = Options()
         chrome_options.add_argument("--headless")  # Run Chrome in headless mode
         chrome_options.add_argument("--no-sandbox")  # Disable sandbox for Docker environments
@@ -201,21 +201,25 @@ class OrderAdmin(admin.ModelAdmin):
         # Automatically download and set up the correct chromedriver
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
-        # Load the HTML content into Chrome
-        driver.get("data:text/html;charset=utf-8," + html_content)
-
-        # Wait for the page to load (optional)
-        import time
-        time.sleep(2)
-
-        # Save the screenshot
-        driver.save_screenshot(output_path)
-
-        driver.quit()
-
-    def download_receipt(self,request, pk):
         try:
-            # Get the order object from your database (replace with actual logic)
+            # Load the HTML content into Chrome
+            driver.get("data:text/html;charset=utf-8," + html_content)
+
+            # Wait for the page to load (this can be improved with WebDriverWait)
+            time.sleep(2)  # Optional, you can replace with a better wait if necessary
+
+            # Save the screenshot
+            driver.save_screenshot(output_path)
+        except Exception as e:
+            print(f"Error during receipt generation: {e}")
+            raise
+        finally:
+            # Always quit the driver
+            driver.quit()
+
+    def download_receipt(self, request, pk):
+        try:
+            # Get the order object from the database
             order = get_object_or_404(Order, pk=pk)
 
             # Generate HTML content for the receipt
@@ -248,7 +252,6 @@ class OrderAdmin(admin.ModelAdmin):
                 raise Http404(f"Receipt not found for order {order.order_number}.")
         except Exception as e:
             return HttpResponse(f"Unexpected error: {e}", status=500)
-
     def change_view(self, request, object_id, form_url="", extra_context=None):
         """
         Override the change view to add the download receipt URL to the context.
