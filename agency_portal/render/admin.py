@@ -3,10 +3,6 @@ from rest_framework_simplejwt.token_blacklist.models import (
     OutstandingToken,
     BlacklistedToken,
 )
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-import time
-import os
 from django.http import Http404
 from menukit.models import Category, SubCategory
 from django.contrib import admin
@@ -31,11 +27,9 @@ from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from django.conf import settings
 import os
-
+import imgkit
 from django.core.exceptions import ImproperlyConfigured
 from html2image import Html2Image
-from webdriver_manager.chrome import ChromeDriverManager
-
 
 class CustomAdminSite(AdminSite):
     site_header = (
@@ -186,40 +180,12 @@ class OrderAdmin(admin.ModelAdmin):
         ]
         return custom_urls + urls
 
-    
-
-
-    def generate_receipt_image(self, html_content, output_path):
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")  # Run Chrome in headless mode
-        chrome_options.add_argument("--no-sandbox")  # Disable sandbox for Docker environments
-        chrome_options.add_argument("--disable-dev-shm-usage")  # Avoid crashes in low-memory environments
-        chrome_options.add_argument("--disable-gpu")  # Disable GPU acceleration, useful for environments with limited GPU
-        chrome_options.add_argument("--remote-debugging-port=9222")  # Enable debugging port
-        chrome_options.add_argument("--disable-software-rasterizer")  # Disable software rasterizer
-
-        # Automatically download and set up the correct chromedriver
-        driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
-
-        try:
-            # Load the HTML content into Chrome
-            driver.get("data:text/html;charset=utf-8," + html_content)
-
-            # Wait for the page to load (this can be improved with WebDriverWait)
-            time.sleep(2)  # Optional, you can replace with a better wait if necessary
-
-            # Save the screenshot
-            driver.save_screenshot(output_path)
-        except Exception as e:
-            print(f"Error during receipt generation: {e}")
-            raise
-        finally:
-            # Always quit the driver
-            driver.quit()
-
     def download_receipt(self, request, pk):
+        """
+        Generate and serve a receipt as an image for the given order.
+        """
         try:
-            # Get the order object from the database
+            # Get the order or raise Http404 if not found
             order = get_object_or_404(Order, pk=pk)
 
             # Generate HTML content for the receipt
@@ -239,18 +205,32 @@ class OrderAdmin(admin.ModelAdmin):
             output_dir = os.path.join(settings.MEDIA_ROOT, "generated_receipts")
             output_path = os.path.join(output_dir, f"{order.order_number}.png")
 
-            # Ensure the directory exists
-            os.makedirs(output_dir, exist_ok=True)
+            # Ensure the directory exists, create if it doesn't
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
 
-            # Generate the receipt image
-            self.generate_receipt_image(html_content, output_path)
+            # Set the path for wkhtmltoimage executable if it's not in PATH
+            path_to_wkhtmltoimage = "/usr/bin/wkhtmltoimage"  # Update this path if needed
+
+            # Configure imgkit to use the wkhtmltoimage executable
+            config = imgkit.config(wkhtmltoimage=path_to_wkhtmltoimage)
+
+            # Generate the image from HTML content
+            imgkit.from_string(html_content, output_path, config=config)
 
             # Serve the generated image as a file download
             try:
                 return FileResponse(open(output_path, "rb"), as_attachment=True, filename=f"{order.order_number}.png")
             except FileNotFoundError:
                 raise Http404(f"Receipt not found for order {order.order_number}.")
+        except ImproperlyConfigured as e:
+            # Return a 500 error in case of server configuration issues
+            return HttpResponse(f"Error: {e}", status=500)
+        except Http404 as e:
+            # Handle 404 errors if the order or the file is not found
+            return HttpResponse(f"Error: {e}", status=404)
         except Exception as e:
+            # Catch any unexpected errors
             return HttpResponse(f"Unexpected error: {e}", status=500)
     def change_view(self, request, object_id, form_url="", extra_context=None):
         """
