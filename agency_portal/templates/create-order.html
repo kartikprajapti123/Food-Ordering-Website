@@ -458,14 +458,22 @@ Upload-Video
                                     <div class="add-course-form" style="padding-bottom: 0px;">
                                         <form action="#">
                                             <div class="input-block">
-                                                <label class="add-course-label">Cutomer Name</label>
-                                                <input type="text" id="customer_name" class="form-control"
-                                                    placeholder="Customer Full Name">
+                                                <label class="add-course-label">Customer Name</label>
+                                                <!-- <input type="text" id="customer_name" class="form-control" -->
+                                                    <!-- placeholder="Customer Full Name"> -->
+                                                    <span class="drop-detail" style="background: #fe4565;width: 300px;height: 56px;margin-top:10px;">
+                                                        <select id="customer_name" style="width:300px; border-radius: 24px;"  onchange=fetch_delivery_address() >
+                                                            <option selected value="0">Select Client</option>
+                                                            <option value="1">No Wrapper</option>
+                                                            <option value="2">No JS</option>
+                                                            <option value="3">Nice!</option>
+                                                        </select>
+                                                    </span>
                                             </div>
                                             <div class="input-block">
-                                                <label class="add-course-label">Devlivery Address </label>
+                                                <label class="add-course-label">Delivery Address  (Please Select Client)</label>
                                                 <input type="text" id="delivery_address" class="form-control"
-                                                    placeholder="Delivery Address">
+                                                    placeholder="Delivery Address" readonly>
                                             </div>
                                             <!-- <div class="input-block">
                                                 <div id="order_item" style="display: flex;">
@@ -537,7 +545,7 @@ Upload-Video
                                                 
                                             </div>
                                             <div class="input-block">
-                                                <label class="add-course-label">Special Request </label>
+                                                <label class="add-course-label">Special Request (Optional) </label>
                                                 <input type="text" id="special_request" class="form-control"
                                                     placeholder="Delivery Address">
                                             </div>
@@ -669,6 +677,7 @@ Upload-Video
 {% block script %}
 <script>
     let category_data=`<option value="Select Menu-0" selected>Select Menu</option>`
+    var username='';
     if (authenticated) {
 
         userApi = async () => {
@@ -684,13 +693,15 @@ Upload-Video
                 if (response.success) {
                     user_id = response.data.id
                     username = response.data.username
+                    fetch_user_client(username)
+
                     userprofileid=response.data.id
 								console.log(response.data.image);
 								document.getElementById("profile_image").src = `${response.data.profile_picture}`;
 								document.getElementById("profile_image2").src = `${response.data.profile_picture}`;
 								document.getElementById("profile_username").innerHTML = `${response.data.username}`;
 
-								
+					
 								
                     //followers_following();
                 }
@@ -1061,8 +1072,7 @@ for (let i = 0; i < orderItems.length; i++) {
 
 // Prepare the data for the API request
 let data = {
-    "customer_name":customer_name.value,
-    'delivery_address': delivery_address.value,
+    "client":document.getElementById("customer_name").getAttribute("data-id"),
     "special_instructions": special_request.value,
     "order_total_price": document.getElementById("total-price").textContent.replace("$", ""),
     "items": items,
@@ -1131,7 +1141,7 @@ try {
 } catch (error) {
     // Handle network or unexpected errors
     console.error('Error:', error);
-    message_content.innerHTML = "Failed to upload the video. Please try again later.";
+    message_content.innerHTML = "Failed to create Order. Please try again later.";
     card.style.display = "flex";
     card.style.borderLeft = "10px solid red";
     message_type.innerHTML = "Error";
@@ -1147,7 +1157,76 @@ try {
     clearInterval(progressInterval); // Ensure progress simulation stops
 }}
 
+function fetch_user_client(){
+    fetch(`${window.location.origin}/api/client/filter-by-username/?username=${username}&no_pagination=true`,{
+        method:"GET",
+        headers: {
+            "content-type": "Application/json",
+            "Authorization": `Bearer ${authenticated}`,
+        },
 
+    }).then((response)=>{
+        return response.json()
+    }).then((response)=>{
+        if (response.success){
+            str=``
+            str=`<option value="select client" >Select Client</option>`
+            response.data.forEach((data)=>{
+                str+=`<option value=${data.name} >${data.name}</option>` 
+            })
+            document.getElementById("customer_name").innerHTML=str
+
+
+        }else{
+            console.error('Error:', response);
+            message_content.innerHTML = "Server error";
+            card.style.display = "flex";
+            card.style.borderLeft = "10px solid red";
+            message_type.innerHTML = "Error";
+            message_type.style.color = "red";
+            message_icon_parent.style.color = "red";
+            message_icon_child.classList = "fas fa-times-circle";
+            document.getElementById('post_form').style.display = "block";
+        }
+    })
+}
+function fetch_delivery_address(){
+    new_customer_value=document.getElementById("customer_name").value
+    if (new_customer_value=="select client"){
+        document.getElementById("delivery_address").value=""
+        document.getElementById("customer_name").setAttribute("data-id",0)
+    }
+    else{
+
+    fetch(`${window.location.origin}/api/client/get-delivery-address/?name=${new_customer_value}`,{
+        method:"GET",
+        headers: {
+            "content-type": "Application/json",
+            "Authorization": `Bearer ${authenticated}`,
+        },
+    }).then((response)=>{
+        return response.json()
+    }).then((response)=>{
+        console.log(response)
+        if (response.success){
+            document.getElementById("customer_name").setAttribute("data-id",response.data.id)
+
+            document.getElementById("delivery_address").value=response.data.delivery_address
+        }
+        else{
+            console.error('Error:', response);
+            message_content.innerHTML = "Server error";
+            card.style.display = "flex";
+            card.style.borderLeft = "10px solid red";
+            message_type.innerHTML = "Error";
+            message_type.style.color = "red";
+            message_icon_parent.style.color = "red";
+            message_icon_child.classList = "fas fa-times-circle";
+        }
+    })
+}
+
+}
 function reversefunction(e) {
     window.location.reload()
 }

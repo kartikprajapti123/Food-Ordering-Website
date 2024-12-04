@@ -1,0 +1,6 @@
+{% extends "admin/change_form.html" %}
+
+{% block object-tools %}
+    {{ block.super }}
+    <a class="button" href="http://localhost:8000/admin/orders/order/{{ download_receipt_url }}">Download Receipt</a>
+{% endblock %}

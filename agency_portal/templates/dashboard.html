@@ -522,8 +522,8 @@ const dateObject = new Date(data.order_date);
 
 					const formattedDate = dateObject.toLocaleDateString(); // "11/27/2024" (default format, depends on locale)
 					const formattedTime = dateObject.toLocaleTimeString();
-            let customerName = truncateText(data.customer_name, 50);
-            let deliveryAddress = truncateText(data.delivery_address, 50);
+            let customerName = truncateText(data.client_name, 50);
+            let deliveryAddress = truncateText(data.client_delivery_address, 50);
             special_instruction = truncateText(special_instruction, 50);
 
             // HTML structure for the post

@@ -4,6 +4,7 @@ from user.views import UserViewSet,RegisterViewSet,ResendOtpViewSet,LoginViewSet
 from support_ticket.views import SupportTicketPagesViewSet
 from menukit.views import CategoryViewSet,SubCategoryViewSet
 from orders.views import OrderViewSet,OrderItemViewSet
+from client.views import ClientViewSet
 
 
 router=DefaultRouter()
@@ -25,6 +26,7 @@ router.register("subcategory",SubCategoryViewSet,basename="subcategory")
 router.register("orders",OrderViewSet,basename="orders")
 router.register("order-item",OrderItemViewSet,basename="order-item")
 
+router.register("client",ClientViewSet,basename="client")
 
 
 

@@ -33,7 +33,7 @@ class SupportTicketPagesViewSet(ModelViewSet):
 
     search_fields = [
         "ticket_id",
-        "user_username",
+        "user__username",
         "priority",
         "category",
         "description",
@@ -41,7 +41,7 @@ class SupportTicketPagesViewSet(ModelViewSet):
     ordering_fields = [
         "id",
         "ticket_id",
-        "user_username",
+        "user__username",
         "priority",
         "category",
         "description",

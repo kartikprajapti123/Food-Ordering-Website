@@ -458,14 +458,22 @@ Upload-Video
                                     <div class="add-course-form" style="padding-bottom: 0px;">
                                         <form action="#">
                                             <div class="input-block">
-                                                <label class="add-course-label">Cutomer Name</label>
-                                                <input type="text" id="customer_name" class="form-control"
-                                                    placeholder="Customer Full Name">
+                                                <label class="add-course-label">Customer Name</label>
+                                                <!-- <input type="text" id="customer_name" class="form-control" -->
+                                                    <!-- placeholder="Customer Full Name"> -->
+                                                    <span class="drop-detail" style="background: #fe4565;width: 300px;height: 56px;margin-top:10px;">
+                                                        <select id="customer_name" style="width:300px; border-radius: 24px;"  onchange=fetch_delivery_address() >
+                                                            <option selected value="0">Select Client</option>
+                                                            <option value="1">No Wrapper</option>
+                                                            <option value="2">No JS</option>
+                                                            <option value="3">Nice!</option>
+                                                        </select>
+                                                    </span>
                                             </div>
                                             <div class="input-block">
-                                                <label class="add-course-label">Devlivery Address </label>
+                                                <label class="add-course-label">Delivery Address  (Please Select Client)</label>
                                                 <input type="text" id="delivery_address" class="form-control"
-                                                    placeholder="Delivery Address">
+                                                    placeholder="Delivery Address" readonly>
                                             </div>
                                             <!-- <div class="input-block">
                                                 <div id="order_item" style="display: flex;">
@@ -614,7 +622,7 @@ Upload-Video
                                 <div class="add-course-info">
                                     <div class="add-course-msg">
                                         <i class="fas fa-circle-check"></i>
-                                        <h4>Your Order Has Been Successfully Submitted</h4>
+                                        <h4>Your Order Has Been Successfully Updated</h4>
             <p>Thank you for updating your order. Our team is processing your request and will take care of the necessary steps to fulfill it. Thank You</p>
                                     </div>
                                 </div>
@@ -679,8 +687,10 @@ else {
 }
     let category_data=`<option value="Select Menu-0" selected>Select Menu</option>`
     if (authenticated){
+        
         fetch_category()
         fetchOrder(orderId)
+
     }
     else{
         window.location.href="/"
@@ -700,13 +710,13 @@ else {
             return response.json()
         }).then((response)=>{
             if (response.success){
-                document.getElementById("customer_name").value=response.data.customer_name
-                document.getElementById("delivery_address").value=response.data.delivery_address
+                document.getElementById("customer_name").setAttribute("data-id",response.data.client)
+                document.getElementById("customer_name").innerHTML=`<option selected value="${response.data.client_name}">${response.data.client_name}</option>`
+                document.getElementById("delivery_address").value=response.data.client_delivery_address
                 document.getElementById("special_request").value=response.data.special_instructions
-
                 document.getElementById("total-price").innerHTML=`$${response.data.order_total_price}`
 
-
+                fetch_user_client()
                 response.data.items.forEach((data)=>{
                     const container = document.getElementById("orderItemsContainer1");
         const LabelItem = document.createElement("label");
@@ -1216,8 +1226,7 @@ for (let i = 0; i < orderItems.length; i++) {
 
 // Prepare the data for the API request
 let data = {
-    "customer_name":customer_name.value,
-    'delivery_address': delivery_address.value,
+    "client":document.getElementById("customer_name").getAttribute("data-id"),
     "special_instructions": special_request.value,
     "order_total_price": document.getElementById("total-price").textContent.replace("$", ""),
     "items": items,
@@ -1320,7 +1329,7 @@ async function fetch_update_category(setid,id){
         if (response.success){
             str=``
             response.data.forEach((data)=>{
-                        str+=`<option value="${data.name}-${data.id}">${data.name}</Option>`
+                        str+=`<option value="${data.name}-${data.id}" >${data.name}</Option>`
             })
             const categorySelect = document.getElementById(`category-${setid}`);  // Get the select element using id
             categorySelect.innerHTML += str;  // Append new options to existing options
@@ -1375,6 +1384,79 @@ async function fetch_update_subcategory(setid,cat_id,subcat_id){
     document.getElementById('post_form').style.display = "block";
         }
     })
+}
+
+
+function fetch_user_client(){
+    let name=document.getElementById("customer_name").value
+    fetch(`${window.location.origin}/api/client/exclude-client-by-name/?name=${name}`,{
+        method:"GET",
+        headers: {
+            "content-type": "Application/json",
+            "Authorization": `Bearer ${authenticated}`,
+        },
+
+    }).then((response)=>{
+        return response.json()
+    }).then((response)=>{
+        if (response.success){
+            str=''
+            response.data.forEach((data)=>{
+                str+=`<option value=${data.name} >${data.name}</option>` 
+            })
+            document.getElementById("customer_name").innerHTML+=str
+
+
+        }else{
+            console.error('Error:', response);
+            message_content.innerHTML = "Server error";
+            card.style.display = "flex";
+            card.style.borderLeft = "10px solid red";
+            message_type.innerHTML = "Error";
+            message_type.style.color = "red";
+            message_icon_parent.style.color = "red";
+            message_icon_child.classList = "fas fa-times-circle";
+            document.getElementById('post_form').style.display = "block";
+        }
+    })
+}
+
+
+function fetch_delivery_address(){
+    new_customer_value=document.getElementById("customer_name").value
+    if (new_customer_value=="select client"){
+        document.getElementById("delivery_address").value=""
+        document.getElementById("customer_name").setAttribute("data-id",0)
+    }
+    else{
+
+    fetch(`${window.location.origin}/api/client/get-delivery-address/?name=${new_customer_value}`,{
+        method:"GET",
+        headers: {
+            "content-type": "Application/json",
+            "Authorization": `Bearer ${authenticated}`,
+        },
+    }).then((response)=>{
+        return response.json()
+    }).then((response)=>{
+        console.log(response)
+        if (response.success){
+            document.getElementById("customer_name").setAttribute("data-id",response.data.id)
+
+            document.getElementById("delivery_address").value=response.data.delivery_address
+        }
+        else{
+            console.error('Error:', response);
+            message_content.innerHTML = "Server error";
+            card.style.display = "flex";
+            card.style.borderLeft = "10px solid red";
+            message_type.innerHTML = "Error";
+            message_type.style.color = "red";
+            message_icon_parent.style.color = "red";
+            message_icon_child.classList = "fas fa-times-circle";
+        }
+    })
+}
 }
 </script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>

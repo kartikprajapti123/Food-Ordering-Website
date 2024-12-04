@@ -242,8 +242,8 @@ view-order
 					const formattedDate = dateObject.toLocaleDateString(); // "11/27/2024" (default format, depends on locale)
 					const formattedTime = dateObject.toLocaleTimeString();
 
-					customer_name.innerHTML=response.data.customer_name
-					delivery_address.innerHTML=response.data.delivery_address
+					customer_name.innerHTML=response.data.client_name
+					delivery_address.innerHTML=response.data.client_delivery_address
 					special_instructions.innerHTML=special_instruction
 					created_at.innerHTML=`Date: ${formattedDate}, Time: ${formattedTime}`
 					created_by.innerHTML=response.data.user_username

@@ -1,0 +1,773 @@
+{% extends "base.html" %}
+{% block title %}
+
+{% endblock title %}
+{% block link %}
+
+{% endblock link %}
+{% block style %}
+<style>
+	/* Style for Dropzone preview images and videos */
+	.dropzone .dz-preview .dz-image,
+	.dropzone .dz-preview .dz-video {
+		border: 2px solid #007bff;
+		/* Change the border color and width as desired */
+		border-radius: 5px;
+		/* Optional: adds rounded corners */
+		padding: 5px;
+		/* Optional: add some padding */
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		/* Optional: adds a subtle shadow */
+	}
+
+	/* Style for the remove button */
+	.remove-btn {
+		background-color: red;
+		/* Change the background color */
+		color: white;
+		/* Text color */
+		border: none;
+		/* Remove border */
+		padding: 5px 10px;
+		/* Padding for the button */
+		cursor: pointer;
+		/* Change cursor to pointer */
+		margin-top: 5px;
+		/* Space between button and file preview */
+	}
+</style>
+{% endblock style %}
+{% block body %}
+
+<!-- /Header -->
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar breadcrumb-bar-info" style="margin-top: 125px;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-12">
+				<div class="breadcrumb-list">
+					<h2 class="breadcrumb-title">My Clients</h2>
+					<nav aria-label="breadcrumb" class="page-breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/dashboard/">Dashboard</a></li>
+							<li class="breadcrumb-item active" aria-current="page">My Clients</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Breadcrumb -->
+
+<!-- Page Content -->
+<div class="page-content">
+	<div class="container">
+		<div class="row">
+
+			<!-- sidebar -->
+			<div class="col-xl-3 col-lg-3 theiaStickySidebar">
+				<div class="settings-widget dash-profile">
+					<div class="settings-menu">
+						<div class="profile-bg">
+							<div class="profile-img">
+								<a href="#" class="profile-update" id="profile_picture_link2"><img
+										id="profile_page_image" src="/media/profile_picture/default_profile_image.png"
+										alt="Img"></a>
+							</div>
+						</div>
+						<div class="profile-group">
+							<div class="profile-name text-center">
+								<h4 id="profile_page_username2"> Username</h4>
+								<a href="/create-order/" class="add-course btn-primary">
+									<i class="fas fa-upload"></i> Create New Order
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Sidebar -->
+
+			<!-- Student Tickets -->
+			<div class="col-xl-9 col-lg-9">
+
+				<div class="settings-widget card-details">
+					<div class="settings-menu p-0">
+						<div class="profile-heading">
+							<h3>My Clients</h3>
+						</div>
+						<div class="checkout-form">
+
+							<!-- Support Information -->
+							<div class="row">
+								<div class="col-md-4 col-sm-6">
+									<div class="card support-box">
+										<div class="card-body">
+											<h3 id="total_ticket">00</h3>
+											<p>Total Clients</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /Support Information -->
+
+							<div class="filter-grp ticket-grp d-flex align-items-center justify-content-between">
+								<div>
+									<h3>My Clients</h3>
+									<p>You can find all of your clients here.</p>
+								</div>
+								<div class="ticket-btn-grp">
+									<a href="#" data-bs-toggle="modal" data-bs-target="#add-tickets">Add New Client</a>
+								</div>
+							</div>
+
+
+							<!-- Tab Contant -->
+							<div class="tab-content">
+
+								<!-- All -->
+								<div class="tab-pane show active" id="all">
+									<div class="table-responsive custom-table">
+
+										<!-- Referred Users-->
+										<table class="table table-nowrap mb-0">
+											<thead>
+												<tr>
+													<th>Client Name</th>
+													<th>Client Delivery Address</th>
+													<th>Edit</th>
+													<th>Delete</th>
+
+												</tr>
+											</thead>
+											<tbody id="allstr">
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!-- Tab Contant -->
+                            <div class="dash-pagination" style="margin-top:20px;">
+                                <div class="row align-items-center">
+                                    <div class="col-6"
+                                        style="z-index: 1000 !important;display:flex;justify-content:center;">
+                                        <p class="pagination_list" style="color: #ff4667;"></p>
+                                    </div>
+                                    <div class="col-6"
+                                        style="z-index: 1000 !important;display:flex;justify-content:center;">
+                                        <ul class="pagination">
+    
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- Student Tickets -->
+
+		</div>
+	</div>
+</div>
+<!-- /Page Content -->
+
+<!-- Modal -->
+<div class="modalStyle modal fade" id="addpaymentMethod" tabindex="-1" aria-labelledby="addpaymentMethod"
+	aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Add New Payment Method</h5>
+				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i
+						class="fa-regular fa-circle-xmark"></i></button>
+			</div>
+			<div class="modal-body">
+				<div class="addpaymethod-form">
+					<form>
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="wallet-method">
+									<label class="radio-inline custom_radio me-4">
+										<input type="radio" name="optradio" checked="">
+										<span class="checkmark"></span> Credit or Debit card
+									</label>
+									<label class="radio-inline custom_radio">
+										<input type="radio" name="optradio">
+										<span class="checkmark"></span> PayPal
+									</label>
+								</div>
+								<div class="input-block">
+									<label class="form-control-label">Card Number</label>
+									<input type="text" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="input-block">
+									<label class="form-label">Month</label>
+									<select class="form-select" name="sellist1">
+										<option>Month</option>
+										<option>Brazil</option>
+										<option>French</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="input-block">
+									<label class="form-label">Year</label>
+									<select class="form-select" name="sellist1">
+										<option>Year</option>
+										<option>India</option>
+										<option>America</option>
+										<option>London</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="input-block">
+									<label class="form-control-label">CVV Code </label>
+									<input type="text" class="form-control" placeholder="XXXX">
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<div class="input-block mb-0">
+									<label class="form-control-label">Name on Card</label>
+									<input type="text" class="form-control" placeholder="Address">
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer me-auto">
+				<button type="button" class="btn btn-modal-style btn-theme">Save changes</button>
+				<button type="button" class="btn btn-modal-style btn-cancel" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Footer -->
+
+<!-- /Footer -->
+
+<div class="modal fade" id="add-tickets">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+			<div class="page-wrapper-new p-0">
+				<div class="content">
+					<div class="modal-header border-0 custom-modal-header">
+						<div class="page-title">
+							<h4>Add New Client</h4>
+						</div>
+						<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="feather-x"></i>
+						</button>
+					</div>
+					<div class="modal-body custom-modal-body">
+						<form>
+							<div class="tickets-add-list">
+								<div class="settings-inner-blk add-course-info p-0">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="input-block">
+												<label class="form-label">Client Name</label>
+												<input type="text" class="form-control" id="client_name">
+											</div>
+										</div>
+                                        <div class="col-md-12">
+											<div class="input-block">
+												<label class="form-label">Client Delivery Address</label>
+												<input type="text" class="form-control" id="client_delivery_address">
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer-btn">
+								<button type="submit" class="btn btn-primary" id="ticket_submit">Submit</button>
+								<button type="button" class="btn btn-outline-primary"
+									data-bs-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="update-tickets">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+			<div class="page-wrapper-new p-0">
+				<div class="content">
+					<div class="modal-header border-0 custom-modal-header">
+						<div class="page-title">
+							<h4>Update Client</h4>
+						</div>
+						<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="feather-x"></i>
+						</button>
+					</div>
+					<div class="modal-body custom-modal-body">
+						<form>
+							<div class="tickets-add-list">
+								<div class="settings-inner-blk add-course-info p-0">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="input-block">
+												<label class="form-label">Client Name</label>
+												<input type="text" class="form-control" id="update_client_name">
+											</div>
+										</div>
+                                        <div class="col-md-12">
+											<div class="input-block">
+												<label class="form-label">Client Delivery Address</label>
+												<input type="text" class="form-control" id="update_client_delivery_address">
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer-btn">
+								<button type="submit" class="btn btn-primary" id="update_my_client">Update</button>
+								<button type="button" class="btn btn-outline-primary"
+									data-bs-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</div>
+
+{% endblock body %}
+
+<!-- /Main Wrapper -->
+{% block script %}
+<script>
+	var user_id = 0;
+	var user_username = 0;
+
+    let currentPage=0;
+    let totalPages=0;
+
+	document.addEventListener("DOMContentLoaded", function () {
+
+		document.getElementsByClassName("footer-top")[0].style.opacity = 1
+		let client_name = document.getElementById('client_name');
+		let client_delivery_address = document.getElementById('client_delivery_address');
+
+		if (authenticated) {
+			document.getElementById('ticket_submit').addEventListener("click", function (e) {
+				e.preventDefault()
+				post_my_client(user_id);
+			});
+
+			const userApi = async () => {
+				await fetch(`${window.location.origin}/api/user/get-user-single/`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${authenticated}`
+					}
+				})
+					.then((response) => response.json())
+					.then((response) => {
+						if (response.success) {
+							userprofileid=response.data.id
+								console.log(response.data.image);
+								document.getElementById("profile_image").src = `${response.data.profile_picture}`;
+								document.getElementById("profile_image2").src = `${response.data.profile_picture}`;
+								document.getElementById("profile_username").innerHTML = `${response.data.username}`;
+								document.getElementById("profile_page_username2").innerHTML = `${response.data.username}`;
+								
+
+								
+					document.getElementById("profile_page_image").src=response.data.profile_picture
+
+								
+							user_id = response.data.id
+							user_username = response.data.username;
+                            ;
+							fetch_my_client_by_user(1,response.data.username)
+						}
+						console.log(response);
+					});
+			};
+
+			userApi();
+		} else {
+			console.log("You are not logged in.");
+		}
+        
+		async function post_my_client(id) {
+			card.style.display = "none";
+            client_name.style.border="none"
+            client_delivery_address.style.border="none"
+
+
+			let data = new FormData();
+			data.append("name", client_name.value);
+			data.append("delivery_address",client_delivery_address.value);
+			data.append("user",id);
+
+
+			await fetch(`${window.location.origin}/api/client/`, {
+				method: "POST",
+				headers: {
+					"Authorization": `Bearer ${authenticated}`
+				},
+				body: data // Send FormData directly
+			})
+				.then((response) => response.json())
+				.then((response) => {
+					if (response.success) {
+
+						card.style.display = "flex";
+						card.style.borderLeft = "10px solid green";
+
+						message_content.innerHTML = "Your Client successfully created";
+
+						// Use Bootstrap's modal hide <method></method>
+						document.getElementById("add-tickets").style.display = "none" // This will properly hide the modal
+						document.getElementById("add-tickets").classList.remove("show")
+						document.getElementById("add-tickets").setAttribute("aria-hidden", "true")
+						document.getElementById("add-tickets").removeAttribute("role")
+						document.getElementById("add-tickets").removeAttribute("aria-modal") // This will properly hide the modal
+						// This will properly hide the modal
+						// This will properly hide the modal
+
+
+						message_type.innerHTML = "Success";
+						message_type.style.color = "green";
+						message_icon_parent.style.color = "green";
+						message_icon_child.classList = "fas fa-check-circle";
+						setTimeout(() => {
+							card.style.display = "none";
+							window.location.reload()
+						}, 2500)
+
+						client_name.value = ""
+						client_delivery_address.value = ""
+
+					}
+					else {
+						if (response.message.name) {
+							message_content.innerHTML = response.message.name[0];
+                            client_name.style.border="2px solid red"
+
+
+						}
+						else if (response.message.delivery_address) {
+
+							message_content.innerHTML = response.message.delivery_address[0];
+                            client_delivery_address.style.border="2px solid red"
+
+
+
+						}
+						else if (response.message.non_field_errors) {
+
+							message_content.innerHTML = response.message.non_field_errors[0];
+
+						}
+						else if (response.message) {
+
+							message_content.innerHTML = response.message[0];
+
+						}
+
+						card.style.display = "flex";
+						card.style.borderLeft = "10px solid red";
+						message_type.innerHTML = "Error";
+						message_type.style.color = "red";
+						message_icon_parent.style.color = "red";
+						message_icon_child.classList = "fas fa-times-circle";
+					}
+					console.log("Response:", response);
+				});
+		}
+	});
+	async function fetch_my_client_by_user(page,username) {
+		await fetch(`${window.location.origin}/api/client/filter-by-username/?username=${username}&page=${page}`, {
+			"method": "GET",
+			"headers": {
+                'Content-Type': 'application/json',
+
+				"Authorization": `Bearer ${authenticated}`
+			}
+		}).then((response) => {
+			return response.json()
+		}).then((response) => {
+			console.log(response)
+			if (response.results) {
+				if (response.results.success) {
+                    totalPages = Math.ceil(response.count / 10);
+                    currentPage=page
+                    allstr=''
+					response.results.data.forEach((data) => {
+                        let name1 = data.name
+						let address = data.delivery_address
+
+						if (data.name && data.name.length > 20) {
+							name1 = data.name.substring(0, 20) + '...';
+						} 
+                        if (data.delivery_address && data.delivery_address.length > 50) {
+							address = data.delivery_address.substring(0, 50) + '...';
+						}
+
+						allstr += `<tr>
+													<td><a href="javascript:void(0);" class="tab-title">${name1}</a>
+													</td>
+													<td>${address}</td>
+                                                    
+													<td><div onclick=get_client(${data.id}) class="btn btn-primary"  style="color: white;
+    background: green;font-weight:600;border:none;">
+									<a href="#" data-bs-toggle="modal" data-bs-target="#update-tickets" style="background:green;border:none;color:white;">Edit</a>
+								</div></td>
+													<td><button class="btn btn-primary"  style="color: white;
+    background: #ff4667;font-weight:600;" onclick=my_client_delete(${data.id})>Delete</button></td>
+
+												</tr>`
+
+					})
+					// Example of how to structure the empty states for all sections
+
+					if (allstr == "") {
+						document.getElementById("allstr").innerHTML = `
+        <tr>
+            <td colspan="7" style="padding: 53px 10px; text-align: center;">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
+                    <h4 style="margin: 10px; color: gray;">
+                        There are no clients of yours Tickets.
+                    </h4>
+                </div>
+            </td>
+        </tr>`;
+					} else {
+						document.getElementById("allstr").innerHTML = allstr;
+					}
+
+
+
+					function formatNumber(num) {
+						return num < 10 ? '0' + num : num;
+					}
+
+					document.getElementById('total_ticket').innerHTML = formatNumber(response.count);
+
+                    updatePagination();
+
+
+				}   
+			}
+		})
+	}
+	document.getElementsByClassName("footer-top")[0].classList.remove("aos");
+	document.getElementsByClassName("footer-top")[0].setAttribute("data-aos", "");
+
+    const updatePagination = () => {
+        const paginationList = document.getElementsByClassName("pagination_list")[0];
+        if (totalPages > 1) {
+
+            paginationList.innerHTML = `Page ${currentPage} of ${totalPages}`;
+        }
+
+        const pagination = document.querySelector('.pagination');
+        pagination.innerHTML = '';
+
+        // Add "Previous" button only if we're not on the first page
+        if (currentPage > 1) {
+            pagination.innerHTML += `<li><a onclick="fetch_my_client_by_user(${currentPage - 1}, '${user_username}'); document.getElementById('allstr').scrollIntoView({ behavior: 'smooth' });" style="box-shadow: 0px 0px 10px 0px gray;"><i class="bx bx-chevron-left" style="font-size:25px;"></i></a></li>`;
+        }
+
+        // Add "Next" button only if we're not on the last page
+        if (currentPage < totalPages) {
+            pagination.innerHTML += `<li><a onclick="fetch_my_client_by_user(${currentPage + 1}, '${user_username}'); document.getElementById('allstr').scrollIntoView({ behavior: 'smooth' });" style="box-shadow: 0px 0px 10px 0px gray;" ><i class="bx bx-chevron-right" style="font-size:25px;"></i></a></li>`;
+        }
+
+    };
+
+	async function my_client_delete(id) {
+		card.style.display = "none"
+		check = confirm(`Are you sure to delete Client`)
+		if (check) {
+
+			await fetch(`${window.location.origin}/api/client/${id}/`, {
+				method: "DELETE",
+				headers: {
+            'Content-Type': 'application/json',
+                    
+					"Authorization": `Bearer ${authenticated}`,
+                }
+
+			}).then((response) => {
+				return response.json()
+			}).then((response) => {
+				if (response.success) {
+					console.log(response)
+					card.style.display = "flex";
+					card.style.borderLeft = "10px solid green"
+					message_content.innerHTML = `Client successfully deleted`
+					message_type.innerHTML = "Success";
+					message_type.style.color = "green";
+					message_icon_parent.style.color = "green";
+					message_icon_child.classList = "fas fa-check-circle";
+					setTimeout(() => {
+						card.style.display = "none";
+					}, 2500)
+					fetch_my_client_by_user(currentPage,user_username)
+
+				}
+				else {
+					message_content.innerHTML = "Something went wrong ! try again later";
+					card.style.display = "flex";
+					card.style.borderLeft = "10px solid red";
+					message_type.innerHTML = "Oops";
+					message_type.style.color = "red";
+					message_icon_parent.style.color = "red";
+					message_icon_child.classList = "fas fa-times-circle";
+				}
+			})
+		}
+
+	}
+    update_client_name=document.getElementById("update_client_name")
+    update_client_delivery_address=document.getElementById("update_client_delivery_address")
+
+    function get_client(id) {
+        update_client_name.value=""
+        update_client_delivery_address.value=""
+        fetch(`${window.location.origin}/api/client/${id}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authenticated}`,
+            }
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((response) => {
+            if (response.success) {
+                update_client_name.value = response.data.name;
+                update_client_delivery_address.value = response.data.delivery_address;
+                document.getElementById("update_my_client").setAttribute("data-id", `${id}`);
+            } else {
+                console.error("API response indicates failure:", response.message);
+                alert(`Error: ${response.message}`);
+            }
+        })
+        .catch((error) => {
+            console.error("Error during fetch:", error);
+            alert("An error occurred while fetching client data. Please try again.");
+        });
+    }
+
+    document.getElementById("update_my_client").addEventListener('click',function(e){
+        e.preventDefault()
+        let id=document.getElementById("update_my_client").getAttribute("data-id")
+        data={
+            "name":update_client_name.value,
+            "delivery_address":update_client_delivery_address.value,
+            'user':user_id
+        }
+        fetch(`${window.location.origin}/api/client/${id}/`,{
+            "method":"PATCH",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authenticated}`,
+            },
+            body:JSON.stringify(data)
+
+        }).then((response) => response.json())
+        .then((response) => {
+            if (response.success) {
+
+                card.style.display = "flex";
+                card.style.borderLeft = "10px solid green";
+
+                message_content.innerHTML = "Your Client successfully updated";
+
+                // Use Bootstrap's modal hide <method></method>
+                document.getElementById("add-tickets").style.display = "none" // This will properly hide the modal
+                document.getElementById("add-tickets").classList.remove("show")
+                document.getElementById("add-tickets").setAttribute("aria-hidden", "true")
+                document.getElementById("add-tickets").removeAttribute("role")
+                document.getElementById("add-tickets").removeAttribute("aria-modal") // This will properly hide the modal
+                // This will properly hide the modal
+                // This will properly hide the modal
+
+
+                message_type.innerHTML = "Success";
+                message_type.style.color = "green";
+                message_icon_parent.style.color = "green";
+                message_icon_child.classList = "fas fa-check-circle";
+                setTimeout(() => {
+                    card.style.display = "none";
+                    window.location.reload()
+                }, 2500)
+
+                client_name.value = ""
+                client_delivery_address.value = ""
+
+            }
+            else {
+                if (response.message.name) {
+                    message_content.innerHTML = response.message.name[0];
+                    client_name.style.border="2px solid red"
+
+
+                }
+                else if (response.message.delivery_address) {
+
+                    message_content.innerHTML = response.message.delivery_address[0];
+                    client_delivery_address.style.border="2px solid red"
+
+
+
+                }
+                else if (response.message.non_field_errors) {
+
+                    message_content.innerHTML = response.message.non_field_errors[0];
+
+                }
+                else if (response.message) {
+
+                    message_content.innerHTML = response.message[0];
+
+                }
+
+                card.style.display = "flex";
+                card.style.borderLeft = "10px solid red";
+                message_type.innerHTML = "Error";
+                message_type.style.color = "red";
+                message_icon_parent.style.color = "red";
+                message_icon_child.classList = "fas fa-times-circle";
+            }
+            console.log("Response:", response);
+        });
+
+    })
+    
+
+</script>
+{% endblock script %}
+<!-- jQuery -->

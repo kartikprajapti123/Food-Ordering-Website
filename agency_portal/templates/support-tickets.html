@@ -662,7 +662,7 @@
 		}
 	};
 	async function fetch_support_ticket_user(username) {
-		await fetch(`${window.location.origin}/api/support-ticket/?user_username=${username}&no_pagination=true&ordering=-id`, {
+		await fetch(`${window.location.origin}/api/support-ticket/?search=${username}&no_pagination=true&ordering=-id`, {
 			"method": "GET",
 			"headers": {
 				"Authorization": `Bearer ${authenticated}`

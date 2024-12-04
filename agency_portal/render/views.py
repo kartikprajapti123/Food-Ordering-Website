@@ -49,3 +49,7 @@ def myorders(request):
 
 def update_order(request,id):
     return render(request,"update-order.html")
+
+def myclient(request):
+    return render(request,"myclient.html")
+    

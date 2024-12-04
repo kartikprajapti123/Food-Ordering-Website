@@ -500,8 +500,8 @@ My Orders
                 return text;
             };
 
-            let customerName = truncateText(data.customer_name, 50);
-            let deliveryAddress = truncateText(data.delivery_address, 50);
+            let customerName = truncateText(data.client_name, 50);
+            let deliveryAddress = truncateText(data.client_delivery_address, 50);
             special_instruction = truncateText(special_instruction, 50);
 
             // HTML structure for the post
