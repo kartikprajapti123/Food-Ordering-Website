@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     function calculateTotalAmount() {
         let totalAmount = 0;
-
+        console.log(totalAmount)
         // Select all visible rows in the Django admin table
         const rows = document.querySelectorAll("tbody tr");
 
@@ -17,7 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // Update the total amount display
         const totalAmountElement = document.getElementById("total-amount");
         if (totalAmountElement) {
+            
             totalAmountElement.textContent = totalAmount.toFixed(2);
+            console.log(totalAmount)
         }
     }
 
@@ -27,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Recalculate whenever filters are applied
     document.querySelectorAll(".changelist-filter a").forEach((filter) => {
         filter.addEventListener("click", () => {
+            console.log("called")
             setTimeout(calculateTotalAmount, 500); // Wait for filters to apply
         });
     });
