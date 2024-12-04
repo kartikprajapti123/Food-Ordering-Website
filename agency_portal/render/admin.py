@@ -206,7 +206,10 @@ class OrderAdmin(admin.ModelAdmin):
         print(f"Output path: {output_path}")
         # Initialize Html2Image and generate the image
         hti = Html2Image(output_path=output_dir)
+        print(f"hti: {hti}")
+        
         hti.screenshot(html_str=html_content, save_as=f"{order.order_number}.png")
+        print(f"screenshort setted: done")
 
         # Serve the generated image as a file download
         return FileResponse(open(output_path, "rb"), as_attachment=True, filename=f"{order.order_number}.png")
