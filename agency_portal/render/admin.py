@@ -292,8 +292,8 @@ class OrderItemAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
+    # def has_delete_permission(self, request, obj=None):
+        # return False
     
     def has_change_permission(self, request, obj=None):
         # If you want to prevent saving or modifying, return False
@@ -320,8 +320,8 @@ class AttachmentInline(admin.TabularInline):
     def has_add_permission(self, request, obj=None):
         return False  # Disable the ability to add new attachments
 
-    def has_delete_permission(self, request, obj=None):
-        return False  # Disable the ability to delete attachments
+    # def has_delete_permission(self, request, obj=None):
+        # return False  # Disable the ability to delete attachments
 
 
 class SupportTicketAdmin(admin.ModelAdmin):
@@ -457,9 +457,9 @@ class CustomUserAdmin(UserAdmin):
     # You can remove the "groups" and "user_permissions" fields from the form
     exclude = ("groups", "user_permissions", "Deleted")
 
-    def has_delete_permission(self, request, obj=None):
-        """Disable delete functionality for Orders."""
-        return False
+    # def has_delete_permission(self, request, obj=None):
+        # """Disable delete functionality for Orders."""
+        # return False
 
 
 # Register the User model with the custom UserAdmin
