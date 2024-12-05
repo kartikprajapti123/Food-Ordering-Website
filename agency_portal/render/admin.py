@@ -511,8 +511,8 @@ class ClientAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False  # Disable adding new clients
 
-    def has_delete_permission(self, request, obj=None):
-        return False  # Disable deleting clients
+    # def has_delete_permission(self, request, obj=None):
+        # return False  # Disable deleting clients
 
 
 # Unregister Blacklisted and Outstanding tokens
