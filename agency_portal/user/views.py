@@ -556,8 +556,9 @@ class LoginWithGoogleViewSet(ModelViewSet):
                     user = User.objects.filter(email=email)
                     print(user)
                     if user.exists():
-                        user[0].is_active = True
-                        user[0].save()
+                        mainuser=user[0]
+                        mainuser.is_active = True
+                        mainuser.save()
                         refresh_token = RefreshToken.for_user(user[0])
                         access_token = str(refresh_token.access_token)
 
