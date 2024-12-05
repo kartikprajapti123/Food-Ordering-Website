@@ -1402,7 +1402,7 @@ function fetch_user_client(){
         if (response.success){
             str=''
             response.data.forEach((data)=>{
-                str+=`<option value=${data.name} >${data.name}</option>` 
+                str+=`<option value="${data.name}" >${data.name}</option>` 
             })
             document.getElementById("customer_name").innerHTML+=str
 

@@ -1172,7 +1172,7 @@ function fetch_user_client(){
             str=``
             str=`<option value="select client" >Select Client</option>`
             response.data.forEach((data)=>{
-                str+=`<option value=${data.name} >${data.name}</option>` 
+                str+=`<option value="${data.name}">${data.name}</option>` 
             })
             document.getElementById("customer_name").innerHTML=str
 
@@ -1192,11 +1192,16 @@ function fetch_user_client(){
 }
 function fetch_delivery_address(){
     new_customer_value=document.getElementById("customer_name").value
+    console.log("new_customer_value",new_customer_value)
+
+
     if (new_customer_value=="select client"){
         document.getElementById("delivery_address").value=""
         document.getElementById("customer_name").setAttribute("data-id",0)
     }
     else{
+    console.log("new_customer_value",new_customer_value)
+
 
     fetch(`${window.location.origin}/api/client/get-delivery-address/?name=${new_customer_value}`,{
         method:"GET",
