@@ -154,13 +154,12 @@ EMAIL_HOST_PASSWORD = config('SEND_EMAIL_PASSWORD')
 
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=360),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=360),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1825),  # 5 years = 365 * 5 days
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=2190),  # 6 years = 365 * 6 days
     "ALGORITHM": "HS256",
     "SIGNING_KEY": SECRET_KEY,
     "AUTH_HEADER_TYPES": ("Bearer",),
-    'BLACKLIST_AFTER_ROTATION': True,
-    
+    "BLACKLIST_AFTER_ROTATION": True,
 }
 
 AUTH_USER_MODEL = "user.User"
