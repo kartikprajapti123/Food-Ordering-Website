@@ -364,8 +364,8 @@
     let currentPage=0;
     let totalPages=0;
 
-	document.addEventListener("DOMContentLoaded", function () {
-
+	document.addEventListener("DOMContentLoaded", function (e) {
+		e.preventDefault()
 		document.getElementsByClassName("footer-top")[0].style.opacity = 1
 		let client_name = document.getElementById('client_name');
 		let client_delivery_address = document.getElementById('client_delivery_address');
