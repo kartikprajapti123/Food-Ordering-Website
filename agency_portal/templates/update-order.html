@@ -512,6 +512,20 @@ Upload-Video
                                                 <!-- Order Form 2 -->
                                                 
                                             </div>
+                                            <div class="input-block" style="display: flex;flex-wrap:wrap;">
+
+                                                <div class="input-block" style="margin-right:20px;width:200px;">
+                                                    <label class="add-course-label" for="delivery_date">Delivery Date</label>
+                                                    <input type="date" id="delivery_date" class="form-control" placeholder="Select Date" >
+                                                </div>
+                                                
+                                                    <div class="input-block" style="width:200px;">
+                                                
+                                                    <label class="add-course-label" for="delivery_time">Delivery Time</label>
+                                                    <input type="time" id="delivery_time" class="form-control" placeholder="Select Time">
+                                                </div>
+    
+                                            </div>
                                             <div class="input-block">
                                                 <label class="add-course-label">Special Request </label>
                                                 <input type="text" id="special_request" class="form-control"
@@ -668,13 +682,8 @@ if (authenticated) {
                             document.getElementById("profile_image").src = `${response.data.profile_picture}`;
                             document.getElementById("profile_image2").src = `${response.data.profile_picture}`;
                             document.getElementById("profile_username").innerHTML = `${response.data.username}`;
-                document.getElementById("profile_page_image").src=response.data.profile_picture
 
                             
-                document.getElementById("profile_page_username2").innerHTML = `${response.data.username}`;
-                            
-                getUserPosts(1)
-                //followers_following();
             }
             console.log(response)
         })
@@ -715,7 +724,12 @@ else {
                 document.getElementById("delivery_address").value=response.data.client_delivery_address
                 document.getElementById("special_request").value=response.data.special_instructions
                 document.getElementById("total-price").innerHTML=`$${response.data.order_total_price}`
+                let deliveryDate = response.data.delivery_date; // "2024-12-10"
+let deliveryTime = response.data.delivery_time.split(":").slice(0, 2).join(":"); // "22:36"
 
+// Set the values to the input fields
+document.getElementById("delivery_date").value = deliveryDate;
+document.getElementById("delivery_time").value = deliveryTime;
                 fetch_user_client()
                 response.data.items.forEach((data)=>{
                     const container = document.getElementById("orderItemsContainer1");
@@ -1223,15 +1237,47 @@ for (let i = 0; i < orderItems.length; i++) {
         });
     }
 }
+let payload_delivery_date = document.getElementById("delivery_date").value;
 
+// Function to convert date format to YYYY-MM-DD
+function formatDateToYYYYMMDD(dateString) {
+    if (!dateString) return null; // Handle empty or invalid dates
+
+    // Create a new Date object from the input value
+    const date = new Date(dateString);
+
+    // Extract year, month, and day
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+
+    // Combine them into YYYY-MM-DD format
+    return `${year}-${month}-${day}`;
+}
+
+payload_delivery_date = formatDateToYYYYMMDD(payload_delivery_date);
+let payload_delivery_time = document.getElementById("delivery_time").value;
+//payload_delivery_time += ":00"; // Appending seconds
+
+
+// Add seconds if not included
+if (payload_delivery_time && !payload_delivery_time.includes(":")) {
+    payload_delivery_time += ":00"; // Appending seconds
+}
 // Prepare the data for the API request
 let data = {
     "client":document.getElementById("customer_name").getAttribute("data-id"),
     "special_instructions": special_request.value,
     "order_total_price": document.getElementById("total-price").textContent.replace("$", ""),
     "items": items,
+    
 };
-
+if (payload_delivery_date){
+    data["delivery_date"]=payload_delivery_date
+}
+if (payload_delivery_time){
+    data["delivery_time"]=payload_delivery_time
+}
 customer_name.style.border = "1px solid grey";
 delivery_address.style.border = "1px solid grey";
 

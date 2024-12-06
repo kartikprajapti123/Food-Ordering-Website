@@ -18,6 +18,9 @@ class Order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(choices=ORDER_STATUS_CHOICES, default="Pending", max_length=20)
     special_instructions = models.TextField(blank=True, null=True)
+    delivery_date=models.DateField(blank=True,null=True)
+    delivery_time=models.TimeField(blank=True,null=True)
+    
     # delivery_address = models.CharField(max_length=100,blank=True, null=True)
     order_total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     deleted = models.IntegerField(default=0)

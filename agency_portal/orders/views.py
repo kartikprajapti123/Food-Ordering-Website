@@ -33,6 +33,8 @@ class OrderViewSet(ModelViewSet):
         "order_date",
         "status",
         "special_instructions",
+        'delivery_date',
+            'delivery_time',
         "order_total_price",
         "deleted",
         "created_at",
@@ -46,6 +48,8 @@ class OrderViewSet(ModelViewSet):
             'client__name',
             'client__delivery_address',
         "order_number",
+        'delivery_date',
+            'delivery_time',
         "order_date",
         "status",
         "special_instructions",
@@ -250,6 +254,30 @@ class OrderViewSet(ModelViewSet):
         return Response(
             {"success": True, "message": "Order successfully canceled."},
             status=status.HTTP_200_OK,
+        )
+        
+    @action(detail=False, methods=['post'], url_path='create-order')
+    def create_order(self, request):
+        user = request.user
+        today = now().date()
+        start_of_week = today - timedelta(days=today.weekday()) 
+        end_of_week = start_of_week + timedelta(days=6)  
+        
+        weekly_orders = Order.objects.filter(
+            user=user,
+            order_date__date__gte=start_of_week,
+            order_date__date__lte=end_of_week
+        ).count()
+
+        if weekly_orders >= 2:
+            return Response(
+                {"success":False,"message": "You have already created 2 orders this week. Please try again next week."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response(
+            {"success":True,"message":"User Can do Order"},
+            status=status.HTTP_201_CREATED
         )
 
     @action(detail=False,methods=['POST',],url_path="status-update")

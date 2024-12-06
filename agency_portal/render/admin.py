@@ -104,13 +104,18 @@ class OrderAdmin(admin.ModelAdmin):
         "get_client_name",
         "order_total_price",
         "order_date",
+        "delivery_date",
+        "delivery_time",
     )
     list_filter = ("status", "order_date", "deleted", "user")
     search_fields = (
         "order_number",
+        "delivery_date",
+        "delivery_time",
         "user__username",
         "client__name",
         "client__delivery_address",
+        
     )
     ordering = ("-order_date",)
     list_editable = ("status",)
@@ -124,6 +129,8 @@ class OrderAdmin(admin.ModelAdmin):
         "order_date",
         "special_instructions",
         "deleted",
+        "delivery_date",
+        "delivery_time",
         "created_at",
         "updated_at",
         "order_total_price",
@@ -186,17 +193,101 @@ class OrderAdmin(admin.ModelAdmin):
             # Get the order or raise Http404 if not found
             order = get_object_or_404(Order, pk=pk)
 
+            # Fetch the associated order items
+            order_items = order.items.all()
+
             # Generate HTML content for the receipt
             html_content = f"""
                 <html>
-                <head><title>Receipt</title></head>
+                <head>
+                    <title>Receipt for Order #{order.order_number}</title>
+                    <style>
+                        body {{
+                            font-family: Arial, sans-serif;
+                            margin: 20px;
+                            padding: 10px;
+                            border: 1px solid #ddd;
+                            max-width: 600px;
+                            margin: 0 auto;
+                        }}
+                        h1 {{
+                            text-align: center;
+                            font-size: 24px;
+                            margin-bottom: 10px;
+                        }}
+                        .order-details {{
+                            margin-bottom: 20px;
+                        }}
+                        .order-details p {{
+                            font-size: 16px;
+                            margin: 5px 0;
+                        }}
+                        .items {{
+                            margin-top: 20px;
+                        }}
+                        .items table {{
+                            width: 100%;
+                            border-collapse: collapse;
+                        }}
+                        .items th, .items td {{
+                            padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #ddd;
+                        }}
+                        .total {{
+                            font-size: 18px;
+                            margin-top: 20px;
+                            text-align: right;
+                        }}
+                    </style>
+                </head>
                 <body>
-                    <h1>Receipt for Order {order.order_number}</h1>
-                    <p>Client Name: {order.client.name}</p>
-                    <p>Total Price: ₹{order.order_total_price}</p>
-                    <p>Order Date: {order.order_date}</p>
-                </body>
-                </html>
+                    <h1>Order Receipt</h1>
+
+                    <div class="order-details">
+                        <p><strong>Order Number:</strong> {order.order_number}</p>
+                        <p><strong>Client Name:</strong> {order.client.name}</p>
+                        <p><strong>Address:</strong> {order.client.delivery_address}</p>
+                        <p><strong>Order Date:</strong> {order.order_date.strftime('%b %d, %Y')}</p>
+                        <p><strong>Delivery Date:</strong> {order.delivery_date.strftime('%b %d, %Y') if order.delivery_date else 'N/A'}</p>
+                        <p><strong>Delivery Time:</strong> {order.delivery_time.strftime('%I:%M %p') if order.delivery_time else 'N/A'}</p>
+                    </div>
+
+                    <div class="items">
+                        <h3>Order Items</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            """
+
+            # Add order items to the table
+            for item in order_items:
+                html_content += f"""
+                    <tr>
+                        <td>{item.category}</td>
+                        <td>${item.price:.2f}</td>
+                        <td>{item.quantity}</td>
+                        <td>${item.order_item_total_price:.2f}</td>
+                    </tr>
+                """
+
+            # Add total price
+            html_content += f"""
+                </tbody>
+            </table>
+            <div class="total">
+                <p><strong>Total: ${order.order_total_price:.2f}</strong></p>
+            </div>
+            </div>
+            </body>
+            </html>
             """
 
             # Define the output directory and file path

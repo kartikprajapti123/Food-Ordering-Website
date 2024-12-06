@@ -402,7 +402,7 @@ Upload-Video
 
 <!-- New Course -->
 <section class="page-content course-sec" style="margin-top: 100px;">
-    <div class="container" id="row1">
+    <div class="container" id="row1" style="display: none;">
         <div class="row align-items-center">
             <div class="col-md-12">
                 <div class="add-course-header">
@@ -544,6 +544,21 @@ Upload-Video
                                                 <!-- Order Form 2 -->
                                                 
                                             </div>
+                                            <div class="input-block" style="display: flex;flex-wrap:wrap;">
+
+                                            <div class="input-block" style="margin-right:20px;width:200px;">
+                                                <label class="add-course-label" for="delivery_date">Delivery Date</label>
+                                                <input type="date" id="delivery_date" class="form-control" placeholder="Select Date" >
+                                            </div>
+                                            
+                                                <div class="input-block" style="width:200px;">
+                                            
+                                                <label class="add-course-label" for="delivery_time">Delivery Time</label>
+                                                <input type="time" id="delivery_time" class="form-control" placeholder="Select Time">
+                                            </div>
+
+                                        </div>
+
                                             <div class="input-block">
                                                 <label class="add-course-label">Special Request (Optional) </label>
                                                 <input type="text" id="special_request" class="form-control"
@@ -668,6 +683,56 @@ Upload-Video
 
         </div>
     </div>
+    <div class="container" id="row3" style="display:none">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="add-course-header">
+                    <h2>Please place your order next week.</h2>
+                    <div class="add-course-btns">
+                        <ul class="nav">
+                            <li>
+                                <a href="/dashboard/" class="btn btn-black profile-update">Back to Dashboared</a>
+                            </li>
+                            <li>
+                                <a href="/myorder/" class="btn btn-success-dark"
+                                    >My Orders</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- Course Wizard -->
+                    <div class="widget-set">
+                        <div class="widget-setcount">
+                            <ul id="progressbar">
+
+                            </ul>
+                        </div>
+                        <div class="widget-content multistep-form">
+                            <fieldset class="field-card" style="display: block;">
+                                <div class="add-course-info">
+                                    <div class="add-course-msg">
+                                        <i class="fas fa-times" style="color: red;"></i>
+
+                                        <h4>Oops! You have reached your weekly order limit.</h4>
+<p>We noticed that you have already placed two orders this week. In order to maintain fair usage and ensure timely delivery for all of our customers, we kindly ask that you wait until next week to place additional orders. Thank you for your understanding and cooperation. </p>
+<p>We appreciate your business and look forward to serving you again next week!</p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <!-- /Course Wizard -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 </section>
 
 </div>
@@ -716,9 +781,33 @@ Upload-Video
     }
     if (authenticated){
         fetch_category()
+        check_user_can_do_order()
     }
     else{
         window.location.href="/"
+    }
+    function check_user_can_do_order(){
+        fetch(`${window.location.origin}/api/orders/create-order/`,{
+            method:"POST",
+            "headers":{
+                "content-type": "application/json",
+						"Authorization": `Bearer ${authenticated}`
+            },
+            body:{}
+        }).then((response)=>{
+            return response.json()
+        }).then((response)=>{
+            if (response.success){
+                document.getElementById("row1").style.display="block";
+                document.getElementById("row3").style.display="none";
+
+            }
+            else{
+                document.getElementById("row3").style.display="block";
+                document.getElementById("row1").style.display="none";
+
+            }
+        })
     }
     let itemCounter=2
     document.getElementById("addItemBtn1").addEventListener("click", function (e) {
@@ -964,6 +1053,10 @@ Upload-Video
     let customer_name=document.getElementById("customer_name")
     let delivery_address=document.getElementById("delivery_address")
     let special_request=document.getElementById("special_request")
+    let delivery_date=document.getElementById("delivery_date")
+    let delivery_time=document.getElementById("delivery_time")
+
+
 
 
 
@@ -1069,15 +1162,47 @@ for (let i = 0; i < orderItems.length; i++) {
         price: unitPrice,
     });
 }
+let payload_delivery_date = document.getElementById("delivery_date").value;
 
+// Function to convert date format to YYYY-MM-DD
+function formatDateToYYYYMMDD(dateString) {
+    if (!dateString) return null; // Handle empty or invalid dates
+
+    // Create a new Date object from the input value
+    const date = new Date(dateString);
+
+    // Extract year, month, and day
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+
+    // Combine them into YYYY-MM-DD format
+    return `${year}-${month}-${day}`;
+}
+
+payload_delivery_date = formatDateToYYYYMMDD(payload_delivery_date);
+let payload_delivery_time = document.getElementById("delivery_time").value;
+//payload_delivery_time += ":00"; // Appending seconds
+
+
+// Add seconds if not included
+if (payload_delivery_time && !payload_delivery_time.includes(":")) {
+    payload_delivery_time += ":00"; // Appending seconds
+}
 // Prepare the data for the API request
 let data = {
     "client":document.getElementById("customer_name").getAttribute("data-id"),
     "special_instructions": special_request.value,
     "order_total_price": document.getElementById("total-price").textContent.replace("$", ""),
     "items": items,
+    
 };
-
+if (payload_delivery_date){
+    data["delivery_date"]=payload_delivery_date
+}
+if (payload_delivery_time){
+    data["delivery_time"]=payload_delivery_time
+}
 customer_name.style.border = "1px solid grey";
 delivery_address.style.border = "1px solid grey";
 
@@ -1123,7 +1248,13 @@ try {
             errorMessage = result.message.special_instructions[0];
         } else if (result.message.non_field_errors) {
             errorMessage = result.message.non_field_errors[0];
-        } else if (result.message.items) {
+        }else if (result.message.delivery_date) {
+            errorMessage = result.message.delivery_date[0];
+            delivery_date.style.border = "2px solid red";
+        }else if (result.message.delivery_time) {
+            errorMessage = result.message.delivery_time[0];
+            delivery_time.style.border = "2px solid red";
+        }  else if (result.message.items) {
             if (result.message.items[0].non_field_errors) {
                 errorMessage = result.message.items[0].non_field_errors[0];
             }

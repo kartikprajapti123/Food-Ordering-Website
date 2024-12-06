@@ -33,7 +33,9 @@ class OrderSerializer(serializers.ModelSerializer):
     order_number=serializers.CharField(required=False)
     client_name=serializers.CharField(source="client.name",required=False)
     client_delivery_address=serializers.CharField(source="client.delivery_address",required=False)
-    
+    delivery_date = serializers.DateField(required=False, allow_null=True)
+    delivery_time = serializers.TimeField(required=False, allow_null=True)
+
     class Meta:
         model = Order
         fields = [
@@ -48,6 +50,8 @@ class OrderSerializer(serializers.ModelSerializer):
             'status',
             'special_instructions',
             'order_total_price',
+            'delivery_date',
+            'delivery_time',
             'deleted',
             'created_at',
             'updated_at',
@@ -61,6 +65,15 @@ class OrderSerializer(serializers.ModelSerializer):
         if data.get('order_total_price') == "0":
             raise serializers.ValidationError("Order total price cannot be negative.")
     
+        if data.get("delivery_date")==None:
+            raise serializers.ValidationError("Delivery date is required")
+            
+        if data.get("delivery_time")==None:
+            raise serializers.ValidationError("Delivery time is required")
+            
+        if data.get("items")==[]:
+            raise serializers.ValidationError("Order item is required")
+            
         # if data.get("delivery_address") is None or data.get("delivery_address").strip() == "":
             # raise serializers.ValidationError("Delivery Address is required")
         # if data.get("customer_name") is None or data.get("customer_name").strip() == "":

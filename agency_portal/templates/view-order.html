@@ -115,18 +115,32 @@ view-order
 									</div>
 								</div>
 								<div class="col-sm-6">
+									<div class="contact-info">
+										<h6>Created At </h6>
+										<p id="created_at">Not Provided</p>
+									</div>
+								</div>
+								
+
+								<div class="col-sm-6">
+									<div class="contact-info mb-0">
+										<h6>Delivery Date</h6>
+										<p id="delivery_date">Not Provided</p>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="contact-info mb-0">
+										<h6>Delivery Time</h6>
+										<p id="delivery_time">Not Provided</p>
+									</div>
+								</div>
+								<div class="col-sm-12" style="margin-top:20px;">
 									<div class="contact-info mb-0">
 										<h6>Total Price</h6>
 										<p id="total_price">Total Price</p>
 									</div>
 								</div>
 								
-								<div class="col-sm-12" style="margin-top: 15px;">
-									<div class="contact-info">
-										<h6>Created At </h6>
-										<p id="created_at">Not Provided</p>
-									</div>
-								</div>
 								<h3 style="margin-top: 20px;">Order Items</h3>
 								<div class="tab-content">
 									<div class="tab-pane fade show active" id="all">
@@ -182,6 +196,9 @@ view-order
 	let created_at=document.getElementById("created_at")
 	let created_by=document.getElementById("created_by")
 	let total_price=document.getElementById("total_price")
+	let delivery_date=document.getElementById("delivery_date")
+
+	let delivery_time=document.getElementById("delivery_time")
 
 
 	let order_items=document.getElementById("orders-items")
@@ -248,6 +265,10 @@ view-order
 					created_at.innerHTML=`Date: ${formattedDate}, Time: ${formattedTime}`
 					created_by.innerHTML=response.data.user_username
 					total_price.innerHTML=`$${response.data.order_total_price}`
+					delivery_date.innerHTML=`${response.data.delivery_date}`
+					delivery_time.innerHTML=`${response.data.delivery_time}`
+
+
 					document.getElementById("status").innerHTML=response.data.status
 
 					str=``
