@@ -242,15 +242,13 @@ class OrderAdmin(admin.ModelAdmin):
                     </style>
                 </head>
                 <body>
-                    <h1>Order Receipt</h1>
+                    <h1>Order Ticket</h1>
 
                     <div class="order-details">
                         <p><strong>Order Number:</strong> {order.order_number}</p>
                         <p><strong>Client Name:</strong> {order.client.name}</p>
                         <p><strong>Address:</strong> {order.client.delivery_address}</p>
                         <p><strong>Order Date:</strong> {order.order_date.strftime('%b %d, %Y')}</p>
-                        <p><strong>Delivery Date:</strong> {order.delivery_date.strftime('%b %d, %Y') if order.delivery_date else 'N/A'}</p>
-                        <p><strong>Delivery Time:</strong> {order.delivery_time.strftime('%I:%M %p') if order.delivery_time else 'N/A'}</p>
                     </div>
 
                     <div class="items">
