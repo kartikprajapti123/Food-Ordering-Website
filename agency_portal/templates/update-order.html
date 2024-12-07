@@ -1141,7 +1141,8 @@ document.getElementById("delivery_time").value = deliveryTime;
         const subcategory = document.getElementById(`subcategory-${subcategory_id}`);
         const quantityField = document.getElementById(`quantity-${subcategory_id}`);
         const priceField = document.getElementById(`price-${subcategory_id}`);
-    
+        const category = document.getElementById(`category-${subcategory_id}`).value.split("-")[0];
+        
         if (subcategory.value === "Select SubMenu-0") {
             // Disable and visually indicate disabled state
             quantityField.disabled = true;
