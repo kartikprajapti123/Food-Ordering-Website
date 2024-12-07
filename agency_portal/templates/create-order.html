@@ -623,7 +623,7 @@ Upload-Video
                 <div class="card">
                     <h3>Seafood Entrees</h3>
                     <p>Special Offer: 7 items for <span class="highlight">$40.00</span></p>
-                    <p>Additional Items: $8.00 per item beyond 7</p>
+                    <p>Additional Items: $5.71 per item beyond 7</p>
                 </div>
             </div>
           </div>
@@ -1247,10 +1247,10 @@ Upload-Video
                                 totalPrice = quantity * price; // Default price calculation for less than 5
                             }
                         } else if (category === "Seafood Entrees") {
-                            if (quantity === 5) {
+                            if (quantity === 7) {
                                 totalPrice = 40; // Fixed price for 5 seafood entrees
-                            } else if (quantity > 5) {
-                                totalPrice = (40 / 5) * quantity; // Calculate price for more than 5 seafood items
+                            } else if (quantity > 7) {
+                                totalPrice = (40 / 7) * quantity; // Calculate price for more than 5 seafood items
                             } else {
                                 totalPrice = quantity * price; // Default price calculation for less than 5
                             }
