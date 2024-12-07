@@ -39,7 +39,7 @@ class OrderItem(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(default=1)
-    price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    price = models.FloatField(null=True)
     order_item_total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     deleted = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True,null=True)
