@@ -23,8 +23,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if data.get('quantity') <= 0:
             raise serializers.ValidationError("Quantity must be greater than zero.")
-        if data.get('order_item_total_price') != data.get('price') * data.get('quantity'):
-            raise serializers.ValidationError("Total price for the item is incorrect.")
+        # if data.get('order_item_total_price') != data.get('price') * data.get('quantity'):
+            # raise serializers.ValidationError("Total price for the item is incorrect.")
         return data
 
 class OrderSerializer(serializers.ModelSerializer):

@@ -1027,6 +1027,12 @@ document.getElementById("delivery_time").value = deliveryTime;
                     console.log(document.getElementById(`subcategory-${category_id}`).disabled)
 
 
+                    document.getElementById(`quantity-${category_id}`).style.opacity="0.5"
+            document.getElementById(`quantity-${category_id}`).value = "0";
+            document.getElementById(`price-${category_id}`).innerHTML = "$0.00";
+
+            document.getElementById(`price-${category_id}`).disabled=true
+            document.getElementById(`price-${category_id}`).style.opacity="0.5"
                     //document.getElementById(`quantity-${category_id}`).disabled=false
                     //document.getElementById(`quantity-${category_id}`).style.opacity=1
 //

@@ -393,7 +393,134 @@ Upload-Video
             background: #fe4565;
             color: white;
         }
+        
     }
+    /*.combo-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .combo-card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      }
+      
+      .combo-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+      }
+      
+      .combo-title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #343a40;
+      }
+      
+      .combo-content p {
+        font-size: 1rem;
+        margin: 8px 0;
+        color: #495057;
+      }
+      
+      .combo-content span {
+        font-weight: bold;
+        color: #fe4565;
+      }
+      
+      .combo-action {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        color: #ffffff;
+        background-color: #fe4565;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+      }
+      
+      .combo-action:hover {
+        background-color: #fe4565;
+      }
+      
+      @media (max-width: 768px) {
+        .combo-card {
+          padding: 15px;
+        }
+      
+        .combo-title {
+          font-size: 1.3rem;
+        }
+      
+        .combo-content p {
+          font-size: 0.9rem;
+        }
+      
+        .combo-action {
+          font-size: 0.9rem;
+        }
+      }*/
+      .combo-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+        text-align: center;
+        padding: 20px 0;
+        border-bottom: 2px solid #e5e7eb;
+    }
+    .header h1 {
+        margin: 0;
+        font-size: 28px;
+        color: #f66962;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+    }
+    .card {
+        padding: 20px;
+        border-radius: 8px;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+    .card h3 {
+        margin: 0 0 10px;
+        font-size: 20px;
+        color: #f66962;
+    }
+    .card p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    .highlight {
+        font-weight: bold;
+        color: #f66962;
+    }
+
+
 </style>
 {% endblock style %}
 
@@ -421,7 +548,88 @@ Upload-Video
                 </div>
             </div>
         </div>
-
+        <!-- <div class="combo-container">
+            <div class="combo-card">
+              <h2 class="combo-title">Combo 1</h2>
+              <div class="combo-content">
+                <p><strong>Category:</strong> <span id="combo-category-1">Chicken Entrees</span></p>
+                <p><strong>Quantity:</strong> <span id="combo-quantity-1">7</span></p>
+                <p><strong>Price:</strong> <span id="combo-price-1">$40.00</span></p>
+              </div>
+              <button class="combo-action">Order Now</button>
+            </div>
+          
+            <div class="combo-card">
+              <h2 class="combo-title">Combo 2</h2>
+              <div class="combo-content">
+                <p><strong>Category:</strong> <span id="combo-category-2">Seafood Entrees</span></p>
+                <p><strong>Quantity:</strong> <span id="combo-quantity-2">5</span></p>
+                <p><strong>Price:</strong> <span id="combo-price-2">$50.00</span></p>
+              </div>
+              <button class="combo-action">Order Now</button>
+            </div>
+          
+            <div class="combo-card">
+              <h2 class="combo-title">Combo 3</h2>
+              <div class="combo-content">
+                <p><strong>Category:</strong> <span id="combo-category-3">Soups</span></p>
+                <p><strong>Quantity:</strong> <span id="combo-quantity-3">5</span></p>
+                <p><strong>Price:</strong> <span id="combo-price-3">$40.00</span></p>
+              </div>
+              <button class="combo-action">Order Now</button>
+            </div>
+            <div class="combo-card">
+                <h2 class="combo-title">Combo 3</h2>
+                <div class="combo-content">
+                  <p><strong>Category:</strong> <span id="combo-category-3">Desserts</span></p>
+                  <p><strong>Quantity:</strong> <span id="combo-quantity-3">5</span></p>
+                  <p><strong>Price:</strong> <span id="combo-price-3">$40.00</span></p>
+                </div>
+                <button class="combo-action">Order Now</button>
+              </div>
+          </div> -->
+          <div class="combo-container">
+            <div class="header">
+                <h1>Exclusive Combo Offers</h1>
+                <p>Enjoy tailored meal combinations at unbeatable prices. Choose from our premium categories and experience the best value for your order.</p>
+            </div>
+        
+            <div class="grid">
+                <div class="card">
+                    <h3>Chicken Entrees</h3>
+                    <p>Special Offer: 7 items for <span class="highlight">$40.00</span></p>
+                    <p>Additional Items: $5.71 per item beyond 7</p>
+                </div>
+                <div class="card">
+                    <h3>Breakfast Menu</h3>
+                    <p>Special Offer: 7 items for <span class="highlight">$40.00</span></p>
+                    <p>Additional Items: $5.71 per item beyond 7</p>
+                </div>
+                <div class="card">
+                    <h3>Soups & Desserts</h3>
+                    <p>Special Offer: 5 items for <span class="highlight">$20.00</span></p>
+                    <p>Additional Items: $4.00 per item beyond 5</p>
+                </div>
+                <div class="card">
+                    <h3>Vegetarian Entrees</h3>
+                    <p>Special Offer: 7 items for <span class="highlight">$40.00</span></p>
+                    <p>Additional Items: $5.71 per item beyond 7</p>
+                </div>
+                <div class="card">
+                    <h3>Beef Entrees</h3>
+                    <p>Special Offer: 7 items for <span class="highlight">$40.00</span></p>
+                    <p>Additional Items: $5.71 per item beyond 7</p>
+                </div>
+                <div class="card">
+                    <h3>Seafood Entrees</h3>
+                    <p>Special Offer: 7 items for <span class="highlight">$40.00</span></p>
+                    <p>Additional Items: $8.00 per item beyond 7</p>
+                </div>
+            </div>
+          </div>
+            
+        
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="card" style="position: relative;">
@@ -718,9 +926,7 @@ Upload-Video
                                     <div class="add-course-msg">
                                         <i class="fas fa-times" style="color: red;"></i>
 
-                                        <h4>Oops! You have reached your weekly order limit.</h4>
-<p>We noticed that you have already placed two orders this week. In order to maintain fair usage and ensure timely delivery for all of our customers, we kindly ask that you wait until next week to place additional orders. Thank you for your understanding and cooperation. </p>
-<p>We appreciate your business and look forward to serving you again next week!</p>
+                                        <h4>Oops! You have reached your weekly order limit of 2 orders.</h4> <p>We noticed that you have already placed two orders this week. To maintain fair usage and ensure timely delivery for all our customers, we limit each account to a maximum of 2 orders per week. We kindly ask that you wait until next week to place additional orders.</p> <p>Thank you for your understanding and cooperation. We appreciate your business and look forward to serving you again next week!</p>
                                     </div>
                                 </div>
                             </fieldset>
@@ -781,7 +987,9 @@ Upload-Video
     }
     if (authenticated){
         fetch_category()
-        check_user_can_do_order()
+        document.getElementById("row1").style.display="block";
+                document.getElementById("row3").style.display="none";
+        //check_user_can_do_order()
     }
     else{
         window.location.href="/"
@@ -962,11 +1170,13 @@ Upload-Video
                     console.log(document.getElementById(`subcategory-${category_id}`).disabled)
 
 
-                    //document.getElementById(`quantity-${category_id}`).disabled=false
-                    //document.getElementById(`quantity-${category_id}`).style.opacity=1
-//
-                    //document.getElementById(`price-${category_id}`).disabled=false
-                    //document.getElementById(`price-${category_id}`).style.opacity=1
+                    document.getElementById(`quantity-${category_id}`).disabled=true
+            document.getElementById(`quantity-${category_id}`).style.opacity="0.5"
+            document.getElementById(`quantity-${category_id}`).value = "0";
+            document.getElementById(`price-${category_id}`).innerHTML = "$0.00";
+
+            document.getElementById(`price-${category_id}`).disabled=true
+            document.getElementById(`price-${category_id}`).style.opacity="0.5"
 
 
                 }
@@ -976,6 +1186,7 @@ Upload-Video
 
     function fetch_single_subcategory(subcategory_id) {
         const subcategory = document.getElementById(`subcategory-${subcategory_id}`);
+        const category = document.getElementById(`category-${subcategory_id}`).value.split("-")[0];
         const quantityField = document.getElementById(`quantity-${subcategory_id}`);
         const priceField = document.getElementById(`price-${subcategory_id}`);
     
@@ -1022,13 +1233,43 @@ Upload-Video
     
                     // Add event listener to update price on quantity change
                     quantityField.addEventListener("input", () => {
-                        const quantity = quantityField.value; // Ensure numeric value
-                        const totalPrice = quantity * price;
+                        const quantity = parseInt(quantityField.value) || 0; // Ensure numeric value
+                        let totalPrice = 0;
+                    
+                        // Determine combo price based on category and quantity
+                        console.log("category",category)
+                        if (["Desserts", "Soups"].includes(category)) {
+                            if (quantity === 5) {
+                                totalPrice = 20; // Fixed price for 5 items in these categories
+                            } else if (quantity > 5) {
+                                totalPrice = (20 / 5) * quantity; // Calculate price for more than 5 items
+                            } else {
+                                totalPrice = quantity * price; // Default price calculation for less than 5
+                            }
+                        } else if (category === "Seafood Entrees") {
+                            if (quantity === 5) {
+                                totalPrice = 40; // Fixed price for 5 seafood entrees
+                            } else if (quantity > 5) {
+                                totalPrice = (40 / 5) * quantity; // Calculate price for more than 5 seafood items
+                            } else {
+                                totalPrice = quantity * price; // Default price calculation for less than 5
+                            }
+                        } else {
+                            // Other categories logic
+                            if (quantity === 7) {
+                                totalPrice = 40; // Fixed price for 7 items in other categories
+                            } else if (quantity > 7) {
+                                totalPrice = (40 / 7) * quantity; // Calculate price for more than 7 items
+                            } else {
+                                totalPrice = quantity * price; // Default price calculation for less than 7
+                            }
+                        }
+                    
+                    
                         priceField.innerHTML = `$${totalPrice.toFixed(2)}`; // Update price field with calculated total
                         updateTotalOrderPrice();
                     });
                     updateTotalOrderPrice();
-
                 }
             });
         }
