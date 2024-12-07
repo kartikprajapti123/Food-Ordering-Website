@@ -986,9 +986,7 @@ Upload-Video
     }
     if (authenticated){
         fetch_category()
-        document.getElementById("row1").style.display="block";
-                document.getElementById("row3").style.display="none";
-        //check_user_can_do_order()
+check_user_can_do_order()
     }
     else{
         window.location.href="/"
@@ -1540,11 +1538,18 @@ function fetch_user_client(){
         return response.json()
     }).then((response)=>{
         if (response.success){
-            str=``
-            str=`<option value="select client" >Select Client</option>`
-            response.data.forEach((data)=>{
-                str+=`<option value="${data.name}">${data.name}</option>` 
-            })
+            if (response.data.length==0){
+            str=`<option value="select client" >Add Client</option>`
+
+            }
+            else{
+
+                str=``
+                str=`<option value="select client" >Select Client</option>`
+                response.data.forEach((data)=>{
+                    str+=`<option value="${data.name}">${data.name}</option>` 
+                })
+            }
             document.getElementById("customer_name").innerHTML=str
 
 
