@@ -393,6 +393,55 @@ Upload-Video
             background: #fe4565;
             color: white;
         }
+        .combo-container {
+            max-width: 1200px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #f66962;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            padding: 20px;
+            border-radius: 8px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px;
+            font-size: 20px;
+            color: #f66962;
+        }
+        .card p {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #f66962;
+        }
+    
     }
 </style>
 {% endblock style %}
@@ -621,6 +670,47 @@ Upload-Video
                 </div>
             </div>
         </div>
+        <div class="combo-container">
+            <div class="header">
+                <h1>Exclusive Combo Prices</h1>
+                <p>Enjoy tailored meal combinations at unbeatable prices. Choose from our premium categories and experience the best value for your order.</p>
+                <p><strong>Note:</strong> When you <b>select your order items</b> and <b>set the quantity</b>, these exclusive offers will be <b>automatically</b> applied to <b>your total</b>.</p>
+            </div>
+        
+            <div class="grid">
+                <div class="card">
+                    <h3>Chicken Entrees</h3>
+                    <p>Special Offer: 7 items for <span class="highlight">$40.00</span></p>
+                    <p>Additional Items: $5.71 per item beyond 7</p>
+                </div>
+                <div class="card">
+                    <h3>Breakfast Menu</h3>
+                    <p>Special Offer: 7 items for <span class="highlight">$40.00</span></p>
+                    <p>Additional Items: $5.71 per item beyond 7</p>
+                </div>
+                <div class="card">
+                    <h3>Soups & Desserts</h3>
+                    <p>Special Offer: 5 items for <span class="highlight">$20.00</span></p>
+                    <p>Additional Items: $4.00 per item beyond 5</p>
+                </div>
+                <div class="card">
+                    <h3>Vegetarian Entrees</h3>
+                    <p>Special Offer: 7 items for <span class="highlight">$40.00</span></p>
+                    <p>Additional Items: $5.71 per item beyond 7</p>
+                </div>
+                <div class="card">
+                    <h3>Beef Entrees</h3>
+                    <p>Special Offer: 7 items for <span class="highlight">$40.00</span></p>
+                    <p>Additional Items: $5.71 per item beyond 7</p>
+                </div>
+                <div class="card">
+                    <h3>Seafood Entrees</h3>
+                    <p>Special Offer: 7 items for <span class="highlight">$40.00</span></p>
+                    <p>Additional Items: $8.00 per item beyond 7</p>
+                </div>
+            </div>
+        </div>
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -1091,8 +1181,39 @@ document.getElementById("delivery_time").value = deliveryTime;
     
                     // Add event listener to update price on quantity change
                     quantityField.addEventListener("input", () => {
-                        const quantity = quantityField.value; // Ensure numeric value
-                        const totalPrice = quantity * price;
+                        const quantity = parseInt(quantityField.value) || 0; // Ensure numeric value
+                        let totalPrice = 0;
+                    
+                        // Determine combo price based on category and quantity
+                        console.log("category",category)
+                        if (["Desserts", "Soups"].includes(category)) {
+                            if (quantity === 5) {
+                                totalPrice = 20; // Fixed price for 5 items in these categories
+                            } else if (quantity > 5) {
+                                totalPrice = (20 / 5) * quantity; // Calculate price for more than 5 items
+                            } else {
+                                totalPrice = quantity * price; // Default price calculation for less than 5
+                            }
+                        } else if (category === "Seafood Entrees") {
+                            if (quantity === 7) {
+                                totalPrice = 40; // Fixed price for 5 seafood entrees
+                            } else if (quantity > 7) {
+                                totalPrice = (40 / 7) * quantity; // Calculate price for more than 5 seafood items
+                            } else {
+                                totalPrice = quantity * price; // Default price calculation for less than 5
+                            }
+                        } else {
+                            // Other categories logic
+                            if (quantity === 7) {
+                                totalPrice = 40; // Fixed price for 7 items in other categories
+                            } else if (quantity > 7) {
+                                totalPrice = (40 / 7) * quantity; // Calculate price for more than 7 items
+                            } else {
+                                totalPrice = quantity * price; // Default price calculation for less than 7
+                            }
+                        }
+                    
+                    
                         priceField.innerHTML = `$${totalPrice.toFixed(2)}`; // Update price field with calculated total
                         updateTotalOrderPrice();
                     });
