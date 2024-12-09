@@ -1,12 +1,13 @@
 {% extends "admin/change_list.html" %}
 
 {% block content %}
-    {{ block.super }}
 
     <!-- Display Totals -->
     <div style="margin: 20px 0; font-weight: bold; font-size: 16px;">
         Total Quantity: <span id="total-quantity">0</span><br>
         Total Amount: ₹<span id="total-amount">0.00</span>
     </div>
+    {{ block.super }}
+
 {% endblock %}
 
