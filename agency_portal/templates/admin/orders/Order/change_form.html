@@ -2,5 +2,35 @@
 
 {% block object-tools %}
     {{ block.super }}
-    <a class="button" href="{{ download_receipt_url }}" >Generate Order Reciept</a>
+    <div class="filter-container">
+        <div class="date-selection">
+            <!-- This is where the 'December 2024' dropdown would be, so you can place your button here -->
+            <button id="download-report" ><a class="button" href="{{ download_receipt_url }}" style="color: white;background:none;">Generate Order Reciept</a>
+            </button>
+        </div>
+    </div>
 {% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <style>
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+        #download-report {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #download-report:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+
