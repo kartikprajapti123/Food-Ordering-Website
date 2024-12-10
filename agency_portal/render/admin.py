@@ -1,3 +1,7 @@
+from django.contrib.admin import RelatedFieldListFilter,RelatedOnlyFieldListFilter
+from django.contrib.admin import SimpleListFilter
+from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from django.utils.html import format_html
 from django.contrib import admin
 from rest_framework_simplejwt.token_blacklist.models import (
@@ -26,12 +30,28 @@ from django.template.loader import (
 from django.urls import path, reverse
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from django.conf import settings
+from orders.models import Order
+import os
 from django.conf import settings
 import os
 import imgkit
 from django.core.exceptions import ImproperlyConfigured
 from django.http import QueryDict
 from django.urls import reverse
+from io import BytesIO
+from zipfile import ZipFile
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+from datetime import datetime
+
 
 class CustomAdminSite(AdminSite):
     site_header = (
@@ -57,42 +77,34 @@ class CategoryAdmin(admin.ModelAdmin):
     ordering = ("name",)  # Default ordering
 
 
-class CategoryFilter(admin.SimpleListFilter):
-    title = 'Menu'  # This will change the filter label to "Menu"
-    parameter_name = 'category'  # This is still the category field you're filtering by
-    
-    def lookups(self, request, model_admin):
-        return [(category.id, category.name) for category in Category.objects.all()]
-    
-    def queryset(self, request, queryset):
-        if self.value():
-            return queryset.filter(category__id=self.value())
-        return queryset
 
 class SubCategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "category", "price", "deleted")  # Display columns
     search_fields = ("name", "category__name")  # Search bar with category name support
-    list_filter = (CategoryFilter,)  # Correct way to add the filter class
+    list_filter = (
+        ('category', RelatedOnlyFieldListFilter),  # Correct filter for category
+    )  
+  # Correct way to add the filter class
     ordering = ("category", "name")  # Default ordering
     autocomplete_fields = ("category",)  # Autocomplete for category selection
 
-    def get_search_results(self, request, queryset, search_term):
-        return queryset
+    # def get_search_results(self, request, queryset, search_term):
+        # return queryset
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.select_related("category")
+    # def get_queryset(self, request):
+        # qs = super().get_queryset(request)
+        # return qs.select_related("category")
     
-class OrderItemInline2(admin.TabularInline):
+class OrderItemInline(admin.TabularInline):
     """
     Inline admin to display OrderItem details within the Order panel.
     """
 
     model = OrderItem
     extra = 0
-    fields = ("category", "subcategory", "quantity", "price", "order_item_total_price")
-    readonly_fields = ("order_item_total_price",)
-    autocomplete_fields = ("category", "subcategory")
+    fields = ("category_name", "subcategory_name", "quantity", "price", "order_item_total_price")
+    readonly_fields = ("category_name", "subcategory_name", "quantity", "price", "order_item_total_price",)
+    # autocomplete_fields = ("category", "subcategory")
 
     def get_readonly_fields(self, request, obj=None):
         """
@@ -101,10 +113,27 @@ class OrderItemInline2(admin.TabularInline):
         return self.fields if obj else super().get_readonly_fields(request, obj)
 
     def has_add_permission(self, request, obj=None):
+        """
+        Disable adding new OrderItems in the inline.
+        """
         return False
 
     def has_delete_permission(self, request, obj=None):
+        """
+        Disable deleting OrderItems in the inline.
+        """
         return False
+
+    # Custom methods to display category and subcategory names as text (without links)
+    def category_name(self, obj):
+        return obj.category.name if obj.category else "N/A"
+    
+    def subcategory_name(self, obj):
+        return obj.subcategory.name if obj.subcategory else "N/A"
+
+    category_name.short_description = "Menu Name"  # Custom label for display
+    subcategory_name.short_description = "Submenu Name"  # Custom label for display
+
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -112,7 +141,7 @@ class OrderAdmin(admin.ModelAdmin):
     Admin panel for managing Orders, with the 'status' field editable.
     """
 
-    inlines = [OrderItemInline2]
+    inlines = [OrderItemInline]
     list_display = (
         "order_number",
         "user",
@@ -123,7 +152,7 @@ class OrderAdmin(admin.ModelAdmin):
         "delivery_date",
         "delivery_time",
     )
-    list_filter = ("status", "order_date", "deleted", "user")
+    list_filter = ("status", "order_date", ("user",RelatedOnlyFieldListFilter))
     search_fields = (
         "order_number",
         "delivery_date",
@@ -143,6 +172,7 @@ class OrderAdmin(admin.ModelAdmin):
         "get_client_delivery_address",
         "order_number",
         "order_date",
+        
         "special_instructions",
         "deleted",
         "delivery_date",
@@ -185,118 +215,149 @@ class OrderAdmin(admin.ModelAdmin):
 
     # def has_delete_permission(self, request, obj=None):
         # return False
-    
+
     def generate_report(self, request):
         """
-        Generate a consolidated report of the filtered orders and their items as an image.
+        Generate separate professionally formatted PDF reports for each user.
         """
         try:
-            # Extract order IDs from the query parameters
-            order_ids = request.GET.getlist("ids")
-            if not order_ids:
-                return HttpResponse("No orders selected for the report.", status=400)
+            # Start with the filtered queryset based on current admin filters
+            queryset = self.get_queryset(request)
 
-            # Fetch the orders and prefetch related items
-            orders = Order.objects.filter(id__in=order_ids).prefetch_related("items")
+            # Further filter the queryset if specific IDs are provided
+            selected_ids = request.GET.getlist("ids")
+            if selected_ids:
+                queryset = queryset.filter(id__in=selected_ids)
 
-            # Generate HTML for the report
-            html_content = """
-                <html>
-                <head>
-                    <title>Order Report</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 20px; }
-                        h1 { text-align: center; font-size: 24px; margin-bottom: 20px; }
-                        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-                        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-                        th { background-color: #f4f4f4; }
-                        td { vertical-align: top; }
-                        .order-details { margin-bottom: 20px; }
-                        .order-items { margin-top: 10px; }
-                        .order-items div { margin-bottom: 5px; }
-                    </style>
-                </head>
-                <body>
-                    <h1>Order Report</h1>
-            """
+            # Apply additional filters from the request (e.g., status__exact)
+            filter_params = {key: value for key, value in request.GET.items() if key != "ids"}
+            if filter_params:
+                queryset = queryset.filter(**filter_params)
 
-            # Populate the HTML content with order and item data
+            # Fetch the filtered orders and related items
+            orders = queryset.prefetch_related("items", "client")
+
+            if not orders.exists():
+                return HttpResponse("No orders match the current filters.", status=400)
+
+            # Group orders by user
+            user_orders = {}
             for order in orders:
-                # Start with the order details
-                order_details = f"""
-                    <div class="order-details">
-                        <h2>Order Number: {order.order_number}</h2>
-                        <p><strong>Client Name:</strong> {order.client.name if order.client else 'N/A'}</p>
-                        <p><strong>Order Date:</strong> {order.order_date.strftime('%b %d, %Y')}</p>
-                """
+                user = order.user  # Assuming 'user' field in 'client'
+                if user not in user_orders:
+                    user_orders[user] = []
+                user_orders[user].append(order)
 
-                # Now add the items for this particular order
-                items_html = ""
-                for item in order.items.all():
-                    items_html += f"""
-                        <div>
-                            <strong>Item:</strong> {item.category} - 
-                            <strong>Qty:</strong> {item.quantity} - 
-                            <strong>Price:</strong> ${item.price:.2f} - 
-                            <strong>Total:</strong> ${item.order_item_total_price:.2f}
-                        </div>
-                    """
+            # Prepare a zip file to store PDFs
+            buffer = BytesIO()
+            with ZipFile(buffer, 'w') as zip_file:
+                for user, orders in user_orders.items():
+                    pdf_buffer = BytesIO()
+                    doc = SimpleDocTemplate(pdf_buffer, pagesize=letter)
 
-                order_details += f"""
-                    <div class="order-items">
-                        <h3>Items:</h3>
-                        {items_html}
-                    </div>
-                    </div>
-                """
-                html_content += order_details
+                    # Content container
+                    elements = []
+                    styles = getSampleStyleSheet()
 
-            # Close the HTML tags
-            html_content += """
-                </body>
-                </html>
-            """
+                    # Add Agency/Report Title
+                    title = Paragraph(f"<strong>Agency Report: {user.username}</strong>", styles["Title"])
+                    elements.append(title)
+                    elements.append(Paragraph(f"Generated on: {datetime.now().strftime('%b %d, %Y')}", styles["Normal"]))
+                    elements.append(Paragraph(f"<strong>User Details:</strong> {user.username}", styles["Normal"]))
+                    elements.append(Paragraph(f"Email: {user.email}", styles["Normal"]))
+                    elements.append(Paragraph("<br/><br/>", styles["Normal"]))
 
-            # Define the output path for the report image
-            output_dir = os.path.join(settings.MEDIA_ROOT, "order_reports")
-            os.makedirs(output_dir, exist_ok=True)
-            output_path = os.path.join(output_dir, "filtered_order_report.png")
+                    # Table Header
+                    data = [["Order Number", "Order Date", "Client Name", "Total Price (USD)"]]
 
-            # Set the path for wkhtmltoimage executable
-            path_to_wkhtmltoimage = "/usr/bin/wkhtmltoimage"
-            config = imgkit.config(wkhtmltoimage=path_to_wkhtmltoimage)
+                    # Orders Summary
+                    total_amount = 0
+                    for order in orders:
+                        data.append([
+                            order.order_number,
+                            order.order_date.strftime('%b %d, %Y'),
+                            order.client.name,
+                            f"${order.order_total_price:.2f}"
+                        ])
+                        total_amount += order.order_total_price
 
-            # Generate the image
-            imgkit.from_string(html_content, output_path, config=config)
+                    # Add Table for Orders
+                    table = Table(data, colWidths=[100, 100, 150, 100])
+                    table.setStyle(TableStyle([
+                        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                    ]))
+                    elements.append(table)
+                    elements.append(Paragraph("<br/><br/>", styles["Normal"]))
 
-            # Serve the image as a file download
-            return FileResponse(open(output_path, "rb"), as_attachment=True, filename="filtered_order_report.png")
+                    # Order Items for Each Order
+                    for order in orders:
+                        elements.append(Paragraph(f"<strong>Order Number: {order.order_number}</strong>", styles["Heading3"]))
+                        item_data = [["Category", "Quantity", "Price (USD)"]]
+                        for item in order.items.all():
+                            item_data.append([item.category, item.quantity, f"${item.order_item_total_price:.2f}"])
+
+                        # Add Items Table
+                        item_table = Table(item_data, colWidths=[150, 100, 100])
+                        item_table.setStyle(TableStyle([
+                            ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue),
+                            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                            ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
+                            ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                        ]))
+                        elements.append(item_table)
+                        elements.append(Paragraph("<br/><br/>", styles["Normal"]))
+
+                    # Add Total Amount
+                    elements.append(Paragraph(f"<strong>Total Amount for All Orders: ${total_amount:.2f}</strong>", styles["Normal"]))
+
+                    # Build PDF
+                    doc.build(elements)
+                    pdf_buffer.seek(0)
+
+                    # Add the generated PDF to the zip file
+                    zip_file.writestr(f"{user.username}_order_report.pdf", pdf_buffer.getvalue())
+
+            # Return the zip file as a response
+            buffer.seek(0)
+            response = HttpResponse(buffer, content_type="application/zip")
+            response["Content-Disposition"] = "attachment; filename=order_reports.zip"
+            return response
 
         except Exception as e:
             return HttpResponse(f"An error occurred while generating the report: {e}", status=500)
-    # @admin.action(description="Download Report of Selected Orders")
-    # def generate_report_action(self, request, queryset):
-        # return self.generate_report(request, queryset)
-    
+
     def changelist_view(self, request, extra_context=None):
         """
         Add a custom button for generating a report in the changelist view.
         """
         extra_context = extra_context or {}
 
-        # Get the filtered queryset based on changelist filters
+        # Get the filtered queryset based on current admin filters
         queryset = self.get_queryset(request)
-
-        # Serialize the queryset's IDs into query parameters
+        # Serialize the IDs of only the filtered queryset
+        filtered_ids = list(queryset.values_list("id", flat=True))
         query_dict = QueryDict(mutable=True)
-        query_dict.setlist("ids", queryset.values_list("id", flat=True))
+        query_dict.setlist("ids", filtered_ids)
 
-        # Create the URL with the serialized query parameters
+        # Include all other filters from the current request
+        for key, value in request.GET.items():
+            if key != "ids":  # Avoid overriding the 'ids' parameter
+                query_dict[key] = value
+
+        print(query_dict)
+        # Generate the URL for the report with applied filters and IDs
         generate_report_url = f"{reverse('admin:order_generate_report')}?{query_dict.urlencode()}"
         extra_context["generate_report_url"] = generate_report_url
 
         return super().changelist_view(request, extra_context)
-
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
@@ -312,7 +373,6 @@ class OrderAdmin(admin.ModelAdmin):
             ),
         ]
         return custom_urls + urls
-
     def download_receipt(self, request, pk):
         """
         Generate and serve a receipt as an image for the given order.
@@ -474,10 +534,10 @@ class OrderItemAdmin(admin.ModelAdmin):
         "deleted",
     )
     list_filter = (
-        "order__status",
-        "category",
-        "subcategory",
-        "deleted",
+         "order__status",
+        ('category', RelatedOnlyFieldListFilter),
+        ('subcategory', RelatedOnlyFieldListFilter),
+        
     )
     search_fields = (
         "order__order_number",
@@ -555,7 +615,7 @@ class SupportTicketAdmin(admin.ModelAdmin):
     )
 
     # Add filters for easy navigation of tickets
-    list_filter = ("priority", "status", "category", "created_at", "user")
+    list_filter = ("priority", "status", "category","created_at" ,("user",RelatedOnlyFieldListFilter))
 
     # Enable search for ticket ID, title, and user
     search_fields = ("ticket_id", "title", "user__username")
@@ -719,10 +779,29 @@ class OrderInline(admin.TabularInline):
 
     order_number_link.short_description = "Order Number"
 # Customizing the Client Admin Panel
+
+
+class AgencyFilter(SimpleListFilter):
+    title = _("Agency Data")  # Custom label for the filter
+    parameter_name = "user"
+
+    def lookups(self, request, model_admin):
+        # Display only users associated with clients
+        return (
+            (user.id, user.username)
+            for user in User.objects.filter(client_name__isnull=False).distinct()
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(user_id=self.value())
+        return queryset
+
+
 class ClientAdmin(admin.ModelAdmin):
     list_display = ("name", "delivery_address", "user", "order_count")
     search_fields = ("name", "user__username")
-    list_filter = ("user",)
+    list_filter = (AgencyFilter,) 
     inlines = [
         OrderInline
     ]  # Orders will be displayed inline within Client details page

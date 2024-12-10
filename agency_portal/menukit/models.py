@@ -1,7 +1,8 @@
 from django.db import models
+from django.utils.translation import gettext as _
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, unique=True,verbose_name=_("Menu Name"))
     deleted = models.IntegerField(default=0)
 
     class Meta:
@@ -13,10 +14,9 @@ class Category(models.Model):
 
 
 class SubCategory(models.Model):
-    name = models.CharField(max_length=100)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories',verbose_name="Menu")
-    price = models.FloatField(null=True)
-    ingrediants = models.CharField(max_length=255, null=True,blank=True,default="")
+    name = models.CharField(max_length=100,verbose_name=_("SubMenu Name"))
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories',verbose_name=_("Menu Name"))
+    price = models.FloatField(null=True,verbose_name=_("SubMenu Price"))
     deleted = models.IntegerField(default=0)
 
     class Meta:

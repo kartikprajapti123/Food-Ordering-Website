@@ -2,6 +2,7 @@ from django.db import models
 from user.models import User
 from menukit.models import Category,SubCategory
 from client.models import Client
+from django.utils.translation import gettext as _
 
 
 class Order(models.Model):
@@ -11,8 +12,8 @@ class Order(models.Model):
         ('Delivered', 'Delivered'),
         ('Canceled', 'Canceled'),
     ]
-    client=models.ForeignKey(Client,on_delete=models.CASCADE,related_name="order_client",null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    client=models.ForeignKey(Client,on_delete=models.CASCADE,related_name="order_client",null=True,verbose_name=_("Client Name"))
+    user = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name=_("Agency Name"))
     # customer_name = models.CharField(max_length=50, null=True)
     order_number = models.CharField(max_length=50, unique=True)
     order_date = models.DateTimeField(auto_now_add=True)
@@ -28,16 +29,16 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Order #{self.order_number} - {self.user.username}"
+        return f"Order #{self.order_number}"
     class Meta:
         verbose_name="Manage Order"
         verbose_name_plural="Manage Orders"
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items',null=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items',null=True,verbose_name=_("Order Number"))
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True,verbose_name=_("Menu Name"))
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True,verbose_name=_("SubMenu Name"))
     quantity = models.IntegerField(default=1)
     price = models.FloatField(null=True)
     order_item_total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)

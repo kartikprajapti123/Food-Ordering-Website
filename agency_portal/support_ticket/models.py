@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 from user.models import User
+from django.utils.translation import gettext as _
 
 class Support_ticket(models.Model):
     priority_choices = [
@@ -22,10 +23,10 @@ class Support_ticket(models.Model):
     ]
     title=models.CharField(max_length=100,null=True)
     ticket_id = models.CharField(max_length=50, unique=True)
-    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_supoort_ticket")
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_supoort_ticket",verbose_name=_("Agency"))
     # subject = models.CharField(max_length=255)
     priority = models.CharField(choices=priority_choices, max_length=100, default="Low")
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=100, default="General")
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=100, default="General",verbose_name=_("Ticket Category"))
     status=models.CharField(choices=status_choices,default="Open")
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
