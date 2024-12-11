@@ -335,7 +335,7 @@ class OrderAdmin(admin.ModelAdmin):
             # Return the response as a downloadable PDF report
             buffer.seek(0)
             response = HttpResponse(buffer, content_type="application/pdf")
-            response["Content-Disposition"] = f"attachment; filename={user}_agency_report.pdf"
+            response["Content-Disposition"] = f"attachment; filename={user}_agency_report_{datetime.now().strftime('%b %d, %Y')}.pdf"
             return response
 
         except Exception as e:
@@ -502,7 +502,7 @@ class OrderAdmin(admin.ModelAdmin):
 
             # Serve the generated image as a file download
             try:
-                return FileResponse(open(output_path, "rb"), as_attachment=True, filename=f"{order.order_number}.png")
+                return FileResponse(open(output_path, "rb"), as_attachment=True, filename=f"{order.order_number}_{datetime.now().strftime('%b %d, %Y')}.png")
             except FileNotFoundError:
                 raise Http404(f"Receipt not found for order {order.order_number}.")
         except ImproperlyConfigured as e:
@@ -654,7 +654,7 @@ class OrderItemAdmin(admin.ModelAdmin):
     
             # Return the PDF as a file download
             response = HttpResponse(pdf_buffer, content_type="application/pdf")
-            response["Content-Disposition"] = "attachment; filename=kitchen_report.pdf"
+            response["Content-Disposition"] = f"attachment; filename=kitchen_report_{datetime.now().strftime('%b %d, %Y')}.pdf"
             return response
     
         except Exception as e:
