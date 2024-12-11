@@ -207,6 +207,9 @@ Creator Dashboared
                                                                     <th>Created At</th>
 
                                                                     <th>View Details</th>
+                                                                    <th>Edit</th>
+                                                                    <th>Delete</th>
+
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="orders-all">
@@ -234,6 +237,8 @@ Creator Dashboared
                                                                     <th>Created At</th>
 
                                                                     <th>View Details</th>
+                                                                    <th>Edit</th>
+                                                                    <th>Delete</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="orders-processed">
@@ -263,6 +268,8 @@ Creator Dashboared
                                                                     <th>Created At</th>
 
                                                                     <th>View Details</th>
+                                                                    <th>Edit</th>
+                                                                    <th>Delete</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="orders-pending">
@@ -292,6 +299,8 @@ Creator Dashboared
                                                                     <th>Status</th>
                                                                     <th>Created At</th>
                                                                     <th>View Details</th>
+                                                                    <th>Edit</th>
+                                                                    <th>Delete</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="orders-delivered">
@@ -321,6 +330,8 @@ Creator Dashboared
                                                                     <th>Created At</th>
 
                                                                     <th>View Details</th>
+                                                                    <th>Edit</th>
+                                                                    <th>Delete</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="orders-canceled">
@@ -546,6 +557,27 @@ const dateObject = new Date(data.order_date);
                             </li>
                         </ul>
                     </td>
+                                    <td>
+                        <ul class="nav">
+                            <li>
+                                <a href="/update-order/${data.id}/" class="btn btn-success-dark"
+                                   style="height: 50px;background-color:green;border:none;color:white;">
+                                    Edit
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                    </td>
+                                        <td>
+                        <ul class="nav">
+                            <li>
+    <a href="javascript:void(0);"
+       onclick="${data.status === 'Canceled' ? `activateorder(${data.id})` : `deleteorder(${data.id})`}"
+       class="btn btn-success-dark"
+       style="height: 50px; background-color: ${data.status === 'Canceled' ? `#f24262` : `red`}; border: none; color: white;">
+        ${data.status === 'Canceled' ? 'Activate' : 'Cancel'}
+    </a>
+</li>
                 </tr>
             `;
 
@@ -671,5 +703,102 @@ const dateObject = new Date(data.order_date);
         }
 
     };
+    function deleteorder(id) {
+        check = confirm("Are you sure to Cancel this order")
+        if (check) {
+
+            fetch(`${window.location.origin}/api/orders/${id}/`, {
+                "method": "DELETE",
+                "headers": {
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${authenticated}`
+                }
+
+            }).then((response) => {
+                return response.json()
+            }).then((response) => {
+                console.log(response)
+                if (response.success) {
+                    card.style.display = "flex";
+                    card.style.borderLeft = "10px solid green";
+
+                    message_content.innerHTML = response.message;
+                    message_type.innerHTML = "Success";
+                    message_type.style.color = "green";
+                    message_icon_parent.style.color = "green";
+                    message_icon_child.classList = "fas fa-check-circle";
+
+                    getUserPosts(1)
+                    setTimeout(()=>{
+                    card.style.display = "none";
+                        
+                    },2500)
+
+                }
+                else {
+                    card.style.display = "flex";
+                    card.style.borderLeft = "10px solid green";
+
+                    message_content.innerHTML = response.message;
+                    message_type.innerHTML = "Success";
+                    message_type.style.color = "green";
+                    message_icon_parent.style.color = "green";
+                    message_icon_child.classList = "fas fa-check-circle";
+
+                }
+            })
+        }
+    }
+
+    function activateorder(id) {
+        check = confirm("Are you sure to Activate this order")
+        if (check) {
+            let data = {
+                "id":id,
+                "status": "Pending"
+            }
+            fetch(`${window.location.origin}/api/orders/status-update/`, {
+                "method": "POST",
+                "headers": {
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${authenticated}`
+                },
+                "body": JSON.stringify(data)
+
+            }).then((response) => {
+                return response.json()
+            }).then((response) => {
+                console.log(response)
+                if (response.success) {
+                    card.style.display = "flex";
+                    card.style.borderLeft = "10px solid green";
+
+                    message_content.innerHTML = response.message;
+                    message_type.innerHTML = "Success";
+                    message_type.style.color = "green";
+                    message_icon_parent.style.color = "green";
+                    message_icon_child.classList = "fas fa-check-circle";
+                    getUserPosts(1)
+                    setTimeout(()=>{
+                    card.style.display = "none";
+                        
+                    },2500)
+
+                }
+                else {
+                    message_content.innerHTML = "Server Error";
+
+                    card.style.display = "flex";
+                    card.style.borderLeft = "10px solid red";
+                    message_type.innerHTML = "Error";
+                    message_type.style.color = "red";
+                    message_icon_parent.style.color = "red";
+                    message_icon_child.classList = "fas fa-times-circle";
+
+                }
+            })
+        }
+
+    }
 </script>
 {% endblock script %}
