@@ -313,7 +313,7 @@ class OrderAdmin(admin.ModelAdmin):
                 for subcategory, total_quantity in item_summary.items():
                     summary_data.append([subcategory, total_quantity])
 
-                summary_table = Table(summary_data, colWidths=[200, 100])
+                summary_table = Table(summary_data, colWidths=[300, 100])
                 summary_table.setStyle(TableStyle([
                     ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue),
                     ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
@@ -322,7 +322,7 @@ class OrderAdmin(admin.ModelAdmin):
                     ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
                     ('GRID', (0, 0), (-1, -1), 1, colors.black),
                 ]))
-                elements.append(Paragraph("<strong>Item Summary:</strong>", styles["Heading2"]))
+                elements.append(Paragraph("<strong>Order Item Summary:-</strong>", styles["Heading2"]))
                 elements.append(summary_table)
 
                 # Build PDF
