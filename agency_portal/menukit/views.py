@@ -142,13 +142,11 @@ class SubCategoryViewSet(ModelViewSet):
     search_fields=[
         'name',
         'category__name',
-        'ingrediants',
         "price",
     ]
     ordering_fields=[
         'name',
         'category__name',
-        'ingrediants',
         "price",
     ]
 

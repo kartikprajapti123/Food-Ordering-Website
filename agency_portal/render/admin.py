@@ -1,3 +1,12 @@
+import os
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+from datetime import datetime
+from io import BytesIO
+
 from django.contrib.admin import RelatedFieldListFilter,RelatedOnlyFieldListFilter
 from django.contrib.admin import SimpleListFilter
 from django.contrib import admin
@@ -217,8 +226,9 @@ class OrderAdmin(admin.ModelAdmin):
         # return False
 
     def generate_report(self, request):
-        """
-        Generate separate professionally formatted PDF reports for each user.
+        """ 
+        Generate separate professionally formatted PDF reports for each user,
+        summarizing total quantities of items across all orders without pricing.
         """
         try:
             # Start with the filtered queryset based on current admin filters
@@ -238,7 +248,7 @@ class OrderAdmin(admin.ModelAdmin):
             orders = queryset.prefetch_related("items", "client")
 
             if not orders.exists():
-                return HttpResponse("No orders match the current filters.", status=400)
+                return HttpResponse("No orders data found to generate Order.", status=400)
 
             # Group orders by user
             user_orders = {}
@@ -248,92 +258,88 @@ class OrderAdmin(admin.ModelAdmin):
                     user_orders[user] = []
                 user_orders[user].append(order)
 
-            # Prepare a zip file to store PDFs
+            # Prepare a buffer to store PDFs
             buffer = BytesIO()
-            with ZipFile(buffer, 'w') as zip_file:
-                for user, orders in user_orders.items():
-                    pdf_buffer = BytesIO()
-                    doc = SimpleDocTemplate(pdf_buffer, pagesize=letter)
 
-                    # Content container
-                    elements = []
-                    styles = getSampleStyleSheet()
+            for user, orders in user_orders.items():
+                pdf_buffer = BytesIO()
+                doc = SimpleDocTemplate(pdf_buffer, pagesize=letter)
 
-                    # Add Agency/Report Title
-                    title = Paragraph(f"<strong>Agency Report: {user.username}</strong>", styles["Title"])
-                    elements.append(title)
-                    elements.append(Paragraph(f"Generated on: {datetime.now().strftime('%b %d, %Y')}", styles["Normal"]))
-                    elements.append(Paragraph(f"<strong>User Details:</strong> {user.username}", styles["Normal"]))
-                    elements.append(Paragraph(f"Email: {user.email}", styles["Normal"]))
-                    elements.append(Paragraph("<br/><br/>", styles["Normal"]))
+                # Content container
+                elements = []
+                styles = getSampleStyleSheet()
 
-                    # Table Header
-                    data = [["Order Number", "Order Date", "Client Name", "Total Price (USD)"]]
+                # Add Agency/Report Title
+                title = Paragraph(f"<strong>Agency Report: {user.username}</strong>", styles["Title"])
+                elements.append(title)
+                elements.append(Paragraph(f"Generated on: {datetime.now().strftime('%b %d, %Y')}", styles["Normal"]))
+                elements.append(Paragraph(f"<strong>User Details:</strong> {user.username}", styles["Normal"]))
+                elements.append(Paragraph(f"Email: {user.email}", styles["Normal"]))
+                elements.append(Paragraph("<br/><br/>", styles["Normal"]))
 
-                    # Orders Summary
-                    total_amount = 0
-                    for order in orders:
-                        data.append([
-                            order.order_number,
-                            order.order_date.strftime('%b %d, %Y'),
-                            order.client.name,
-                            f"${order.order_total_price:.2f}"
-                        ])
-                        total_amount += order.order_total_price
+                # Table Header for Orders Summary
+                data = [["Order Number", "Order Date", "Client Name"]]
+                for order in orders:
+                    data.append([
+                        order.order_number,
+                        order.order_date.strftime('%b %d, %Y'),
+                        order.client.name,
+                    ])
 
-                    # Add Table for Orders
-                    table = Table(data, colWidths=[100, 100, 150, 100])
-                    table.setStyle(TableStyle([
-                        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-                        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-                        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-                        ('GRID', (0, 0), (-1, -1), 1, colors.black),
-                    ]))
-                    elements.append(table)
-                    elements.append(Paragraph("<br/><br/>", styles["Normal"]))
+                # Add Orders Table
+                table = Table(data, colWidths=[100, 100, 150])
+                table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                    ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                ]))
+                elements.append(table)
+                elements.append(Paragraph("<br/><br/>", styles["Normal"]))
 
-                    # Order Items for Each Order
-                    for order in orders:
-                        elements.append(Paragraph(f"<strong>Order Number: {order.order_number}</strong>", styles["Heading3"]))
-                        item_data = [["Category", "Quantity", "Price (USD)"]]
-                        for item in order.items.all():
-                            item_data.append([item.category, item.quantity, f"${item.order_item_total_price:.2f}"])
+                # Summarize Total Quantities by Subcategory
+                item_summary = {}
+                for order in orders:
+                    for item in order.items.all():
+                        if item.subcategory not in item_summary:
+                            item_summary[item.subcategory] = 0
+                        item_summary[item.subcategory] += item.quantity
 
-                        # Add Items Table
-                        item_table = Table(item_data, colWidths=[150, 100, 100])
-                        item_table.setStyle(TableStyle([
-                            ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue),
-                            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-                            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                            ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
-                            ('GRID', (0, 0), (-1, -1), 1, colors.black),
-                        ]))
-                        elements.append(item_table)
-                        elements.append(Paragraph("<br/><br/>", styles["Normal"]))
+                # Add Item Summary Table
+                summary_data = [["Subcategory", "Total Quantity"]]
+                for subcategory, total_quantity in item_summary.items():
+                    summary_data.append([subcategory, total_quantity])
 
-                    # Add Total Amount
-                    elements.append(Paragraph(f"<strong>Total Amount for All Orders: ${total_amount:.2f}</strong>", styles["Normal"]))
+                summary_table = Table(summary_data, colWidths=[200, 100])
+                summary_table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                ]))
+                elements.append(Paragraph("<strong>Item Summary:</strong>", styles["Heading2"]))
+                elements.append(summary_table)
 
-                    # Build PDF
-                    doc.build(elements)
-                    pdf_buffer.seek(0)
+                # Build PDF
+                doc.build(elements)
+                pdf_buffer.seek(0)
 
-                    # Add the generated PDF to the zip file
-                    zip_file.writestr(f"{user.username}_order_report.pdf", pdf_buffer.getvalue())
+                # Add the generated PDF to the main buffer
+                buffer.write(pdf_buffer.read())
 
-            # Return the zip file as a response
+            # Return the response as a downloadable PDF report
             buffer.seek(0)
-            response = HttpResponse(buffer, content_type="application/zip")
-            response["Content-Disposition"] = "attachment; filename=order_reports.zip"
+            response = HttpResponse(buffer, content_type="application/pdf")
+            response["Content-Disposition"] = f"attachment; filename={user}_agency_report.pdf"
             return response
 
         except Exception as e:
             return HttpResponse(f"An error occurred while generating the report: {e}", status=500)
-
     def changelist_view(self, request, extra_context=None):
         """
         Add a custom button for generating a report in the changelist view.
@@ -356,6 +362,7 @@ class OrderAdmin(admin.ModelAdmin):
         # Generate the URL for the report with applied filters and IDs
         generate_report_url = f"{reverse('admin:order_generate_report')}?{query_dict.urlencode()}"
         extra_context["generate_report_url"] = generate_report_url
+
 
         return super().changelist_view(request, extra_context)
     def get_urls(self):
@@ -557,7 +564,7 @@ class OrderItemAdmin(admin.ModelAdmin):
     )
     ordering = ("-created_at",)
     autocomplete_fields = ("order", "category", "subcategory")
-    
+    list_display_links = None
     class Media:
         js = ("admin/js/total_quantity.js",)
 
@@ -579,7 +586,114 @@ class OrderItemAdmin(admin.ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         # Allow read-only fields as per your requirement
         return self.readonly_fields
+    
+    def generate_kitchen_report(self, request):
+        """
+        Generate a kitchen report summarizing total quantities of Order Items grouped by subcategory.
+        """
+        try:
+            # Start with the filtered queryset based on current admin filters
+            queryset = self.get_queryset(request)
+    
+            # Further filter the queryset if specific IDs are provided
+            selected_ids = request.GET.getlist("ids")
+            if selected_ids:
+                queryset = queryset.filter(id__in=selected_ids)
+    
+            # if "order__status" not in filter_params or filter_params.get("order__status") != "Pending":
+                # return HttpResponse("Please select the status as 'Pending' before generating the report.", status=400)
+            
+            filter_params = {key: value for key, value in request.GET.items() if key != "ids"}
+            # Apply additional filters from the request (e.g., status__exact)
+            if filter_params:
+                queryset = queryset.filter(**filter_params)
+    
+            if not queryset.exists():
+                return HttpResponse("No Data Found to Generate Report", status=400)
+    
+            # Summarize Total Quantities by Subcategory
+            item_summary = {}
+            for item in queryset:
+                subcategory_name = item.subcategory.name if item.subcategory else "Uncategorized"
+                if subcategory_name not in item_summary:
+                    item_summary[subcategory_name] = 0
+                item_summary[subcategory_name] += item.quantity
+    
+            # Generate PDF content
+            pdf_buffer = BytesIO()
+            doc = SimpleDocTemplate(pdf_buffer, pagesize=letter)
+            elements = []
+            styles = getSampleStyleSheet()
+    
+            # Add Title
+            title = Paragraph("<strong>Kitchen Report</strong>", styles["Title"])
+            elements.append(title)
+            elements.append(Paragraph(f"Generated on: {datetime.now().strftime('%b %d, %Y %H:%M:%S')}", styles["Normal"]))
+            elements.append(Paragraph("<br/><br/>", styles["Normal"]))
+    
+            # Add Item Summary Table
+            summary_data = [["Subcategory", "Total Quantity"]]
+            for subcategory, total_quantity in sorted(item_summary.items()):
+                summary_data.append([subcategory, total_quantity])
+    
+            summary_table = Table(summary_data, colWidths=[250, 100])
+            summary_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.darkgreen),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 10),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+            ]))
+            elements.append(summary_table)
+    
+            # Build PDF
+            doc.build(elements)
+            pdf_buffer.seek(0)
+    
+            # Return the PDF as a file download
+            response = HttpResponse(pdf_buffer, content_type="application/pdf")
+            response["Content-Disposition"] = "attachment; filename=kitchen_report.pdf"
+            return response
+    
+        except Exception as e:
+            return HttpResponse(f"An error occurred while generating the kitchen report: {e}", status=500)
 
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                "generate_kitchen_report/",
+                self.admin_site.admin_view(self.generate_kitchen_report),
+                name="order_generate_kitchen_report",
+            ),
+        ]
+        return custom_urls + urls
+    
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+
+        # Get the filtered queryset
+        queryset = self.get_queryset(request)
+
+        # Serialize the IDs of the filtered queryset
+        filtered_ids = list(queryset.values_list("id", flat=True))
+        query_dict = QueryDict(mutable=True)
+        query_dict.setlist("ids", filtered_ids)
+
+        # Include filters from the current request
+        for key, value in request.GET.items():
+            if key != "ids":
+                query_dict[key] = value
+
+        # Generate URLs for both reports
+        extra_context["generate_kitchen_report_url"] = f"{reverse('admin:order_generate_kitchen_report')}?{query_dict.urlencode()}"
+
+        return super().changelist_view(request, extra_context)
+
+
+    
 class AttachmentInline(admin.TabularInline):
     model = Attachment
     extra = 0  # This hides the 'Add another attachment' button
@@ -780,13 +894,12 @@ class OrderInline(admin.TabularInline):
     order_number_link.short_description = "Order Number"
 # Customizing the Client Admin Panel
 
-
 class AgencyFilter(SimpleListFilter):
-    title = _("Agency Data")  # Custom label for the filter
+    title = _("Agency Name")  # Changed the title to "Agency Name"
     parameter_name = "user"
 
     def lookups(self, request, model_admin):
-        # Display only users associated with clients
+        # Display only users associated with agencies
         return (
             (user.id, user.username)
             for user in User.objects.filter(client_name__isnull=False).distinct()
@@ -797,32 +910,34 @@ class AgencyFilter(SimpleListFilter):
             return queryset.filter(user_id=self.value())
         return queryset
 
-
 class ClientAdmin(admin.ModelAdmin):
     list_display = ("name", "delivery_address", "user", "order_count")
     search_fields = ("name", "user__username")
-    list_filter = (AgencyFilter,) 
-    inlines = [
-        OrderInline
-    ]  # Orders will be displayed inline within Client details page
+    list_filter = (AgencyFilter,)  # This is the updated filter
+    inlines = [OrderInline]
     readonly_fields = (
         "name",
         "delivery_address",
         "user",
         "order_count",
-    )  # Add all fields you want to be read-only
+    )
 
-    # Display the number of orders linked to each client
     def order_count(self, obj):
-        return obj.order_client.count()  # Counts the number of orders for each client
+        return obj.order_client.count()
 
-    order_count.short_description = "Number of Orders"
+    order_count.short_description = _("Number of Orders")
 
     def has_add_permission(self, request):
-        return False  # Disable adding new clients
+        return False
 
-    # def has_delete_permission(self, request, obj=None):
-        # return False  # Disable deleting clients
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset
+
+    def get_model_perms(self, request):
+        perms = super().get_model_perms(request)
+        perms["change"] = True
+        return perms
 
 
 # Unregister Blacklisted and Outstanding tokens

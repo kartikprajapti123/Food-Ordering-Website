@@ -49,5 +49,5 @@ class OrderItem(models.Model):
         return f"Item in Order #{self.order.order_number}: {self.category.name if self.category else 'No Category'}"
     
     class Meta:
-        verbose_name="Manage Kitchen"
-        verbose_name_plural="Manage Kitchen"
+        verbose_name="Manage Kitchen (Orders Items)"
+        verbose_name_plural="Manage Kitchen (Orders Items)"

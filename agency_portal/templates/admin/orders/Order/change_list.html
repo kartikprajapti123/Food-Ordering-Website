@@ -15,16 +15,18 @@
     <div class="filter-container">
         <div class="date-selection">
             <!-- This is where the 'December 2024' dropdown would be, so you can place your button here -->
-            <button id="download-report"><a href="{{ generate_report_url }}" style="color: white;">Generate Report</a>
+            <button id="download-report"><a href="{{ generate_report_url }}" style="color: white;">Generate Agency Report</a>
             </button>
         </div>
     </div>
-
+    <div id="generateReportUrl" style="display: none;">{{ generate_report_url }}</div>
+    
     <!-- Continue with the existing admin content -->
     {{ block.super }}
 {% endblock %}
 
 {% block extrahead %}
+
     {{ block.super }}
     <style>
         .filter-container {
@@ -44,5 +46,6 @@
             background-color: #0056b3;
         }
     </style>
+    
 {% endblock %}
 

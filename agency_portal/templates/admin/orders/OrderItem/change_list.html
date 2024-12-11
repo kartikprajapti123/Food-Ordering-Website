@@ -1,13 +1,45 @@
 {% extends "admin/change_list.html" %}
 
 {% block content %}
-
     <!-- Display Totals -->
     <div style="margin: 20px 0; font-weight: bold; font-size: 16px;">
         Total Quantity: <span id="total-quantity">0</span><br>
         Total Amount: ₹<span id="total-amount">0.00</span>
     </div>
-    {{ block.super }}
 
+    <div class="filter-container">
+        <div class="date-selection">
+            <!-- This is where the 'December 2024' dropdown would be, so you can place your button here -->
+            <button id="download-report"><a href="{{generate_kitchen_report_url}}" style="color: white;">Generate Kitchen Report</a></button>
+        </div>
+    </div>
+    <div id="generate_url_kitchen" style="display: none;">{{ generate_kitchen_report_url }}</div>
+
+    {{ block.super }}
 {% endblock %}
 
+{% block extrahead %}
+    {{ block.super }}
+    <style>
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+        #download-report {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #download-report:hover {
+            background-color: #0056b3;
+        }
+        .alert {
+            font-size: 16px;
+            margin-top: 15px;
+        }
+    </style>
+{% endblock %}
