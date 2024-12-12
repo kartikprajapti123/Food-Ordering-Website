@@ -453,6 +453,8 @@ class OrderAdmin(admin.ModelAdmin):
                     <div class="order-details">
                         <p><strong>Order Number:</strong> {order.order_number}</p>
                         <p><strong>Client Name:</strong> {order.client.name}</p>
+                        <p><strong>Agency Name:</strong> {order.user.username}</p>
+                        
                         <p><strong>Address:</strong> {order.client.delivery_address}</p>
                         <p><strong>Order Date:</strong> {order.order_date.strftime('%b %d, %Y')}</p>
                     </div>
@@ -579,6 +581,8 @@ class OrderAdmin(admin.ModelAdmin):
                             <div class="header">Receipt for Order #{order.order_number}</div>
                             <div class="order-details">
                                 <p><strong>Client:</strong> {order.client.name}</p>
+                                <p><strong>Agency Name:</strong> {order.user.username}</p>
+                                
                                 <p><strong>Address:</strong> {order.client.delivery_address}</p>
                                 <p><strong>Order Date:</strong> {order.order_date.strftime('%b %d, %Y')}</p>
                             </div>
