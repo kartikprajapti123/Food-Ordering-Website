@@ -361,7 +361,11 @@ class OrderAdmin(admin.ModelAdmin):
         print(query_dict)
         # Generate the URL for the report with applied filters and IDs
         generate_report_url = f"{reverse('admin:order_generate_report')}?{query_dict.urlencode()}"
+        generate_bulk_order_report_url = f"{reverse('admin:download_bulk_orders_receipt')}?{query_dict.urlencode()}"
+        
         extra_context["generate_report_url"] = generate_report_url
+        extra_context["generate_bulk_order_report_url"] = generate_bulk_order_report_url
+        
 
 
         return super().changelist_view(request, extra_context)
@@ -377,6 +381,11 @@ class OrderAdmin(admin.ModelAdmin):
                 "<int:pk>/download_receipt/",
                 self.admin_site.admin_view(self.download_receipt),
                 name="order_download_receipt",
+            ),
+            path(
+                "download_bulk_orders_receipt/",
+                self.admin_site.admin_view(self.generate_bulk_receipts),
+                name="download_bulk_orders_receipt",
             ),
         ]
         return custom_urls + urls
@@ -514,6 +523,99 @@ class OrderAdmin(admin.ModelAdmin):
         except Exception as e:
             # Catch any unexpected errors
             return HttpResponse(f"Unexpected error: {e}", status=500)
+    def generate_bulk_receipts(self, request):
+        """
+        Generate and save receipt images for multiple orders.
+        """
+        try:
+            # Start with the filtered queryset based on current admin filters
+            queryset = self.get_queryset(request)
+
+            # Further filter the queryset if specific IDs are provided
+            selected_ids = request.GET.getlist("ids")
+            if selected_ids:
+                queryset = queryset.filter(id__in=selected_ids)
+
+            # Apply additional filters from the request
+            filter_params = {key: value for key, value in request.GET.items() if key != "ids"}
+            if filter_params:
+                queryset = queryset.filter(**filter_params)
+
+            # Check if any orders match the filter
+            if not queryset.exists():
+                return HttpResponse("No orders found to generate receipts.", status=400)
+
+            # Define the output directory for bulk receipts
+            bulk_receipts_dir = os.path.join(settings.MEDIA_ROOT, "bulk_receipts")
+            if not os.path.exists(bulk_receipts_dir):
+                os.makedirs(bulk_receipts_dir)
+
+            # Generate receipts for each order
+            for order in queryset:
+                # Fetch the associated order items
+                order_items = order.items.all()
+
+                # Generate HTML content for the receipt
+                html_content = f"""
+                    <html>
+                    <head>
+                        <title>Receipt for Order #{order.order_number}</title>
+                        <style>
+                            body {{ font-family: Arial, sans-serif; margin: 20px; }}
+                            .header {{ text-align: center; font-size: 20px; margin-bottom: 20px; }}
+                            .order-details {{ margin-bottom: 10px; }}
+                            .order-details p {{ margin: 5px 0; }}
+                            table {{ width: 100%; border-collapse: collapse; margin-top: 10px; }}
+                            th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+                            th {{ background-color: #f2f2f2; }}
+                            .total {{ text-align: right; font-weight: bold; margin-top: 10px; }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header">Receipt for Order #{order.order_number}</div>
+                        <div class="order-details">
+                            <p><strong>Client:</strong> {order.client.name}</p>
+                            <p><strong>Address:</strong> {order.client.delivery_address}</p>
+                            <p><strong>Order Date:</strong> {order.order_date.strftime('%b %d, %Y')}</p>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                """
+                for item in order_items:
+                    html_content += f"""
+                        <tr>
+                            <td>{item.subcategory}</td>
+                            <td>${item.price:.2f}</td>
+                            <td>{item.quantity}</td>
+                            <td>${item.order_item_total_price:.2f}</td>
+                        </tr>
+                    """
+                html_content += f"""
+                        </table>
+                        <div class="total">
+                            Total: ${order.order_total_price:.2f}
+                        </div>
+                    </body>
+                    </html>
+                """
+
+                # Define the path for the receipt image
+                receipt_path = os.path.join(bulk_receipts_dir, f"{order.order_number}.png")
+
+                # Configure imgkit to use wkhtmltoimage executable
+                config = imgkit.config(wkhtmltoimage="/usr/bin/wkhtmltoimage")  # Update the path as needed
+                imgkit.from_string(html_content, receipt_path, config=config)
+
+            return HttpResponse(f"Receipts generated and saved in {bulk_receipts_dir}.", status=200)
+
+        except Exception as e:
+            return HttpResponse(f"An error occurred: {e}", status=500)
+
     def change_view(self, request, object_id, form_url="", extra_context=None):
         """
         Override the change view to add the download receipt URL to the context.
