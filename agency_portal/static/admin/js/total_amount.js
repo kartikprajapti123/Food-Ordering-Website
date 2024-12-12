@@ -120,7 +120,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", function (e) {
       e.preventDefault(); // Prevent the default action
       if (BulkOrdervalidateFilters()) {
-        alert("BulkOrdervalidateFilters", BulkOrdervalidateFilters())
         if (generateBulkOrderReportUrl) {
           window.location.href = generateBulkOrderReportUrl; // Redirect to report generation
         } else {
