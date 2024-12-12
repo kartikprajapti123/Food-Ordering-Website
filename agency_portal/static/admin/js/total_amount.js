@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function BulkOrdervalidateFilters() {
     // Get the 'order_date__gte' and 'order_date__lt' parameters from the URL
     const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get("Orders_status__exact");
+    const status = urlParams.get("status__exact");
 
     // Check if the status is 'Delivered'
     if (status !== "Delivered") {
