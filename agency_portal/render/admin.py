@@ -531,7 +531,8 @@ class OrderAdmin(admin.ModelAdmin):
         Generate and send receipt images for multiple orders as a ZIP archive without storing them on the server.
         """
         try:
-            os.environ['XDG_RUNTIME_DIR'] = '/tmp'
+            # os.environ['XDG_RUNTIME_DIR'] = '/tmp'
+            os.environ['TMPDIR'] = '/tmp' 
             # Start with the filtered queryset based on current admin filters
             queryset = self.get_queryset(request)
 
