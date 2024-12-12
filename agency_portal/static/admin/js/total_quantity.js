@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("download-report")
     .addEventListener("click", function (e) {
       e.preventDefault(); // Prevent the default action
-
+      console.log("called before imgkit")
       if (validateFilters()) {
         console.log(generateReportUrl)
         if (generateReportUrl) {

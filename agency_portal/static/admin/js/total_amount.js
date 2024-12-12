@@ -88,9 +88,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const status = urlParams.get("status__exact");
 
     // Check if the status is 'Delivered'
-    if (status !== "Delivered") {
+    if (status !== "Pending") {
       alert(
-        "Please select the 'Delivered' status in the filters before generating the report."
+        "Please select the 'Pending' status in the filters before generating the report."
       );
       return false;
     }
@@ -119,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", function (e) {
       e.preventDefault(); // Prevent the default action
       if (BulkOrdervalidateFilters()) {
+        alert("BulkOrdervalidateFilters", BulkOrdervalidateFilters())
         if (generateBulkOrderReportUrl) {
           window.location.href = generateBulkOrderReportUrl; // Redirect to report generation
         } else {
