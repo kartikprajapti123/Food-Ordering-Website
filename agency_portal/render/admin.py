@@ -1,3 +1,4 @@
+import tempfile
 import os
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import letter
@@ -607,15 +608,18 @@ class OrderAdmin(admin.ModelAdmin):
                         </html>
                     """
 
-                    # Create a BytesIO buffer to store the receipt image
-                    receipt_buffer = io.BytesIO()
+                    # Create a temporary file to store the receipt image
+                    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+                        # Configure imgkit to use wkhtmltoimage executable
+                        config = imgkit.config(wkhtmltoimage="/usr/bin/wkhtmltoimage")  # Update the path as needed
+                        imgkit.from_string(html_content, temp_file.name, config=config)
 
-                    # Configure imgkit to use wkhtmltoimage executable
-                    config = imgkit.config(wkhtmltoimage="/usr/bin/wkhtmltoimage")  # Update the path as needed
-                    imgkit.from_string(html_content, receipt_buffer, config=config)
+                        # Read the generated image from the temporary file
+                        with open(temp_file.name, 'rb') as f:
+                            receipt_image_data = f.read()
 
-                    # Add the generated receipt to the ZIP file in memory
-                    zip_file.writestr(f"receipt_{order.order_number}.png", receipt_buffer.getvalue())
+                        # Add the generated receipt to the ZIP file in memory
+                        zip_file.writestr(f"receipt_{order.order_number}.png", receipt_image_data)
 
             # Seek to the beginning of the ZIP buffer
             zip_buffer.seek(0)
