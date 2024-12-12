@@ -22,11 +22,12 @@
     <div class="filter-container">
         <div class="date-selection">
             <!-- This is where the 'December 2024' dropdown would be, so you can place your button here -->
-            <button id="download-report"><a href="{{ generate_bulk_order_report_url }}" style="color: white;">Generate Bulk Orders Receipt</a>
+            <button id="download-bulk-order-report"><a href="{{ generate_bulk_order_report_url }}" style="color: white;">Generate Bulk Orders Receipt</a>
             </button>
         </div>
     </div>
     <div id="generateReportUrl" style="display: none;">{{ generate_report_url }}</div>
+    <div id="generateBulkOrderReportUrl" style="display: none;">{{ generate_bulk_order_report_url }}</div>
     
     <!-- Continue with the existing admin content -->
     {{ block.super }}

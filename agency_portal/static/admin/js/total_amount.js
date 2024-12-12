@@ -18,6 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // Remove the '&amp;' part by replacing it with '&'
   generateReportUrl = generateReportUrl.replace(/&amp;/g, "&");
 
+  var generateBulkOrderReportUrl = document
+    .getElementById("generateBulkOrderReportUrl")
+    .textContent.trim();
+  console.log("Initial URL:", generateBulkOrderReportUrl); // Debugging the raw URL
+
+  // Remove the '&amp;' part by replacing it with '&'
+  generateBulkOrderReportUrl = generateBulkOrderReportUrl.replace(/&amp;/g, "&");
+
   // Function to validate required filters
   function validateFilters() {
     // Get the 'order_date__gte' and 'order_date__lt' parameters from the URL
@@ -74,6 +82,21 @@ document.addEventListener("DOMContentLoaded", function () {
     return true;
   }
 
+  function BulkOrdervalidateFilters() {
+    // Get the 'order_date__gte' and 'order_date__lt' parameters from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get("Orders_status__exact");
+
+    // Check if the status is 'Delivered'
+    if (status !== "Delivered") {
+      alert(
+        "Please select the 'Delivered' status in the filters before generating the report."
+      );
+      return false;
+    }
+
+  }
+
   // Function to handle the 'Generate Report' button click
   document
     .getElementById("download-report")
@@ -91,6 +114,20 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
+    document
+    .getElementById("download-bulk-order-report")
+    .addEventListener("click", function (e) {
+      e.preventDefault(); // Prevent the default action
+      if (BulkOrdervalidateFilters()) {
+        if (generateBulkOrderReportUrl) {
+          window.location.href = generateBulkOrderReportUrl; // Redirect to report generation
+        } else {
+          console.log(
+            "Report generation URL is missing. Please contact the administrator."
+          );
+        }
+      }
+    });
   // Initial calculation of total amount (if needed)
   function calculateTotalAmount() {
     let totalAmount = 0;
