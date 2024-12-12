@@ -88,13 +88,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const status = urlParams.get("status__exact");
 
     // Check if the status is 'Delivered'
-    if (status !== "Pending") {
+    if (status !== "Delivered") {
       alert(
-        "Please select the 'Pending' status in the filters before generating the report."
+        "Please select the 'Delivered' status in the filters before generating the 'Bulk Orders Receipt'."
       );
       return false;
     }
 
+    return true
   }
 
   // Function to handle the 'Generate Report' button click
