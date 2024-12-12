@@ -531,36 +531,37 @@ class OrderAdmin(admin.ModelAdmin):
         Generate and send receipt images for multiple orders as a ZIP archive without storing them on the server.
         """
         try:
-            # os.environ['XDG_RUNTIME_DIR'] = '/tmp'
-            os.environ['TMPDIR'] = '/tmp' 
+            # Ensure that the required environment variable is set
+            os.environ['XDG_RUNTIME_DIR'] = '/tmp'
+    
             # Start with the filtered queryset based on current admin filters
             queryset = self.get_queryset(request)
-
+    
             # Further filter the queryset if specific IDs are provided
             selected_ids = request.GET.getlist("ids")
             if selected_ids:
                 queryset = queryset.filter(id__in=selected_ids)
-
+    
             # Apply additional filters from the request
             filter_params = {key: value for key, value in request.GET.items() if key != "ids"}
             if filter_params:
                 queryset = queryset.filter(**filter_params)
-
+    
             # Check if any orders match the filter
             if not queryset.exists():
                 return HttpResponse("No orders found to generate receipts.", status=400)
-
+    
             # Create an in-memory buffer for the ZIP file
             zip_buffer = io.BytesIO()
-
+    
             # Create a ZIP file in memory
             with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
-
+            
                 # Generate receipts for each order
                 for order in queryset:
                     # Fetch the associated order items
                     order_items = order.items.all()
-
+    
                     # Generate HTML content for the receipt
                     html_content = f"""
                         <html>
@@ -609,31 +610,32 @@ class OrderAdmin(admin.ModelAdmin):
                         </body>
                         </html>
                     """
-
+    
                     # Create a temporary file to store the receipt image
                     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
                         # Configure imgkit to use wkhtmltoimage executable
                         config = imgkit.config(wkhtmltoimage="/usr/bin/wkhtmltoimage")  # Update the path as needed
                         imgkit.from_string(html_content, temp_file.name, config=config)
-
+    
                         # Read the generated image from the temporary file
                         with open(temp_file.name, 'rb') as f:
                             receipt_image_data = f.read()
-
+    
                         # Add the generated receipt to the ZIP file in memory
                         zip_file.writestr(f"receipt_{order.order_number}.png", receipt_image_data)
-
+    
             # Seek to the beginning of the ZIP buffer
             zip_buffer.seek(0)
-
+    
             # Prepare the response as a downloadable ZIP file
             response = HttpResponse(zip_buffer.read(), content_type="application/zip")
             response['Content-Disposition'] = 'attachment; filename="bulk_receipts.zip"'
-
+    
             return response
-
+    
         except Exception as e:
             return HttpResponse(f"An error occurred: {str(e)}", status=500)
+    
     def change_view(self, request, object_id, form_url="", extra_context=None):
         """
         Override the change view to add the download receipt URL to the context.
