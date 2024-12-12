@@ -472,26 +472,23 @@ class OrderAdmin(admin.ModelAdmin):
             """
 
             # Add order items to the table
+            quantity=0
             for item in order_items:
+                quantity=quantity+item.quantity
+                
                 html_content += f"""
                     <tr>
                         <td>{item.subcategory}</td>
-                        <td>${item.price:.2f}</td>
                         <td>{item.quantity}</td>
-                        <td>${item.order_item_total_price:.2f}</td>
                     </tr>
                 """
-
-            # Add total price
             html_content += f"""
-                </tbody>
-            </table>
-            <div class="total">
-                <p><strong>Total: ${order.order_total_price:.2f}</strong></p>
-            </div>
-            </div>
-            </body>
-            </html>
+                    </table>
+                    <div class="total">
+                        Total Quantity: ${quantity}
+                    </div>
+                </body>
+                </html>
             """
 
             # Define the output directory and file path
@@ -595,19 +592,20 @@ class OrderAdmin(admin.ModelAdmin):
                                     <th>Total</th>
                                 </tr>
                     """
+                    quantity=0
                     for item in order_items:
+                        quantity=quantity+item.quantity
+                        
                         html_content += f"""
                             <tr>
                                 <td>{item.subcategory}</td>
-                                <td>${item.price:.2f}</td>
                                 <td>{item.quantity}</td>
-                                <td>${item.order_item_total_price:.2f}</td>
                             </tr>
                         """
                     html_content += f"""
                             </table>
                             <div class="total">
-                                Total: ${order.order_total_price:.2f}
+                                Total Quantity: ${quantity}
                             </div>
                         </body>
                         </html>
