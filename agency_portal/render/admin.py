@@ -463,9 +463,7 @@ class OrderAdmin(admin.ModelAdmin):
                             <thead>
                                 <tr>
                                     <th>Item</th>
-                                    <th>Price</th>
                                     <th>Quantity</th>
-                                    <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -485,7 +483,7 @@ class OrderAdmin(admin.ModelAdmin):
             html_content += f"""
                     </table>
                     <div class="total">
-                        Total Quantity: ${quantity}
+                        Total Quantity: {quantity}
                     </div>
                 </body>
                 </html>
@@ -587,9 +585,7 @@ class OrderAdmin(admin.ModelAdmin):
                             <table>
                                 <tr>
                                     <th>Item</th>
-                                    <th>Price</th>
                                     <th>Quantity</th>
-                                    <th>Total</th>
                                 </tr>
                     """
                     quantity=0
@@ -605,7 +601,7 @@ class OrderAdmin(admin.ModelAdmin):
                     html_content += f"""
                             </table>
                             <div class="total">
-                                Total Quantity: ${quantity}
+                                Total Quantity: {quantity}
                             </div>
                         </body>
                         </html>
