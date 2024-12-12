@@ -6,7 +6,8 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 from datetime import datetime
 from io import BytesIO
-
+import io
+import zipfile
 from django.contrib.admin import RelatedFieldListFilter,RelatedOnlyFieldListFilter
 from django.contrib.admin import SimpleListFilter
 from django.contrib import admin
@@ -523,9 +524,10 @@ class OrderAdmin(admin.ModelAdmin):
         except Exception as e:
             # Catch any unexpected errors
             return HttpResponse(f"Unexpected error: {e}", status=500)
+        
     def generate_bulk_receipts(self, request):
         """
-        Generate and save receipt images for multiple orders.
+        Generate and send receipt images for multiple orders as a ZIP archive without storing them on the server.
         """
         try:
             # Start with the filtered queryset based on current admin filters
@@ -545,77 +547,87 @@ class OrderAdmin(admin.ModelAdmin):
             if not queryset.exists():
                 return HttpResponse("No orders found to generate receipts.", status=400)
 
-            # Define the output directory for bulk receipts
-            bulk_receipts_dir = os.path.join(settings.MEDIA_ROOT, "bulk_receipts")
-            if not os.path.exists(bulk_receipts_dir):
-                os.makedirs(bulk_receipts_dir)
+            # Create an in-memory buffer for the ZIP file
+            zip_buffer = io.BytesIO()
 
-            # Generate receipts for each order
-            for order in queryset:
-                # Fetch the associated order items
-                order_items = order.items.all()
+            # Create a ZIP file in memory
+            with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
 
-                # Generate HTML content for the receipt
-                html_content = f"""
-                    <html>
-                    <head>
-                        <title>Receipt for Order #{order.order_number}</title>
-                        <style>
-                            body {{ font-family: Arial, sans-serif; margin: 20px; }}
-                            .header {{ text-align: center; font-size: 20px; margin-bottom: 20px; }}
-                            .order-details {{ margin-bottom: 10px; }}
-                            .order-details p {{ margin: 5px 0; }}
-                            table {{ width: 100%; border-collapse: collapse; margin-top: 10px; }}
-                            th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
-                            th {{ background-color: #f2f2f2; }}
-                            .total {{ text-align: right; font-weight: bold; margin-top: 10px; }}
-                        </style>
-                    </head>
-                    <body>
-                        <div class="header">Receipt for Order #{order.order_number}</div>
-                        <div class="order-details">
-                            <p><strong>Client:</strong> {order.client.name}</p>
-                            <p><strong>Address:</strong> {order.client.delivery_address}</p>
-                            <p><strong>Order Date:</strong> {order.order_date.strftime('%b %d, %Y')}</p>
-                        </div>
-                        <table>
-                            <tr>
-                                <th>Item</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
-                            </tr>
-                """
-                for item in order_items:
-                    html_content += f"""
-                        <tr>
-                            <td>{item.subcategory}</td>
-                            <td>${item.price:.2f}</td>
-                            <td>{item.quantity}</td>
-                            <td>${item.order_item_total_price:.2f}</td>
-                        </tr>
+                # Generate receipts for each order
+                for order in queryset:
+                    # Fetch the associated order items
+                    order_items = order.items.all()
+
+                    # Generate HTML content for the receipt
+                    html_content = f"""
+                        <html>
+                        <head>
+                            <title>Receipt for Order #{order.order_number}</title>
+                            <style>
+                                body {{ font-family: Arial, sans-serif; margin: 20px; }}
+                                .header {{ text-align: center; font-size: 20px; margin-bottom: 20px; }}
+                                .order-details {{ margin-bottom: 10px; }}
+                                .order-details p {{ margin: 5px 0; }}
+                                table {{ width: 100%; border-collapse: collapse; margin-top: 10px; }}
+                                th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+                                th {{ background-color: #f2f2f2; }}
+                                .total {{ text-align: right; font-weight: bold; margin-top: 10px; }}
+                            </style>
+                        </head>
+                        <body>
+                            <div class="header">Receipt for Order #{order.order_number}</div>
+                            <div class="order-details">
+                                <p><strong>Client:</strong> {order.client.name}</p>
+                                <p><strong>Address:</strong> {order.client.delivery_address}</p>
+                                <p><strong>Order Date:</strong> {order.order_date.strftime('%b %d, %Y')}</p>
+                            </div>
+                            <table>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
                     """
-                html_content += f"""
-                        </table>
-                        <div class="total">
-                            Total: ${order.order_total_price:.2f}
-                        </div>
-                    </body>
-                    </html>
-                """
+                    for item in order_items:
+                        html_content += f"""
+                            <tr>
+                                <td>{item.subcategory}</td>
+                                <td>${item.price:.2f}</td>
+                                <td>{item.quantity}</td>
+                                <td>${item.order_item_total_price:.2f}</td>
+                            </tr>
+                        """
+                    html_content += f"""
+                            </table>
+                            <div class="total">
+                                Total: ${order.order_total_price:.2f}
+                            </div>
+                        </body>
+                        </html>
+                    """
 
-                # Define the path for the receipt image
-                receipt_path = os.path.join(bulk_receipts_dir, f"{order.order_number}.png")
+                    # Create a BytesIO buffer to store the receipt image
+                    receipt_buffer = io.BytesIO()
 
-                # Configure imgkit to use wkhtmltoimage executable
-                config = imgkit.config(wkhtmltoimage="/usr/bin/wkhtmltoimage")  # Update the path as needed
-                imgkit.from_string(html_content, receipt_path, config=config)
+                    # Configure imgkit to use wkhtmltoimage executable
+                    config = imgkit.config(wkhtmltoimage="/usr/bin/wkhtmltoimage")  # Update the path as needed
+                    imgkit.from_string(html_content, receipt_buffer, config=config)
 
-            return HttpResponse(f"Receipts generated and saved in {bulk_receipts_dir}.", status=200)
+                    # Add the generated receipt to the ZIP file in memory
+                    zip_file.writestr(f"receipt_{order.order_number}.png", receipt_buffer.getvalue())
+
+            # Seek to the beginning of the ZIP buffer
+            zip_buffer.seek(0)
+
+            # Prepare the response as a downloadable ZIP file
+            response = HttpResponse(zip_buffer.read(), content_type="application/zip")
+            response['Content-Disposition'] = 'attachment; filename="bulk_receipts.zip"'
+
+            return response
 
         except Exception as e:
-            return HttpResponse(f"An error occurred: {e}", status=500)
-
+            return HttpResponse(f"An error occurred: {str(e)}", status=500)
     def change_view(self, request, object_id, form_url="", extra_context=None):
         """
         Override the change view to add the download receipt URL to the context.
