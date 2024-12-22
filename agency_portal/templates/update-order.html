@@ -1458,6 +1458,11 @@ async function fetch_update_category(setid,id){
     })
 }
 async function fetch_update_subcategory(setid,cat_id,subcat_id){
+    if (subcat_id==null){
+        return
+    }
+    else{
+
     await fetch(`${window.location.origin}/api/subcategory/filter_subcategories/`,{
         "method":"POST",
         headers: {
@@ -1493,6 +1498,7 @@ async function fetch_update_subcategory(setid,cat_id,subcat_id){
     document.getElementById('post_form').style.display = "block";
         }
     })
+}
 }
 
 
