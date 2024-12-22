@@ -827,6 +827,8 @@ document.getElementById("delivery_time").value = deliveryTime;
             </span>
             <div style="display: flex;margin-top:10px;width:300px;justify-content:center;align-items:center;">
 
+            <input type="text" class="form-input quantity-input"  placeholder="Any Request" 
+                                                                style="margin-left: 10px; width: 100px; text-align: center;"  />
             <input type="number" id="quantity-${itemCounter}" class="form-input quantity-input" min="1" value="${data.quantity}" placeholder="Quantity"
                 style="margin-left: 10px; width: 54px; text-align: center;" oninput="checkQuantity(this)"/>
             <span class="price-display" style="margin-left: 10px; padding: 5px; display: flex; justify-content: center; align-items: center;" id="price-${itemCounter}" >$${data.order_item_total_price}</span>
@@ -967,6 +969,8 @@ document.getElementById("delivery_time").value = deliveryTime;
             </span>
             <div style="display: flex;margin-top:10px;width:300px;justify-content:center;align-items:center;">
 
+            <input type="text" class="form-input quantity-input"  placeholder="Any Request" 
+                                                                style="margin-left: 10px; width: 100px; text-align: center;"  />
             <input type="number" id="quantity-${itemCounter}" class="form-input quantity-input" min="1" value="1" placeholder="Quantity"
                 style="margin-left: 10px; width: 54px; text-align: center;opacity:0.5" oninput="checkQuantity(this)" disabled />
             <span class="price-display" style="margin-left: 10px; padding: 5px; display: flex; justify-content: center; align-items: center;opacity:0.5;" disabled id="price-${itemCounter}" >$0.00</span>
