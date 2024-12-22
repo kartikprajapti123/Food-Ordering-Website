@@ -548,7 +548,7 @@ class OrderAdmin(admin.ModelAdmin):
 
             # Check if any orders match the filter
             if not queryset.exists():
-                return HttpResponse("No orders found to generate receipts.", status=400)
+                return HttpResponse("No orders found to generate receipts. Please Go Back", status=400)
 
             # Create an in-memory buffer for the ZIP file
             zip_buffer = BytesIO()
