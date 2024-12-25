@@ -116,6 +116,27 @@ class OrderSerializer(serializers.ModelSerializer):
         email.start()
         
         
+        subject=f"{order.order_number} New Order has been Successfully Created"
+        to=f"{order.user.email}"
+        template="send_email_to_creator.html"
+        context={
+            "username":f"{order.user.username}",
+            "order_number":order.order_number,
+            "order_date":order.order_date,
+            "order_status":order.status,
+            "delivery_date":order.delivery_date,
+            "order_total_price":order.order_total_price,
+            "order_link":f"https://www.agelesseatskitchen.com/view-order/{order.id}/",
+            "order_items":order.items.all(),
+            
+            
+        } 
+        
+        # send_email_with_template(subject=subject,recipient_email=to,template_name="send_order_email.html",context=context)
+        email=Thread(target=send_email_with_template,args=(subject,to,template,context))
+        email.start()
+        
+        
         return order
     
     def update(self, instance, validated_data):
