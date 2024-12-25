@@ -605,6 +605,7 @@ class OrderAdmin(admin.ModelAdmin):
                             <table>
                                 <tr>
                                     <th>Item</th>
+                                    <th>Special Request</th>
                                     <th>Quantity</th>
                                 </tr>
                     """
@@ -615,6 +616,8 @@ class OrderAdmin(admin.ModelAdmin):
                         html_content += f"""
                             <tr>
                                 <td>{item.subcategory}</td>
+                                                        <td>{item.special_request}</td>
+
                                 <td>{item.quantity}</td>
                             </tr>
                         """
@@ -736,49 +739,61 @@ class OrderItemAdmin(admin.ModelAdmin):
         try:
             # Start with the filtered queryset based on current admin filters
             queryset = self.get_queryset(request)
-    
+
             # Further filter the queryset if specific IDs are provided
             selected_ids = request.GET.getlist("ids")
             if selected_ids:
+                # Validate the IDs to ensure they are integers (to avoid any potential injection)
+                try:
+                    selected_ids = [int(id) for id in selected_ids]
+                except ValueError:
+                    return HttpResponse("Invalid IDs provided.", status=400)
                 queryset = queryset.filter(id__in=selected_ids)
-    
-            # if "order__status" not in filter_params or filter_params.get("order__status") != "Pending":
-                # return HttpResponse("Please select the status as 'Pending' before generating the report.", status=400)
-            
-            filter_params = {key: value for key, value in request.GET.items() if key != "ids"}
+
             # Apply additional filters from the request (e.g., status__exact)
+            filter_params = {key: value for key, value in request.GET.items() if key != "ids"}
             if filter_params:
                 queryset = queryset.filter(**filter_params)
-    
+
             if not queryset.exists():
                 return HttpResponse("No Data Found to Generate Report", status=400)
-    
-            # Summarize Total Quantities by Subcategory
+
+            # Summarize Total Quantities by Subcategory and Special Request
             item_summary = {}
             for item in queryset:
                 subcategory_name = item.subcategory.name if item.subcategory else "Uncategorized"
+                special_request = item.special_request if item.special_request else "-"
+
                 if subcategory_name not in item_summary:
-                    item_summary[subcategory_name] = 0
-                item_summary[subcategory_name] += item.quantity
-    
+                    item_summary[subcategory_name] = {
+                        "quantity": 0,
+                        "special_request": special_request
+                    }
+
+                item_summary[subcategory_name]["quantity"] += item.quantity
+
+                # If special_request is different, update it (optional based on your needs)
+                if item.special_request != "-" and item.special_request != item_summary[subcategory_name]["special_request"]:
+                    item_summary[subcategory_name]["special_request"] = item.special_request
+
             # Generate PDF content
             pdf_buffer = BytesIO()
             doc = SimpleDocTemplate(pdf_buffer, pagesize=letter)
             elements = []
             styles = getSampleStyleSheet()
-    
+
             # Add Title
             title = Paragraph("<strong>Kitchen Report</strong>", styles["Title"])
             elements.append(title)
             elements.append(Paragraph(f"Generated on: {datetime.now().strftime('%b %d, %Y %H:%M:%S')}", styles["Normal"]))
             elements.append(Paragraph("<br/><br/>", styles["Normal"]))
-    
+
             # Add Item Summary Table
-            summary_data = [["Subcategory", "Total Quantity"]]
-            for subcategory, total_quantity in sorted(item_summary.items()):
-                summary_data.append([subcategory, total_quantity])
-    
-            summary_table = Table(summary_data, colWidths=[250, 100])
+            summary_data = [["Subcategory",  "Special Request","Total Quantity"]]
+            for subcategory, data in sorted(item_summary.items()):
+                summary_data.append([subcategory, data["quantity"], data["special_request"]])
+
+            summary_table = Table(summary_data, colWidths=[200, 100, 200])
             summary_table.setStyle(TableStyle([
                 ('BACKGROUND', (0, 0), (-1, 0), colors.darkgreen),
                 ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
@@ -789,16 +804,16 @@ class OrderItemAdmin(admin.ModelAdmin):
                 ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
             ]))
             elements.append(summary_table)
-    
+
             # Build PDF
             doc.build(elements)
             pdf_buffer.seek(0)
-    
+
             # Return the PDF as a file download
             response = HttpResponse(pdf_buffer, content_type="application/pdf")
             response["Content-Disposition"] = "attachment; filename=kitchen_report.pdf"
             return response
-    
+
         except Exception as e:
             return HttpResponse(f"An error occurred while generating the kitchen report: {e}", status=500)
 
@@ -807,7 +822,7 @@ class OrderItemAdmin(admin.ModelAdmin):
         custom_urls = [
             path(
                 "generate_kitchen_report/",
-                self.admin_site.admin_view(self.generate_kitchen_report),
+            self.admin_site.admin_view(self.generate_kitchen_report),
                 name="order_generate_kitchen_report",
             ),
         ]

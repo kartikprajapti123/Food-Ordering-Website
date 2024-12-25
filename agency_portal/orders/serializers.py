@@ -107,8 +107,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "order_total_price":order.order_total_price,
             "order_link":"https://www.agelesseatskitchen.com/admin/orders/order/",
             "order_items":order.items.all(),
-            
-            
+    
         } 
         
         # send_email_with_template(subject=subject,recipient_email=to,template_name="send_order_email.html",context=context)
