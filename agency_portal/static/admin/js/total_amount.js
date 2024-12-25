@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const dateFilterGte = urlParams.get("order_date__gte");
     const dateFilterLt = urlParams.get("order_date__lt");
     const status = urlParams.get("status__exact");
-    const agencyFilter = urlParams.get("user__id__exact");
+    const agencyFilter = urlParams.get("user");
 
     console.log("Current status filter:", status);
     console.log("order_date__gte:", dateFilterGte);
