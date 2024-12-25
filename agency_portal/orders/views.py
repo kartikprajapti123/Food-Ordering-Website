@@ -271,7 +271,7 @@ class OrderViewSet(ModelViewSet):
             order_date__date__lte=end_of_week
         ).count()
 
-        if weekly_orders >= 20:
+        if weekly_orders >= 2:
             return Response(
                 {"success":False,"message": "You have already created 2 orders this week. Please try again next week."},
                 status=status.HTTP_400_BAD_REQUEST
