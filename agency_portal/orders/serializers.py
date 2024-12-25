@@ -97,7 +97,7 @@ class OrderSerializer(serializers.ModelSerializer):
             
         
         subject=f"New Order has been created by {order.user.username}"
-        to="kartikprajapati26122004@gmail.com"
+        to="orders@agelesseatskitchen.com"
         template="send_order_email.html"
         context={
             "order_number":order.order_number,
