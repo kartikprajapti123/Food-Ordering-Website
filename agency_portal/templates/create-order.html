@@ -625,10 +625,10 @@ Create-Order
                                     <div class="add-course-form" style="padding-bottom: 0px;">
                                         <form action="#">
                                             <div class="input-block">
-                                                <label class="add-course-label">Customer Name</label>
+                                                <label class="add-course-label">Client Name</label>
                                                 <!-- <input type="text" id="customer_name" class="form-control" -->
                                                     <!-- placeholder="Customer Full Name"> -->
-                                                    <span class="drop-detail" style="background: #fe4565;width: 300px;height: 56px;margin-top:10px;">
+                                                    <span class="drop-detail" style="margin:0px;background: #fe4565;width: 300px;height: 56px;margin-top:10px;">
                                                         <select id="customer_name" style="width:300px; border-radius: 24px;"  onchange=fetch_delivery_address() >
                                                             <option selected value="0">Select Client</option>
                                                             <option value="1">No Wrapper</option>
@@ -638,7 +638,7 @@ Create-Order
                                                     </span>
                                             </div>
                                             <div class="input-block">
-                                                <label class="add-course-label">Delivery Address  (Please Select Client)</label>
+                                                <label class="add-course-label">Delivery Address (Please Select Client this is Read Only)</label>
                                                 <input type="text" id="delivery_address" class="form-control"
                                                     placeholder="Delivery Address" readonly>
                                             </div>
@@ -691,10 +691,31 @@ Create-Order
                                                                     <option value="3">Nice!</option>
                                                                 </select>
                                                             </span>
-                                                            <div style="display: flex;margin-top:10px;width:300px;justify-content:center;align-items:center;">
+                                                            <div>
+
+                                                                <input type="text" class="special_request-input" id="special_request-1"  placeholder="Any Request (Optional)" 
+                                                                style="margin: 0px 17px;
+    margin-top: 10px;
+    width: 300px;
+    text-align: center;
+    border: none;
+    font-size: 20px;
+    box-shadow: 0px 0px 5px 0px;
+    border-radius: 20px;
+    padding: 5px;
+    opacity:0.5;
+"  disabled/>
+                                                            </div>
+                                                            <div style="display: flex
+;
+    margin: 0px 17px;
+    margin-top: 10px;
+    width: 300px;
+    justify-content: center; 
+    align-items: center;">
                                                             
                                                                
-
+                                                                
                                                             <input type="number" class="form-input quantity-input"  value="0" placeholder="Quantity" id="quantity-1" 
                                                                 style="margin-left: 10px; width: 54px; text-align: center;opacity:0.5;" oninput="checkQuantity(this)" disabled />
                                                             <span class="price-display" style="margin-left: 10px; padding: 5px; display: flex; justify-content: center; align-items: center;opacity:0.5;" id="price-1" disabled>$0.00</span>
@@ -728,15 +749,25 @@ Create-Order
 
                                         </div>
 
-                                            <div class="input-block">
-                                                <label class="add-course-label">Special Request (Optional) </label>
-                                                <input type="text" id="special_request" class="form-control"
-                                                    placeholder="Special Request">
-                                            </div>
+                                            
 
                                             <div >
                                                 <h1 style="color: #685F78;">
-                                                    Total Order Price:- <span id="total-price">$0.00</span>
+                                                    <div style="font-size: 20px;color:rgb(118 118 118)">
+
+                                                        Total Quantity:- <span id="total-quantity">0</span>
+                                                    </div>
+                                                    <div style="font-size: 20px;color:rgb(118 118 118)">
+
+                                                        Total Order item:- <span id="total-order-item">0</span>
+                                                    </div>
+
+                                                    <div style="font-size: 20px;color:rgb(118 118 118)">
+
+                                                        Total Order Price:- <span id="total-price">$0.00</span>
+                                                    </div>
+
+
                                                 </h1>
                                                 
                                             </div>
@@ -789,7 +820,7 @@ Create-Order
                                 </div>
                             </div>
                             <h3 style="margin-top: 15px;
-    color: #049dff;position:relative;">Uploading your video. Please wait while we process your request <div
+    color: #049dff;position:relative;">Creating Your Order. Please wait while we process your request <div
                                     class="loader" style="position: absolute;
     top: 9px;
     right: 30px;"></div>
@@ -1017,8 +1048,24 @@ check_user_can_do_order()
                     <option value="3">Nice!</option>
                 </select>
             </span>
-            <div style="display: flex;margin-top:10px;width:300px;justify-content:center;align-items:center;">
-            
+            <div>
+
+                <input type="text" id="special_request-${itemCounter}" class="special_request-input"  placeholder="Any Request (Optional)" 
+                style="margin: 0px 17px;
+    margin-top: 10px;
+    width: 300px;
+    text-align: center;
+    border: none;
+    font-size: 20px;
+    box-shadow: 0px 0px 5px 0px;
+    border-radius: 20px;
+    padding: 5px;
+    opacity:0.5;
+
+" disabled/>
+            </div>
+        
+            <div style="display: flex;margin:0px 17px;margin-top:10px;width:300px;justify-content:center;align-items:center;">
             <input type="number" id="quantity-${itemCounter}" class="form-input quantity-input" min="1" value="1" placeholder="Quantity"
                 style="margin-left: 10px; width: 54px; text-align: center;opacity:0.5" oninput="checkQuantity(this)" disabled />
             <span class="price-display" style="margin-left: 10px; padding: 5px; display: flex; justify-content: center; align-items: center;opacity:0.5;" disabled id="price-${itemCounter}" >$0.00</span>
@@ -1101,6 +1148,9 @@ check_user_can_do_order()
             document.getElementById(`price-${category_id}`).disabled=true
             document.getElementById(`price-${category_id}`).style.opacity="0.5"
 
+            document.getElementById(`special_request-${category_id}`).disabled=true
+            document.getElementById(`special_request-${category_id}`).style.opacity="0.5"
+
             updateTotalOrderPrice()
 
         }
@@ -1124,9 +1174,7 @@ check_user_can_do_order()
                     })
                     document.getElementById(`subcategory-${category_id}`).innerHTML=str
                     document.getElementById(`subcategory-${category_id}`).style.opacity=1
-                    console.log(document.getElementById(`subcategory-${category_id}`).disabled)
                     document.getElementById(`subcategory-${category_id}`).disabled=false
-                    console.log(document.getElementById(`subcategory-${category_id}`).disabled)
 
 
                     document.getElementById(`quantity-${category_id}`).disabled=true
@@ -1136,6 +1184,9 @@ check_user_can_do_order()
 
             document.getElementById(`price-${category_id}`).disabled=true
             document.getElementById(`price-${category_id}`).style.opacity="0.5"
+
+            document.getElementById(`special_request-${category_id}`).disabled=true
+            document.getElementById(`special_request-${category_id}`).style.opacity="0.5"
 
 
                 }
@@ -1158,6 +1209,10 @@ check_user_can_do_order()
 
             priceField.disabled = true;
             priceField.style.opacity = "0.5";
+
+            document.getElementById(`special_request-${subcategory_id}`).disabled=true
+            document.getElementById(`special_request-${subcategory_id}`).style.opacity="0.5"
+
 
             updateTotalOrderPrice();
 
@@ -1186,6 +1241,10 @@ check_user_can_do_order()
                     quantityField.style.opacity = "1";
                     priceField.disabled = false;
                     priceField.style.opacity = "1";
+
+                    document.getElementById(`special_request-${subcategory_id}`).disabled=false
+            document.getElementById(`special_request-${subcategory_id}`).style.opacity="1"
+
     
                     // Set the price field value
                     priceField.innerHTML = `$${price}`;
@@ -1220,10 +1279,47 @@ check_user_can_do_order()
         // Update total order price displayed at the bottom
         const totalPriceElement = document.getElementById('total-price'); // Ensure this element exists in your HTML
         totalPriceElement.innerHTML = `$${totalOrderPrice.toFixed(2)}`;
+
+
+        ///////////////total quantity //////////////////////////
+
+
+        let totalOrderQuantity = 0;
+    
+        // Loop through all subcategories to calculate total order price
+        const allquantityFields = document.querySelectorAll('[id^="quantity-"]');
+        allquantityFields.forEach((e) => {
+            const quantityText = parseInt(e.value);
+
+            totalOrderQuantity += quantityText;
+        });
+    
+        // Update total order price displayed at the bottom
+        const totalQuantityElement = document.getElementById('total-quantity'); // Ensure this element exists in your HTML
+        totalQuantityElement.innerHTML = `${totalOrderQuantity}`;
+
+
+        //////////////////total order item ///////////////////////
+
+
+        let totalOrderItem = 0;
+    
+        // Loop through all subcategories to calculate total order price
+        const AllOrderItem = document.querySelectorAll('.order-item');
+        AllOrderItem.forEach((e) => {
+            totalOrderItem += 1;
+        });
+    
+        // Update total order price displayed at the bottom
+        const totalOrdersitems = document.getElementById('total-order-item'); // Ensure this element exists in your HTML
+        totalOrdersitems.innerHTML = `${totalOrderItem}`;
+
+
+
+
     }
     let customer_name=document.getElementById("customer_name")
     let delivery_address=document.getElementById("delivery_address")
-    let special_request=document.getElementById("special_request")
     let delivery_date=document.getElementById("delivery_date")
     let delivery_time=document.getElementById("delivery_time")
 
@@ -1280,7 +1376,10 @@ for (let i = 0; i < orderItems.length; i++) {
     
     // Get the item details from the DOM elements
     const itemId = itemElement.dataset.itemId;  // Assuming it's in the data-item-id attribute
-    const itemQuantity = itemElement.querySelector('.quantity-input').value;  // Get quantity from input field
+    const itemQuantity = itemElement.querySelector('.quantity-input').value;
+    
+    const special_request = itemElement.querySelector('.special_request-input').value;  // Get quantity from input field
+    // Get quantity from input field
     const itemPrice = itemElement.querySelector('.price-display').textContent.replace("$","");  // Get price from text (could be in <span> or <p>)
     
     // Get the category and subcategory
@@ -1329,6 +1428,7 @@ for (let i = 0; i < orderItems.length; i++) {
         category: parseInt(category_id),
         subcategory: parseInt(subcategory_id),
         quantity: itemQuantity,
+        special_request:special_request,
         order_item_total_price: itemPrice,
         price: unitPrice,
     });
@@ -1363,7 +1463,7 @@ if (payload_delivery_time && !payload_delivery_time.includes(":")) {
 // Prepare the data for the API request
 let data = {
     "client":document.getElementById("customer_name").getAttribute("data-id"),
-    "special_instructions": special_request.value,
+    
     "order_total_price": document.getElementById("total-price").textContent.replace("$", ""),
     "items": items,
     
@@ -1472,7 +1572,7 @@ function fetch_user_client(){
     }).then((response)=>{
         if (response.success){
             if (response.data.length==0){
-            str=`<option value="select client" >Add Client</option>`
+            str=`<option value="select client" >Add New Client ! Go to My Client Page</option>`
 
             }
             else{

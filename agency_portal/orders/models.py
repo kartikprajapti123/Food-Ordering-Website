@@ -18,7 +18,6 @@ class Order(models.Model):
     order_number = models.CharField(max_length=50, unique=True)
     order_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(choices=ORDER_STATUS_CHOICES, default="Pending", max_length=20)
-    special_instructions = models.TextField(blank=True, null=True)
     delivery_date=models.DateField(blank=True,null=True)
     delivery_time=models.TimeField(blank=True,null=True)
     
@@ -41,6 +40,7 @@ class OrderItem(models.Model):
     subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True,verbose_name=_("SubMenu Name"))
     quantity = models.IntegerField(default=1)
     price = models.FloatField(null=True)
+    special_request=models.CharField(null=True,max_length=255)
     order_item_total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     deleted = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True,null=True)

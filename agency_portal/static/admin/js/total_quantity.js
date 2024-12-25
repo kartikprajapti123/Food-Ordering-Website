@@ -74,15 +74,23 @@ document.addEventListener("DOMContentLoaded", function () {
         const urlParams = new URLSearchParams(window.location.search);
         const status = urlParams.get("order__status__exact");
         console.log("status ",status)
-    
+
+        
         // console.log(order__status__exact)
         // Check if the status is 'Delivered'
+        
         if (status !== "Pending") {
           alert(
             "Please select the 'Pending' status in the filters before generating the report."
           );
           return false;
         }
+        if (isTableEmpty()) {
+          
+          alert("Cannot generate the report because the list is empty.");
+          return false;
+        }
+        
         return true
       }
     // Get the status filter element
@@ -105,3 +113,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 })
+
+function isTableEmpty() {
+  const rows = document.querySelectorAll(".results");
+  console.log("rows",rows.length)
+  if (rows.length==0){
+
+    return true
+  }
+  else{
+    return false
+  }
+}

@@ -1,11 +1,14 @@
 from rest_framework import serializers
 from orders.models import Order, OrderItem
 from client.models import Client
+from decouple import config
+from threading  import Thread
 
+from utils.send_mail import send_email_with_template
 class OrderItemSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source="category.name", read_only=True)
     subcategory_name = serializers.CharField(source="subcategory.name", read_only=True)
-
+    special_request=serializers.CharField(allow_blank=True,required=False)
     class Meta:
         model = OrderItem
         fields = [
@@ -16,6 +19,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             'category_name',
             'subcategory_name',
             'quantity',
+            "special_request",
             'price',
             'order_item_total_price',
         ]
@@ -48,7 +52,6 @@ class OrderSerializer(serializers.ModelSerializer):
             'order_number',
             'order_date',
             'status',
-            'special_instructions',
             'order_total_price',
             'delivery_date',
             'delivery_time',
@@ -90,9 +93,31 @@ class OrderSerializer(serializers.ModelSerializer):
 
         for item_data in items_data:
             OrderItem.objects.create(order=order, **item_data)
-
+            
+            
+        
+        subject=f"New Order has been created by {order.user.username}"
+        to="kartikprajapati26122004@gmail.com"
+        template="send_order_email.html"
+        context={
+            "order_number":order.order_number,
+            "order_date":order.order_date,
+            "order_status":order.status,
+            "delivery_date":order.delivery_date,
+            "order_total_price":order.order_total_price,
+            "order_link":"https://www.agelesseatskitchen.com/admin/orders/order/",
+            "order_items":order.items.all(),
+            
+            
+        } 
+        
+        # send_email_with_template(subject=subject,recipient_email=to,template_name="send_order_email.html",context=context)
+        email=Thread(target=send_email_with_template,args=(subject,to,template,context))
+        email.start()
+        
+        
         return order
-
+    
     def update(self, instance, validated_data):
         items_data = validated_data.pop('items', [])
         print(items_data)

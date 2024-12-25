@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("order_date__gte:", dateFilterGte);
     console.log("order_date__lt:", dateFilterLt);
 
+    
     // Check if the status is 'Delivered'
     if (status !== "Delivered") {
       alert(
@@ -48,38 +49,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Check if the date range is for today (single day)
-    const dateFilterStart = urlParams.get("order_date__gte"); // Start date
-    const dateFilterEnd = urlParams.get("order_date__lt"); // End date
+    // const dateFilterStart = urlParams.get("order_date__gte"); // Start date
+    // const dateFilterEnd = urlParams.get("order_date__lt"); // End date
 
-    if (dateFilterStart && dateFilterEnd) {
-      const startDate = new Date(dateFilterStart);
-      const endDate = new Date(dateFilterEnd);
-
-      // Calculate the difference between the two dates
-      const timeDifference = endDate - startDate;
-      const oneDayInMs = 1000 * 60 * 60 * 24;
-
-      // Check if the date range is exactly 8 days
-      if (timeDifference !== 8 * oneDayInMs) {
-        alert(
-            "Please select the 'Past 7 days' date range in the filters before generating the report."
-
-        );
-        return false;
-      }
-    } else {
-      alert(
-        "Please select the 'Past 7 days' date range in the filters before generating the report."
-      );
-      return false;
-    }
+    
     // Check if the 'agency' filter is applied
     if (!agencyFilter) {
       alert("Please select the 'Agency' filter before generating the report.");
       return false;
     }
 
-    return true;
+    if (isTableEmpty()) {
+      alert("Cannot generate the report because the List is empty.");
+      return false;
+    }
+
+    const check = confirm(
+      "Have you selected 'Past 7 Days' or 'This Month' from Filters ? If not, the report will include all agency orders. Click 'OK' to generate and 'Cancel' to go back ? "
+    );
+    
+    if (check==false){
+      return false
+    }
+    else{
+      return true
+    }
+
   }
 
   function BulkOrdervalidateFilters() {
@@ -88,10 +83,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const status = urlParams.get("status__exact");
 
     // Check if the status is 'Delivered'
-    if (status !== "Delivered") {
+
+    
+    
+
+    if (status !== "Processed") {
       alert(
-        "Please select the 'Delivered' status in the filters before generating the 'Bulk Orders Receipt'."
+        "Please select the 'Processed' status in the filters before generating the 'Bulk Orders Receipt'."
       );
+      return false;
+    }
+
+    if (isTableEmpty()) {
+      alert("Cannot generate the report because the List is empty.");
       return false;
     }
 
@@ -167,3 +171,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+function isTableEmpty() {
+  const rows = document.querySelectorAll(".results");
+  console.log("rows",rows.length)
+  if (rows.length==0){
+
+    return true
+  }
+  else{
+    return false
+  }
+}

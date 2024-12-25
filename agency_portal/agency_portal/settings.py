@@ -143,15 +143,14 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com' 
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config('SEND_EMAIL')
-EMAIL_HOST_PASSWORD = config('SEND_EMAIL_PASSWORD')
-
+EMAIL_HOST = 'smtp.gmail.com'  # Your custom domain's mail server
+EMAIL_PORT = 587  # Port for TLS connection
+EMAIL_USE_TLS = True  # Use TLS for secure email communication
+EMAIL_USE_SSL = False  # Do not use SSL as TLS will be used
+EMAIL_HOST_USER = config('SEND_EMAIL')  # Your email address (e.g., orders@agelesseatskitchen.com)
+EMAIL_HOST_PASSWORD = config('SEND_EMAIL_PASSWORD')  # Your email password or app-specific password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1825),  # 5 years = 365 * 5 days

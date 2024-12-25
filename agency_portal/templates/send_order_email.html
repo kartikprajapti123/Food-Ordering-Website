@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Order </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content h2 {
+            color: #333333;
+            margin-top: 0;
+        }
+        .order-details {
+            margin-top: 20px;
+        }
+        .order-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .order-details th, .order-details td {
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+        .order-details th {
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+        .button-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-block;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .footer {
+            background-color: #f1f1f1;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #666666;
+        }
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>New Order </h1>
+        </div>
+        <div class="content">
+            <h2>Hi Sunita,</h2>
+            <p>Their is a New Order ! Below are the details:</p>
+
+            <div class="order-details">
+                <h3>Order Summary</h3>
+                <table>
+                    <tr>
+                        <th>Order Number</th>
+                        <td>{{ order_number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Order Date</th>
+                        <td>{{ order_date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ order_status }}</td>
+                    </tr>
+                    <tr>
+                        <th>Delivery Date</th>
+                        <td>{{ delivery_date }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="order-details">
+                <h3>Order Items</h3>
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Special Request</th>
+                    </tr>
+                    {% for item in order_items %}
+                    <tr>
+                        <td>{{ item.subcategory }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }}</td>
+                        {% if item.special_request %}
+                          
+                        <td>{{ item.special_request }}</td>
+                        {%else%}
+                        <td>-</td>
+                        
+                        {% endif %}
+                        
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <h3>Total Price: {{ order_total_price }}</h3>
+
+            <div class="button-container">
+                <a href="{{ order_link }}" class="button" style="cursor: pointer;color:white;">View Order</a>
+            </div>
+
+            <!-- <p>If you have any questions, feel free to contact us.</p> -->
+        </div>
+    </div>
+</body>
+</html>

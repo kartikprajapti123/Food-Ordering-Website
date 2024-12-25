@@ -94,12 +94,6 @@ View Order
 										<p id="delivery_address"></p>
 									</div>
 								</div>
-								<div class="col-sm-6">
-									<div class="contact-info">
-										<h6>Special Instructions</h6>
-										<p id="special_instructions">Not Provided</p>
-									</div>
-								</div>
 
 								<div class="col-sm-6">
 									<div class="contact-info mb-0">
@@ -154,9 +148,11 @@ View Order
 														<tr>
 															<th>Menu</th>
 															<th>Sub Menu</th>
+															
 															<th>Quantity</th>
 															<th>Unit Price</th>
 															<th>Total Price</th>
+															<th>Special Request</th>
 
 														</tr>
 													</thead>
@@ -250,7 +246,7 @@ View Order
             }).then((response) => {
 				console.log(response)
                 if (response.success) {
-					let special_instruction = response.data.special_instructions ? response.data.special_instructions : "Not Provided";
+					let special_request = response.data.special_request ? response.data.special_request : "-";
 
 					document.getElementById("update-order-id").href=`/update-order/${response.data.id}/`
 
@@ -261,7 +257,6 @@ View Order
 
 					customer_name.innerHTML=response.data.client_name
 					delivery_address.innerHTML=response.data.client_delivery_address
-					special_instructions.innerHTML=special_instruction
 					created_at.innerHTML=`Date: ${formattedDate}, Time: ${formattedTime}`
 					created_by.innerHTML=response.data.user_username
 					total_price.innerHTML=`$${response.data.order_total_price}`
@@ -280,6 +275,8 @@ View Order
                     <td style="text-align:center;">${data.quantity}</td>
                     <td style="text-align:center;">$${data.price}</td>
                     <td style="text-align:center;">$${data.order_item_total_price}</td>
+                    <td style="text-align:center;">${special_request}</td>
+
 
                     
                 </tr>`

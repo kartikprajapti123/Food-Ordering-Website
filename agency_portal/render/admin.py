@@ -113,8 +113,8 @@ class OrderItemInline(admin.TabularInline):
 
     model = OrderItem
     extra = 0
-    fields = ("category_name", "subcategory_name", "quantity", "price", "order_item_total_price")
-    readonly_fields = ("category_name", "subcategory_name", "quantity", "price", "order_item_total_price",)
+    fields = ("category_name", "subcategory_name","special_request","quantity", "price", "order_item_total_price")
+    readonly_fields = ("category_name", "subcategory_name","special_request", "quantity", "price", "order_item_total_price",)
     # autocomplete_fields = ("category", "subcategory")
 
     def get_readonly_fields(self, request, obj=None):
@@ -147,6 +147,22 @@ class OrderItemInline(admin.TabularInline):
 
 
 
+
+class AlwaysVisibleUserFilter(SimpleListFilter):
+    title = "Agency"  # Title for the filter
+    parameter_name = "user"
+
+    def lookups(self, request, model_admin):
+        # Get all users who have orders
+        users = model_admin.model.objects.values_list("user__id", "user__username").distinct()
+        return [(user_id, username) for user_id, username in users]
+
+    def queryset(self, request, queryset):
+        # Filter the queryset based on the selected user
+        if self.value():
+            return queryset.filter(user__id=self.value())
+        return queryset
+
 class OrderAdmin(admin.ModelAdmin):
     """
     Admin panel for managing Orders, with the 'status' field editable.
@@ -163,7 +179,7 @@ class OrderAdmin(admin.ModelAdmin):
         "delivery_date",
         "delivery_time",
     )
-    list_filter = ("status", "order_date", ("user",RelatedOnlyFieldListFilter))
+    list_filter = ("status", "order_date", AlwaysVisibleUserFilter)
     search_fields = (
         "order_number",
         "delivery_date",
@@ -184,7 +200,6 @@ class OrderAdmin(admin.ModelAdmin):
         "order_number",
         "order_date",
         
-        "special_instructions",
         "deleted",
         "delivery_date",
         "delivery_time",
@@ -249,9 +264,6 @@ class OrderAdmin(admin.ModelAdmin):
             # Fetch the filtered orders and related items
             orders = queryset.prefetch_related("items", "client")
 
-            if not orders.exists():
-                return HttpResponse("No orders data found to generate Order.", status=400)
-
             # Group orders by user
             user_orders = {}
             for order in orders:
@@ -302,20 +314,21 @@ class OrderAdmin(admin.ModelAdmin):
                 elements.append(table)
                 elements.append(Paragraph("<br/><br/>", styles["Normal"]))
 
-                # Summarize Total Quantities by Subcategory
+                # Summarize Total Quantities by Subcategory and Special Requests
                 item_summary = {}
                 for order in orders:
                     for item in order.items.all():
-                        if item.subcategory not in item_summary:
-                            item_summary[item.subcategory] = 0
-                        item_summary[item.subcategory] += item.quantity
+                        key = (item.subcategory, item.special_request)
+                        if key not in item_summary:
+                            item_summary[key] = 0
+                        item_summary[key] += item.quantity
 
                 # Add Item Summary Table
-                summary_data = [["Subcategory", "Total Quantity"]]
-                for subcategory, total_quantity in item_summary.items():
-                    summary_data.append([subcategory, total_quantity])
+                summary_data = [["Subcategory", "Special Request", "Total Quantity"]]
+                for (subcategory, special_request), total_quantity in item_summary.items():
+                    summary_data.append([subcategory, special_request or "None", total_quantity])
 
-                summary_table = Table(summary_data, colWidths=[300, 100])
+                summary_table = Table(summary_data, colWidths=[200, 200, 100])
                 summary_table.setStyle(TableStyle([
                     ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue),
                     ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
@@ -324,7 +337,7 @@ class OrderAdmin(admin.ModelAdmin):
                     ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
                     ('GRID', (0, 0), (-1, -1), 1, colors.black),
                 ]))
-                elements.append(Paragraph("<strong>Order Item Summary:-</strong>", styles["Heading2"]))
+                elements.append(Paragraph("<strong>Order Item Summary:</strong>", styles["Heading2"]))
                 elements.append(summary_table)
 
                 # Build PDF
@@ -342,6 +355,7 @@ class OrderAdmin(admin.ModelAdmin):
 
         except Exception as e:
             return HttpResponse(f"An error occurred while generating the report: {e}", status=500)
+
     def changelist_view(self, request, extra_context=None):
         """
         Add a custom button for generating a report in the changelist view.
@@ -465,6 +479,8 @@ class OrderAdmin(admin.ModelAdmin):
                             <thead>
                                 <tr>
                                     <th>Item</th>
+                                    <th>Special Request</th>
+                                    
                                     <th>Quantity</th>
                                 </tr>
                             </thead>
@@ -479,6 +495,8 @@ class OrderAdmin(admin.ModelAdmin):
                 html_content += f"""
                     <tr>
                         <td>{item.subcategory}</td>
+                        <td>{item.special_request}</td>
+                        
                         <td>{item.quantity}</td>
                     </tr>
                 """
@@ -547,8 +565,6 @@ class OrderAdmin(admin.ModelAdmin):
                 queryset = queryset.filter(**filter_params)
 
             # Check if any orders match the filter
-            if not queryset.exists():
-                return HttpResponse("No orders found to generate receipts. Please Go Back", status=400)
 
             # Create an in-memory buffer for the ZIP file
             zip_buffer = BytesIO()
@@ -660,11 +676,13 @@ class OrderItemAdmin(admin.ModelAdmin):
         "subcategory",
         "quantity",
         "price",
+        "order__order_date",
         "order_item_total_price",
         "deleted",
     )
     list_filter = (
          "order__status",
+         "order__order_date",
         ('category', RelatedOnlyFieldListFilter),
         ('subcategory', RelatedOnlyFieldListFilter),
         
@@ -688,6 +706,7 @@ class OrderItemAdmin(admin.ModelAdmin):
     ordering = ("-created_at",)
     autocomplete_fields = ("order", "category", "subcategory")
     list_display_links = None
+    date_hierarchy = "order__order_date"
     class Media:
         js = ("admin/js/total_quantity.js",)
 
