@@ -728,10 +728,6 @@ class OrderItemAdmin(admin.ModelAdmin):
         # If you want to prevent saving or modifying, return False
         return False
 
-    def get_readonly_fields(self, request, obj=None):
-        # Allow read-only fields as per your requirement
-        return self.readonly_fields
-    
     def generate_kitchen_report(self, request):
         """
         Generate a kitchen report summarizing total quantities of Order Items
@@ -740,7 +736,7 @@ class OrderItemAdmin(admin.ModelAdmin):
         try:
             # Start with the filtered queryset based on current admin filters
             queryset = self.get_queryset(request)
-
+    
             # Further filter the queryset if specific IDs are provided
             selected_ids = request.GET.getlist("ids")
             if selected_ids:
@@ -754,18 +750,18 @@ class OrderItemAdmin(admin.ModelAdmin):
             filter_params = {key: value for key, value in request.GET.items() if key != "ids"}
             if filter_params:
                 queryset = queryset.filter(**filter_params)
-
+    
             if not queryset.exists():
                 return HttpResponse("No Data Found to Generate Report", status=400)
-
+    
             # Summarize Total Quantities by Subcategory and Special Request
             no_special_request_summary = {}
             special_request_summary = {}
-
+    
             for item in queryset:
                 subcategory_name = item.subcategory.name if item.subcategory else "Uncategorized"
                 special_request = item.special_request if item.special_request else "-"
-
+    
                 # Group items with no special request
                 if special_request == "-":
                     if subcategory_name not in no_special_request_summary:
@@ -778,19 +774,19 @@ class OrderItemAdmin(admin.ModelAdmin):
                     if special_request not in special_request_summary[subcategory_name]:
                         special_request_summary[subcategory_name][special_request] = 0
                     special_request_summary[subcategory_name][special_request] += item.quantity
-
+    
             # Generate PDF content
             pdf_buffer = BytesIO()
             doc = SimpleDocTemplate(pdf_buffer, pagesize=letter)
             elements = []
             styles = getSampleStyleSheet()
-
+    
             # Add Title
             title = Paragraph("<strong>Kitchen Report</strong>", styles["Title"])
             elements.append(title)
             elements.append(Paragraph(f"Generated on: {datetime.now().strftime('%b %d, %Y %H:%M:%S')}", styles["Normal"]))
             elements.append(Paragraph("<br/><br/>", styles["Normal"]))
-
+    
             # Section for Orders with No Special Request
             elements.append(Paragraph("<strong>Orders with No Special Request</strong>", styles["Heading2"]))
             if no_special_request_summary:
@@ -811,14 +807,22 @@ class OrderItemAdmin(admin.ModelAdmin):
             else:
                 elements.append(Paragraph("No orders with no special request found.", styles["Normal"]))
             elements.append(Paragraph("<br/><br/>", styles["Normal"]))
-
+    
             # Section for Orders with Special Requests
             elements.append(Paragraph("<strong>Orders with Special Requests</strong>", styles["Heading2"]))
             if special_request_summary:
                 for subcategory, special_requests in special_request_summary.items():
                     summary_data_special = [["Special Request", "Total Quantity"]]
+                    subcategory_total = 0  # Initialize total for the subcategory
+    
                     for special_request, total_quantity in sorted(special_requests.items()):
                         summary_data_special.append([special_request, total_quantity])
+                        subcategory_total += total_quantity  # Add to the subcategory total
+    
+                    # Add the total row at the bottom
+                    summary_data_special.append(["<strong>Total</strong>", f"<strong>{subcategory_total}</strong>"])
+    
+                    # Create table for this subcategory
                     summary_table_special = Table(summary_data_special, colWidths=[200, 100])
                     summary_table_special.setStyle(TableStyle([
                         ('BACKGROUND', (0, 0), (-1, 0), colors.darkgreen),
@@ -827,26 +831,29 @@ class OrderItemAdmin(admin.ModelAdmin):
                         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
                         ('BOTTOMPADDING', (0, 0), (-1, 0), 10),
                         ('GRID', (0, 0), (-1, -1), 1, colors.black),
-                        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                        ('BACKGROUND', (0, 1), (-1, -2), colors.beige),
+                        ('FONTNAME', (-1, -1), (-1, -1), 'Helvetica-Bold'),
+                        ('BACKGROUND', (-1, -1), (-1, -1), colors.lightgrey),
                     ]))
+    
                     elements.append(Paragraph(f"<strong>{subcategory}</strong>", styles["Heading3"]))
                     elements.append(summary_table_special)
             else:
                 elements.append(Paragraph("No orders with special requests found.", styles["Normal"]))
             elements.append(Paragraph("<br/><br/>", styles["Normal"]))
-
+    
             # Build PDF
             doc.build(elements)
             pdf_buffer.seek(0)
-
+    
             # Return the PDF as a file download
             response = HttpResponse(pdf_buffer, content_type="application/pdf")
             response["Content-Disposition"] = "attachment; filename=kitchen_report.pdf"
             return response
-
+    
         except Exception as e:
             return HttpResponse(f"An error occurred while generating the kitchen report: {e}", status=500)
-
+    
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
