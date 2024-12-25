@@ -9,173 +9,169 @@ View Order
 
 <div id="all-page-content">
 
-	
+
 	<!-- Breadcrumb -->
-<div class="breadcrumb-bar breadcrumb-bar-info" style="margin-top: 74px;">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12 col-12">
-				<div class="breadcrumb-list">
-					<h2 class="breadcrumb-title">View Order Details</h2>
-					<nav aria-label="breadcrumb" class="page-breadcrumb">
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="/dashboard/">Dashboard</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Order Detials</li>
-						</ol>
-					</nav>
+	<div class="breadcrumb-bar breadcrumb-bar-info" style="margin-top: 74px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-12">
+					<div class="breadcrumb-list">
+						<h2 class="breadcrumb-title">View Order Details</h2>
+						<nav aria-label="breadcrumb" class="page-breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="/dashboard/">Dashboard</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Order Detials</li>
+							</ol>
+						</nav>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<!-- /Breadcrumb -->
+	<!-- /Breadcrumb -->
 
-<!-- Page Content -->
-<div class="page-content">
-	<div class="container">
-		<div class="row">
-			
-			<!-- sidebar -->
-			<div class="col-xl-3 col-lg-3 theiaStickySidebar">
-				<div class="settings-widget dash-profile">
-					<div class="settings-menu">
-						<div class="profile-bg">
-							<div class="profile-img">
-								<a href="#"  class="profile-update" id="profile_picture_link2"><img id="profile_page_image"
-									src="/media/profile_picture/default_profile_image.png" alt="Img"></a>
+	<!-- Page Content -->
+	<div class="page-content">
+		<div class="container">
+			<div class="row">
+
+				<!-- sidebar -->
+				<div class="col-xl-3 col-lg-3 theiaStickySidebar">
+					<div class="settings-widget dash-profile">
+						<div class="settings-menu">
+							<div class="profile-bg">
+								<div class="profile-img">
+									<a href="#" class="profile-update" id="profile_picture_link2"><img
+											id="profile_page_image"
+											src="/media/profile_picture/default_profile_image.png" alt="Img"></a>
+								</div>
 							</div>
-						</div>
-						<div class="profile-group">
-							<div class="profile-name text-center">
-								<h4 id="profile_page_username2"> Username</h4>
-								
-								<a href="/create-order/" class="add-course btn-primary">
-									<i class="fas fa-upload"></i> Create New Order
-								  </a>
+							<div class="profile-group">
+								<div class="profile-name text-center">
+									<h4 id="profile_page_username2"> Username</h4>
+
+									<a href="/create-order/" class="add-course btn-primary">
+										<i class="fas fa-upload"></i> Create New Order
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<!-- /Sidebar -->
-			
-			<!-- Instructor profile -->
-			<div class="col-xl-9 col-lg-9">
+				<!-- /Sidebar -->
 
-				<div class="settings-widget card-details mb-0">
-					<div class="settings-menu p-0">
-						<div class="profile-heading" style="display: flex;
+				<!-- Instructor profile -->
+				<div class="col-xl-9 col-lg-9">
+
+					<div class="settings-widget card-details mb-0">
+						<div class="settings-menu p-0">
+							<div class="profile-heading" style="display: flex;
     justify-content: space-between;
     align-items: center;">
-							<h3>Order Detail's</h3>
-							<ul class="nav">
-								<li  >
-									<a href="/update-order/" id="update-order-id" class="btn btn-black" style="color: #ffffff;
+								<h3>Order Detail's</h3>
+								<ul class="nav">
+									<li>
+										<a href="/update-order/" id="update-order-id" class="btn btn-black" style="color: #ffffff;
     background: #ff4667;
     border: none;">Edit</a>
-								</li>
-								<!-- <li>
+									</li>
+									<!-- <li>
 									<a href="javascript:void(0);" class="btn btn-success-dark" id="post_save" style="height: 50px;">Save</a>
 								</li> -->
-							</ul>
-						</div>
-						<div class="checkout-form personal-address">
-							<div class="row">
-								
-								<div class="col-sm-6">
-									<div class="contact-info">
-										<h6>Customer Name</h6>
-										<p id="customer_name"></p>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="contact-info">
-										<h6>Delivery Address</h6>
-										<p id="delivery_address"></p>
-									</div>
-								</div>
+								</ul>
+							</div>
+							<div class="checkout-form personal-address">
+								<div class="row">
 
-								<div class="col-sm-6">
-									<div class="contact-info mb-0">
-										<h6>Status</h6>
-										<p id="status">Status</p>
-									</div>
-								</div>
-								
-								<div class="col-sm-6">
-									<div class="contact-info mb-0">
-										<h6>Created By</h6>
-										<p id="created_by">Created_By</p>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="contact-info">
-										<h6>Created At </h6>
-										<p id="created_at">Not Provided</p>
-									</div>
-								</div>
-								
-
-								<div class="col-sm-6">
-									<div class="contact-info mb-0">
-										<h6>Delivery Date</h6>
-										<p id="delivery_date">Not Provided</p>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="contact-info mb-0">
-										<h6>Delivery Time</h6>
-										<p id="delivery_time">Not Provided</p>
-									</div>
-								</div>
-								<div class="col-sm-12" style="margin-top:20px;">
-									<div class="contact-info mb-0">
-										<h6>Total Price</h6>
-										<p id="total_price">Total Price</p>
-									</div>
-								</div>
-								
-								<h3 style="margin-top: 20px;">Order Items</h3>
-								<div class="tab-content">
-									<div class="tab-pane fade show active" id="all">
-										<div class="row">
-
-											<div class="table-responsive custom-table">
-
-												<!-- Referred Users-->
-												<table class="table table-nowrap mb-0">
-													<thead>
-														<tr>
-															<th>Menu</th>
-															<th>Sub Menu</th>
-															
-															<th>Quantity</th>
-															<th>Unit Price</th>
-															<th>Total Price</th>
-															<th>Special Request</th>
-
-														</tr>
-													</thead>
-													<tbody id="orders-items">
-													</tbody>
-												</table>
-
-											</div>
-
+									<div class="col-sm-6">
+										<div class="contact-info">
+											<h6>Customer Name</h6>
+											<p id="customer_name"></p>
 										</div>
 									</div>
-</div>
+									<div class="col-sm-6">
+										<div class="contact-info">
+											<h6>Delivery Address</h6>
+											<p id="delivery_address"></p>
+										</div>
+									</div>
+
+									<div class="col-sm-6">
+										<div class="contact-info mb-0">
+											<h6>Status</h6>
+											<p id="status">Status</p>
+										</div>
+									</div>
+
+									<div class="col-sm-6">
+										<div class="contact-info mb-0">
+											<h6>Created By</h6>
+											<p id="created_by">Created_By</p>
+										</div>
+									</div>
+									<div class="col-sm-6" style="margin-top: 15px;">
+										<div class="contact-info">
+											<h6>Created At </h6>
+											<p id="created_at">Not Provided</p>
+										</div>
+									</div>
+
+
+									<div class="col-sm-6" style="margin-top: 15px;">
+										<div class="contact-info mb-0">
+											<h6>Delivery Date/time</h6>
+											<p id="delivery_date">Not Provided</p>
+										</div>
+									</div>
+
+
+									<h3 style="margin-top: 20px;">Order Items</h3>
+									<div class="tab-content">
+										<div class="tab-pane fade show active" id="all">
+											<div class="row">
+
+												<div class="table-responsive custom-table">
+
+													<!-- Referred Users-->
+													<table class="table table-nowrap mb-0">
+														<thead>
+															<tr>
+																<th>Menu</th>
+																<th>Sub Menu</th>
+
+																<th>Quantity</th>
+																<th>Unit Price</th>
+																<th>Total Price</th>
+																<th>Special Request</th>
+
+															</tr>
+														</thead>
+														<tbody id="orders-items">
+														</tbody>
+													</table>
+
+												</div>
+
+											</div>
+										</div>
+									</div>
+									<div  style="margin-top:20px;">
+										<div class="contact-info mb-0">
+											<h6>Total Price:- <span id="total_price"></span></h6>
+											
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
+
 				</div>
+				<!-- /Instructor profile -->
 
 			</div>
-			<!-- /Instructor profile -->
-			
 		</div>
 	</div>
-</div>
 </div>
 <!-- /Page Content -->
 {% endblock body %}
@@ -186,18 +182,18 @@ View Order
 	const segments = path.split('/'); // ["", "view-order", "1", ""]
 	const orderId = segments[2];
 
-	let customer_name=document.getElementById("customer_name")
-	let delivery_address=document.getElementById("delivery_address")
-	let special_instructions=document.getElementById("special_instructions")
-	let created_at=document.getElementById("created_at")
-	let created_by=document.getElementById("created_by")
-	let total_price=document.getElementById("total_price")
-	let delivery_date=document.getElementById("delivery_date")
+	let customer_name = document.getElementById("customer_name")
+	let delivery_address = document.getElementById("delivery_address")
+	let special_instructions = document.getElementById("special_instructions")
+	let created_at = document.getElementById("created_at")
+	let created_by = document.getElementById("created_by")
+	let total_price = document.getElementById("total_price")
+	let delivery_date = document.getElementById("delivery_date")
 
-	let delivery_time=document.getElementById("delivery_time")
+	let delivery_time = document.getElementById("delivery_time")
 
 
-	let order_items=document.getElementById("orders-items")
+	let order_items = document.getElementById("orders-items")
 
 
 
@@ -206,70 +202,69 @@ View Order
 
 	if (authenticated) {
 		userApi = async () => {
-            await fetch(`${window.location.origin}/api/user/get-user-single/`, {
-                "method": "get",
-                "headers": {
-                    "content-type": "application/json",
-                    "Authorization": `Bearer ${authenticated}`
-                }
-            }).then((response) => {
-                return response.json()
-            }).then((response) => {
-                if (response.success) {
-                    user_id = response.data.id
-                    username = response.data.username
-                    userprofileid=response.data.id
-								console.log(response.data.image);
-								document.getElementById("profile_image").src = `${response.data.profile_picture}`;
-								document.getElementById("profile_image2").src = `${response.data.profile_picture}`;
-								document.getElementById("profile_username").innerHTML = `${response.data.username}`;
-								document.getElementById("profile_page_username2").innerHTML = `${response.data.username}`;
-								
-					document.getElementById("profile_page_image").src=response.data.profile_picture
+			await fetch(`${window.location.origin}/api/user/get-user-single/`, {
+				"method": "get",
+				"headers": {
+					"content-type": "application/json",
+					"Authorization": `Bearer ${authenticated}`
+				}
+			}).then((response) => {
+				return response.json()
+			}).then((response) => {
+				if (response.success) {
+					user_id = response.data.id
+					username = response.data.username
+					userprofileid = response.data.id
+					console.log(response.data.image);
+					document.getElementById("profile_image").src = `${response.data.profile_picture}`;
+					document.getElementById("profile_image2").src = `${response.data.profile_picture}`;
+					document.getElementById("profile_username").innerHTML = `${response.data.username}`;
+					document.getElementById("profile_page_username2").innerHTML = `${response.data.username}`;
 
-								
-                }
-                console.log(response)
-            })
-        }
-        userApi()
+					document.getElementById("profile_page_image").src = response.data.profile_picture
 
-        fetch_order_id = async () => {
-            await fetch(`${window.location.origin}/api/orders/${orderId}/`, {
-                "method": "get",
-                "headers": {
-                    "content-type": "application/json",
-                    "Authorization": `Bearer ${authenticated}`
-                }
-            }).then((response) => {
-                return response.json()
-            }).then((response) => {
+
+				}
 				console.log(response)
-                if (response.success) {
+			})
+		}
+		userApi()
+
+		fetch_order_id = async () => {
+			await fetch(`${window.location.origin}/api/orders/${orderId}/`, {
+				"method": "get",
+				"headers": {
+					"content-type": "application/json",
+					"Authorization": `Bearer ${authenticated}`
+				}
+			}).then((response) => {
+				return response.json()
+			}).then((response) => {
+				console.log(response)
+				if (response.success) {
 					let special_request = response.data.special_request ? response.data.special_request : "-";
 
-					document.getElementById("update-order-id").href=`/update-order/${response.data.id}/`
+					document.getElementById("update-order-id").href = `/update-order/${response.data.id}/`
 
 					const dateObject = new Date(response.data.order_date);
 
 					const formattedDate = dateObject.toLocaleDateString(); // "11/27/2024" (default format, depends on locale)
 					const formattedTime = dateObject.toLocaleTimeString();
 
-					customer_name.innerHTML=response.data.client_name
-					delivery_address.innerHTML=response.data.client_delivery_address
-					created_at.innerHTML=`Date: ${formattedDate}, Time: ${formattedTime}`
-					created_by.innerHTML=response.data.user_username
-					total_price.innerHTML=`$${response.data.order_total_price}`
-					delivery_date.innerHTML=`${response.data.delivery_date}`
-					delivery_time.innerHTML=`${response.data.delivery_time}`
+					customer_name.innerHTML = response.data.client_name
+					delivery_address.innerHTML = response.data.client_delivery_address
+					created_at.innerHTML = `Date: ${formattedDate}, Time: ${formattedTime}`
+					created_by.innerHTML = response.data.user_username
+					total_price.innerHTML = `$${response.data.order_total_price}`
+					delivery_date.innerHTML = `Date: ${response.data.delivery_date} Time: ${response.data.delivery_time}`
 
 
-					document.getElementById("status").innerHTML=response.data.status
+					document.getElementById("status").innerHTML = response.data.status
 
-					str=``
-					response.data.items.forEach((data)=>{
+					str = ``
+					response.data.items.forEach((data) => {
 						console.log(data.price)
-						str+=`<tr>
+						str += `<tr>
                     <td style="text-align:left;">${data.category_name}</td>
                     <td style="text-align:left;">${data.subcategory_name}</td>
                     <td style="text-align:center;">${data.quantity}</td>
@@ -281,38 +276,38 @@ View Order
                     
                 </tr>`
 					})
-					
-					order_items.innerHTML=str
-                }
-				else{
-					if (response.detail){
-					message_content.innerHTML = "No Order found with this id";
-					card.style.display = "flex";
-					card.style.borderLeft = "10px solid #3db5dc";
-					message_type.innerHTML = "Info";
-					message_type.style.color = "#3db5dc";
-					message_icon_parent.style.color = "#3db5dc";
-					message_icon_child.classList = "fas fa-exclamation-circle";
-					}
-					else{
 
-					card.style.display = "flex";
-					card.style.borderLeft = "10px solid #3db5dc";
-					message_content.innerHTML = response.message;
-					message_type.innerHTML = "Info";
-					message_type.style.color = "#3db5dc";
-					message_icon_parent.style.color = "#3db5dc";
-					message_icon_child.classList = "fas fa-exclamation-circle";
+					order_items.innerHTML = str
+				}
+				else {
+					if (response.detail) {
+						message_content.innerHTML = "No Order found with this id";
+						card.style.display = "flex";
+						card.style.borderLeft = "10px solid #3db5dc";
+						message_type.innerHTML = "Info";
+						message_type.style.color = "#3db5dc";
+						message_icon_parent.style.color = "#3db5dc";
+						message_icon_child.classList = "fas fa-exclamation-circle";
+					}
+					else {
+
+						card.style.display = "flex";
+						card.style.borderLeft = "10px solid #3db5dc";
+						message_content.innerHTML = response.message;
+						message_type.innerHTML = "Info";
+						message_type.style.color = "#3db5dc";
+						message_icon_parent.style.color = "#3db5dc";
+						message_icon_child.classList = "fas fa-exclamation-circle";
 					}
 
 				}
-            })
-        }
-        fetch_order_id()
+			})
+		}
+		fetch_order_id()
 
-    }
-    else {
-        window.location.href = "/"
-    }
+	}
+	else {
+		window.location.href = "/"
+	}
 </script>
 {% endblock script %}
