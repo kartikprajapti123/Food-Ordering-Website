@@ -1423,12 +1423,20 @@ for (let i = 0; i < orderItems.length; i++) {
     const unitPrice = itemPrice / itemQuantity;
 
     // Add the item to the list
+    let main_special_request=""
+    if (special_request=="-" || special_request==""){
+        main_special_request="-"
+    }
+    else{
+        main_special_request=special_request
+    }
     items.push({
         item_id: itemId,
         category: parseInt(category_id),
         subcategory: parseInt(subcategory_id),
         quantity: itemQuantity,
-        special_request:special_request,
+        special_request : main_special_request,
+
         order_item_total_price: itemPrice,
         price: unitPrice,
     });

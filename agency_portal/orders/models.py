@@ -40,7 +40,7 @@ class OrderItem(models.Model):
     subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True,verbose_name=_("SubMenu Name"))
     quantity = models.IntegerField(default=1)
     price = models.FloatField(null=True)
-    special_request=models.CharField(null=True,max_length=255)
+    special_request=models.CharField(null=True,max_length=100,blank=True)
     order_item_total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     deleted = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True,null=True)

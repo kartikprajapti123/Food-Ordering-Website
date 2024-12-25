@@ -1388,13 +1388,20 @@ for (let i = 0; i < orderItems.length; i++) {
     const unitPrice = itemPrice / itemQuantity;
 
     // Add the item to the list
-    
+    alert(special_request)
+    let main_special_request=""
+    if (special_request=="-" || special_request==""){
+        main_special_request="-"
+    }
+    else{
+        main_special_request=special_request
+    }
     if (orderid && orderitemid){
         items.push({
             id:parseInt(orderitemid.innerHTML),
             order:parseInt(orderid.innerHTML),
             itemId: itemId,
-            special_request : special_request && special_request !== "" ? special_request  : "-",
+            special_request : main_special_request,
 
             category: parseInt(category_id),
             subcategory: parseInt(subcategory_id),
@@ -1408,7 +1415,7 @@ for (let i = 0; i < orderItems.length; i++) {
             itemId: itemId,
             category: parseInt(category_id),
             subcategory: parseInt(subcategory_id),
-            special_request:special_request,
+            special_request:main_special_request,
 
             quantity: itemQuantity,
             order_item_total_price: itemPrice,

@@ -8,7 +8,7 @@ from utils.send_mail import send_email_with_template
 class OrderItemSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source="category.name", read_only=True)
     subcategory_name = serializers.CharField(source="subcategory.name", read_only=True)
-    special_request=serializers.CharField(allow_blank=True,required=False)
+    # special_request=serializers.CharField(allow_blank=True,required=False)
     class Meta:
         model = OrderItem
         fields = [
@@ -19,7 +19,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             'category_name',
             'subcategory_name',
             'quantity',
-            "special_request",
+            'special_request',
             'price',
             'order_item_total_price',
         ]
@@ -140,7 +140,7 @@ class OrderSerializer(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         items_data = validated_data.pop('items', [])
-        print(items_data)
+        # print(items_data)
         instance = super().update(instance, validated_data)
 
         # Track existing item IDs from the current order

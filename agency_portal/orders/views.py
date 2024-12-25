@@ -134,6 +134,8 @@ class OrderViewSet(ModelViewSet):
                         orderitem.category = category_instance
                         orderitem.quantity =item_data['quantity']
                         orderitem.subcategory = subcategory_instance
+                        orderitem.special_request = item_data["special_request"]
+                        
                         orderitem.order_item_total_price = item_data['order_item_total_price']
                         orderitem.order = instance  # Ensure the order field is correctly linked
 
@@ -254,6 +256,8 @@ class OrderViewSet(ModelViewSet):
             status=status.HTTP_200_OK,
         )
         
+    
+        
     @action(detail=False, methods=['post'], url_path='create-order')
     def create_order(self, request):
         user = request.user
@@ -267,7 +271,7 @@ class OrderViewSet(ModelViewSet):
             order_date__date__lte=end_of_week
         ).count()
 
-        if weekly_orders >= 2:
+        if weekly_orders >= 20:
             return Response(
                 {"success":False,"message": "You have already created 2 orders this week. Please try again next week."},
                 status=status.HTTP_400_BAD_REQUEST
