@@ -54,8 +54,6 @@ class SupportTicketPagesViewSet(ModelViewSet):
         if serializer.is_valid():
             with transaction.atomic():
                 instance = serializer.save()
-
-
                 subject = f" Ticket ID:{instance.ticket_id} in {config("WEB_URL")}"
                 to = config("SEND_EMAIL")
                 context = {
