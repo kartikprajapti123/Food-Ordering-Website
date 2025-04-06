@@ -1,8 +1,11 @@
+import threading
+from django.core.mail import EmailMessage
+from django.utils.timezone import localtime
 from argparse import Action
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from orders.models import Order, OrderItem
 from orders.serializers import OrderSerializer, OrderItemSerializer
@@ -13,9 +16,13 @@ from menukit.models import Category,SubCategory
 from datetime import timedelta
 from rest_framework.decorators import action
 from datetime import datetime
+from django.template.loader import render_to_string
+from xhtml2pdf import pisa
+from django.http import HttpResponse
+from io import BytesIO
 
 class OrderViewSet(ModelViewSet):
-    queryset = Order.objects.filter(deleted=False).order_by("-created_at")
+    queryset = Order.objects.filter(deleted=False).order_by("id")
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [SearchFilter, OrderingFilter]
@@ -183,6 +190,7 @@ class OrderViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
 
         queryset = self.filter_queryset(self.get_queryset())
+        queryset=queryset.order_by("-id")
         no_pagination = request.query_params.get("no_pagination")
         page_url = request.query_params.get("page_url")
         status = self.request.query_params.get("status")
@@ -230,12 +238,12 @@ class OrderViewSet(ModelViewSet):
             "Delivered": 3,
             "Canceled": 4,
         }
-        queryset = sorted(
-            queryset,
-            key=lambda x: status_order.get(
-                x.status, 5
-            ),  # Default to 5 if status is not in the list
-        )
+        # queryset = sorted(
+            # queryset,
+            # key=lambda x: status_order.get(
+                # x.status, 5
+            # ),  # Default to 5 if status is not in the list
+        # )
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -256,8 +264,69 @@ class OrderViewSet(ModelViewSet):
             status=status.HTTP_200_OK,
         )
         
-    
         
+    def send_email_with_receipt(self, email, pdf_content, filename):
+        msg = EmailMessage(
+            subject="Your Order Receipt",
+            body="Please find your receipt attached.",
+            to=[email],
+        )
+        msg.attach(filename, pdf_content, "application/pdf")
+        msg.send()
+
+    @action(detail=False, methods=["GET"], url_path="generate-reciept", permission_classes=[AllowAny])
+    def generate_reciept(self, request, *args, **kwargs):
+        order_id = request.query_params.get("id")
+        try:
+            order_instance = Order.objects.get(id=order_id)
+        except Order.DoesNotExist:
+            return Response({'success': False, "message": f"Order with id {order_id} does not exist"})
+
+        if order_instance.status.lower() != "delivered":
+            return Response({'success': False, "message": "Order is not delivered yet. Receipt cannot be generated."})
+
+        order_data = {
+            "order_number": order_instance.order_number,
+            "client": order_instance.client.name if order_instance.client else "N/A",
+            "agency": order_instance.user.username,
+            "order_date": localtime(order_instance.order_date).strftime("%Y-%m-%d %H:%M"),
+            "delivery_date": order_instance.delivery_date.strftime("%Y-%m-%d") if order_instance.delivery_date else "N/A",
+            "delivery_time": order_instance.delivery_time.strftime("%H:%M") if order_instance.delivery_time else "N/A",
+            "order_total_price": str(order_instance.order_total_price),
+        }
+
+        item_list = []
+        for item in order_instance.items.all():
+            item_list.append({
+                "menu_name": item.category.name if item.category else "N/A",
+                "submenu_name": item.subcategory.name if item.subcategory else "N/A",
+                "quantity": item.quantity,
+                "price": str(item.price),
+                "total_price": str(item.order_item_total_price),
+                "special_request": item.special_request or "",
+            })
+
+        # Render HTML
+        html_string = render_to_string("receipt_template.html", {
+            "order": order_data,
+            "items": item_list,
+        })
+
+        # Generate PDF
+        result = BytesIO()
+        pisa_status = pisa.CreatePDF(html_string, dest=result)
+
+        if pisa_status.err:
+            return Response({'success': False, 'message': 'Failed to generate PDF'}, status=500)
+
+        # Send email in a separate thread
+        pdf_bytes = result.getvalue()
+        user_email = order_instance.user.email
+        pdf_filename = f"receipt_{order_instance.order_number}.pdf"
+        threading.Thread(target=self.send_email_with_receipt, args=(user_email, pdf_bytes, pdf_filename)).start()
+
+        return Response({'success': True, 'message': f'Receipt sent to your mail address:- {user_email}'})
+    
     @action(detail=False, methods=['post'], url_path='create-order')
     def create_order(self, request):
         user = request.user
@@ -271,11 +340,11 @@ class OrderViewSet(ModelViewSet):
             order_date__date__lte=end_of_week
         ).count()
 
-        if weekly_orders >= 2:
-            return Response(
-                {"success":False,"message": "You have already created 2 orders this week. Please try again next week."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        # if weekly_orders >= 2:
+            # return Response(
+                # {"success":False,"message": "You have already created 2 orders this week. Please try again next week."},
+                # status=status.HT/TP_400_BAD_REQUEST
+            # )
 
         return Response(
             {"success":True,"message":"User Can do Order"},

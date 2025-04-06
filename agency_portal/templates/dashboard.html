@@ -133,14 +133,14 @@ Agency Dashboared
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 d-flex">
+                            <!-- <div class="col-lg-4 col-md-6 d-flex">
                                 <div class="card dash-info flex-fill">
                                     <div class="card-body">
                                         <h5>Total Spent</h5>
                                         <h2 id="total_amount_spent"></h2>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
                         <!-- /Dashboard Grid -->
@@ -199,15 +199,17 @@ Agency Dashboared
                                                         <table class="table table-nowrap mb-0">
                                                             <thead>
                                                                 <tr>
+                                                                    <th>Order Number</th>
+
                                                                     <th>Customer Name</th>
                                                                     <th>Delivery Address</th>
-                                                                    <th>Special Instructions</th>
                                                                     <th>Order Total Price</th>
                                                                     <th>Status</th>
                                                                     <th>Created At</th>
+                                                                    <th>Download Receipt </th>
 
                                                                     <th>View Details</th>
-                                                                    <th>Edit</th>
+                                                                    <th>Update</th>
                                                                     <th>Delete</th>
 
                                                                 </tr>
@@ -219,6 +221,12 @@ Agency Dashboared
                                                     </div>
 
                                                 </div>
+                                                <div  style="margin:40px 15px;">
+                                                    <div class="contact-info mb-0">
+                                                        <h6>Total Amount:- <span id="all_total_order_amount"></span></h6>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                             <div class="tab-pane fade" id="processed">
@@ -229,12 +237,14 @@ Agency Dashboared
                                                         <table class="table table-nowrap mb-0">
                                                             <thead>
                                                                 <tr>
+                                                                    <th>Order Number</th>
+
                                                                     <th>Customer Name</th>
                                                                     <th>Delivery Address</th>
-                                                                    <th>Special Instructions</th>
                                                                     <th>Order Total Price</th>
                                                                     <th>Status</th>
                                                                     <th>Created At</th>
+                                                                    <th>Download Receipt </th>
 
                                                                     <th>View Details</th>
                                                                     <th>Edit</th>
@@ -250,6 +260,11 @@ Agency Dashboared
                                                     <!-- /Course Grid -->
 
                                                 </div>
+                                                <div  style="margin:40px 15px;">
+                                                    <div class="contact-info mb-0">
+                                                        <h6>Total Amount:- <span id="processed_total_order_amount"></span></h6>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="tab-pane fade" id="pending">
@@ -260,12 +275,14 @@ Agency Dashboared
                                                         <table class="table table-nowrap mb-0">
                                                             <thead>
                                                                 <tr>
+                                                                    <th>Order Number</th>
+
                                                                     <th>Customer Name</th>
                                                                     <th>Delivery Address</th>
-                                                                    <th>Special Instructions</th>
                                                                     <th>Order Total Price</th>
                                                                     <th>Status</th>
                                                                     <th>Created At</th>
+                                                                    <th>Download Receipt </th>
 
                                                                     <th>View Details</th>
                                                                     <th>Edit</th>
@@ -281,6 +298,11 @@ Agency Dashboared
                                                     <!-- /Course Grid -->
 
                                                 </div>
+                                                <div  style="margin:40px 15px;">
+                                                    <div class="contact-info mb-0">
+                                                        <h6>Total Amount:- <span id="pending_total_order_amount"></span></h6>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="tab-pane fade" id="delivered">
                                                 <div class="row" >
@@ -292,12 +314,15 @@ Agency Dashboared
                                                         <table class="table table-nowrap mb-0">
                                                             <thead>
                                                                 <tr>
+                                                                    <th>Order Number</th>
+
                                                                     <th>Customer Name</th>
                                                                     <th>Delivery Address</th>
-                                                                    <th>Special Instructions</th>
                                                                     <th>Order Total Price</th>
                                                                     <th>Status</th>
                                                                     <th>Created At</th>
+                                                                    <th>Download Receipt </th>
+
                                                                     <th>View Details</th>
                                                                     <th>Edit</th>
                                                                     <th>Delete</th>
@@ -311,6 +336,11 @@ Agency Dashboared
                                                     <!-- /Course Grid -->
 
                                                 </div>
+                                                <div  style="margin:40px 15px;">
+                                                    <div class="contact-info mb-0">
+                                                        <h6>Total Amount:- <span id="delivered_total_order_amount"></span></h6>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="tab-pane fade" id="canceled">
                                                 <div class="row" >
@@ -322,12 +352,14 @@ Agency Dashboared
                                                         <table class="table table-nowrap mb-0">
                                                             <thead>
                                                                 <tr>
+                                                                    <th>Order Number</th>
+
                                                                     <th>Customer Name</th>
                                                                     <th>Delivery Address</th>
-                                                                    <th>Special Instructions</th>
                                                                     <th>Order Total Price</th>
                                                                     <th>Status</th>
                                                                     <th>Created At</th>
+                                                                    <th>Download Receipt </th>
 
                                                                     <th>View Details</th>
                                                                     <th>Edit</th>
@@ -341,10 +373,20 @@ Agency Dashboared
                                                     </div>
                                                     <!-- /Course Grid -->
 
+                                                    
                                                 </div>
+                                                <div  style="margin:40px 15px;">
+                                                    <div class="contact-info mb-0">
+                                                        <h6>Total Amount:- <span id="canceled_total_order_amount"></span></h6>
+                                                    </div>
+                                                </div>
+                                            
                                             </div>
+                                            
                                         </div>
+                                        
                                     </div>
+                                    
                                 </div>
                             </div>
 
@@ -371,9 +413,11 @@ Agency Dashboared
 
                             <!-- /Instructor Courses -->
 
+                            
                         </div>
                         <!-- /Course Grid -->
 
+                        
                     </div>
                 </div>
 
@@ -456,22 +500,48 @@ Agency Dashboared
                     pending_count = 0
                     total_amount_spent = 0
 
+
+                    let all_total_order_amount=0
+
+                    let pending_total_order_amount=0
+
+                    let delivered_total_order_amount=0
+
+                    let processed_total_order_amount=0
+
+                    let canceled_total_order_amount=0
+
+
+
+
                     // Display posts
                     response.data.forEach((data) => {
+                        console.log(data.order_total_price)
+
+                        all_total_order_amount=all_total_order_amount+parseFloat(data.order_total_price)
+                        
                         if (data.status == "Canceled") {
                             canceled_count++
+                            canceled_total_order_amount=canceled_total_order_amount+parseFloat(data.order_total_price)
+
+
                         }
                         else if (data.status == "Delivered") {
-                            total_amount_spent = total_amount_spent + parseInt(data.order_total_price)
+                            //total_amount_spent = total_amount_spent + parseInt(data.order_total_price)
                             delivered_count++
+                            delivered_total_order_amount=delivered_total_order_amount+parseFloat(data.order_total_price)
+
                         }
                         else if (data.status == "Processed") {
-                            total_amount_spent = total_amount_spent + parseInt(data.order_total_price)
+                            //total_amount_spent = total_amount_spent + parseInt(data.order_total_price)
                             processed_count++
+                            processed_total_order_amount=processed_total_order_amount+parseFloat(data.order_total_price)
+
                         }
                         else {
-                            total_amount_spent = total_amount_spent + parseInt(data.order_total_price)
+                            //total_amount_spent = total_amount_spent + parseInt(data.order_total_price)
                             pending_count++
+                            pending_total_order_amount=pending_total_order_amount+parseFloat(data.order_total_price)
 
                         }
                     })
@@ -480,8 +550,14 @@ Agency Dashboared
                     document.getElementById("delivered_orders").innerHTML = String(delivered_count).padStart(2, '0');
                     document.getElementById("canceled_orders").innerHTML = String(canceled_count).padStart(2, '0');
                     document.getElementById("processed_orders").innerHTML = String(processed_count).padStart(2, '0');
-                    document.getElementById("total_amount_spent").innerHTML = `$${String(total_amount_spent).padStart(2, '0')}`;
 
+                    document.getElementById("all_total_order_amount").innerHTML=`$${all_total_order_amount}`
+                    document.getElementById("pending_total_order_amount").innerHTML=`$${pending_total_order_amount}`
+                    document.getElementById("delivered_total_order_amount").innerHTML=`$${delivered_total_order_amount}`
+                    document.getElementById("canceled_total_order_amount").innerHTML=`$${canceled_total_order_amount}`
+                    document.getElementById("processed_total_order_amount").innerHTML=`$${processed_total_order_amount}`
+
+                    //document.getElementById("total_amount_spent").innerHTML = `$${String(total_amount_spent).padStart(2, '0')}`;
 
                     document.getElementById("all_orders_count").innerHTML = String(response.data.length).padStart(2, '0');
                     document.getElementById("pending_orders_count").innerHTML = String(pending_count).padStart(2, '0');
@@ -519,7 +595,6 @@ Agency Dashboared
 
         data.forEach(data => {
             // Handle the special instructions if not provided
-            let special_instruction = data.special_instructions ? data.special_instructions : "Not Provided";
 
             // Function to truncate text to a max length
             const truncateText = (text, maxLength) => {
@@ -535,18 +610,29 @@ const dateObject = new Date(data.order_date);
 					const formattedTime = dateObject.toLocaleTimeString();
             let customerName = truncateText(data.client_name, 50);
             let deliveryAddress = truncateText(data.client_delivery_address, 50);
-            special_instruction = truncateText(special_instruction, 50);
-
+            const isDelivered = data.status.toLowerCase() === "delivered";
             // HTML structure for the post
             const postHTML = (status) => `
                 <tr>
-                    <td style="text-align:left;"><a href="/view-order/${data.id}/" style="color:#ff4667;">${customerName}</a></td>
+                    <td style="text-align:left;"><a href="/view-order/${data.id}/" style="color:#ff4667;">${data.order_number}</a></td>
+
+                    <td style="text-align:left;">${customerName}</td>
                     <td style="text-align:left;">${deliveryAddress}</td>
-                    <td style="text-align:center;">${special_instruction}</td>
                     <td style="text-align:center;">$${data.order_total_price}</td>
                     <td>${data.status}</td>
                     <td>${formattedDate} ${formattedTime}</td>
-
+                    <td>
+                      <ul class="nav">
+    <li>
+        <button onclick="downloadReceipt(${data.id})"
+                class="btn btn-success-dark"
+                 
+                ${!isDelivered ? 'disabled style="background-color: #007bff; cursor: not-allowed;opacity:0.3;color: white; border: none; padding: 10px 20px; border-radius: 6px; display: flex; align-items: center; gap: 8px;"' : 'style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 6px; display: flex; align-items: center; gap: 8px;"'}>
+            <i class="fas fa-file-download"></i> Download Receipt
+        </button>
+    </li>
+</ul>
+                    </td>
                     <td>
                         <ul class="nav">
                             <li>
@@ -562,7 +648,7 @@ const dateObject = new Date(data.order_date);
                             <li>
                                 <a href="/update-order/${data.id}/" class="btn btn-success-dark"
                                    style="height: 50px;background-color:green;border:none;color:white;">
-                                    Edit
+                                    Update
                                 </a>
                             </li>
                         </ul>
@@ -621,20 +707,21 @@ const dateObject = new Date(data.order_date);
     
         // For the 'canceled' section, check if there is content
         if (!canceled) {
-            document.getElementById('canceled').innerHTML += `
+            document.getElementById('canceled').innerHTML = `
+            
                 <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
                     <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
                     <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
                         There are no canceled orders.
                     </h4>
-                </div>`;
+                </div>` ;
         } else {
             document.getElementById('orders-canceled').innerHTML = canceled;
         }
     
         // For the 'delivered' section, check if there is content
         if (!delivered) {
-            document.getElementById('delivered').innerHTML += `
+            document.getElementById('delivered').innerHTML = `
                 <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
                     <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
                     <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
@@ -647,7 +734,7 @@ const dateObject = new Date(data.order_date);
     
         // For the 'processed' section, check if there is content
         if (!processed) {
-            document.getElementById('processed').innerHTML += `
+            document.getElementById('processed').innerHTML = `
                 <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
                     <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
                     <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
@@ -660,7 +747,7 @@ const dateObject = new Date(data.order_date);
     
         // For the 'pending' section, check if there is content
         if (!pending) {
-            document.getElementById('pending').innerHTML += `
+            document.getElementById('pending').innerHTML = `
                 <div style="width: 100%; padding: 53px 10px; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
                     <i class="fas fa-exclamation-circle" style="color: #ff4667; font-size: 50px;"></i>
                     <h4 style="text-align: center; width: 70%; margin: 10px; color: gray;">
@@ -800,5 +887,41 @@ const dateObject = new Date(data.order_date);
         }
 
     }
+    function downloadReceipt(orderId) {
+        fetch(`/api/orders/generate-reciept/?id=${orderId}`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${authenticated}`,
+                "content-type":"application/json"
+            }
+        })
+        .then(response => {
+            return response.json()
+        })
+        .then(response => {
+            console.log(response)
+            if (response.success==true){
+                card.style.display = "flex";
+                    card.style.borderLeft = "10px solid green";
+
+                    message_content.innerHTML = response.message;
+                    message_type.innerHTML = "Success";
+                    message_type.style.color = "green";
+                    message_icon_parent.style.color = "green";
+                    message_icon_child.classList = "fas fa-check-circle";
+            }
+            else{
+                message_content.innerHTML = response.message;
+                    card.style.display = "flex";
+                    card.style.borderLeft = "10px solid red";
+                    message_type.innerHTML = "Oops";
+                    message_type.style.color = "red";
+                    message_icon_parent.style.color = "red";
+                    message_icon_child.classList = "fas fa-times-circle";
+            }
+        })
+        
+    }
+    
 </script>
 {% endblock script %}

@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            max-width: 800px;
+            margin: auto;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 51, 102, 0.1);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            height: 50px;
+            width: 200px;
+        }
+
+        .fallback-brand {
+            display: none;
+            font-size: 22px;
+            font-weight: bold;
+            color: #003366;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #003366;
+            margin: 20px 0;
+        }
+        .title2 {
+            text-align: center;
+            font-weight: bold;
+            color: #003366;
+            margin: 5px 0;
+        }
+
+        .section {
+            margin-bottom: 12px;
+            padding: 10px 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #0056b3;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th {
+            background-color: #003366;
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .total {
+            margin-top: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+            color: #003366;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="title">AgelessEatsKitchen.com</div>
+        <h2 style="margin: 0px;padding:0px;color:#0056b3;font-size:20px;">Order Receipt ({{ order.order_number }})</h2>
+
+            
+
+            <!-- <img src="{% static 'img/share_your_clips_logo.png' %}" alt="Ageless Eats Logo" -->
+                 <!-- class="logo" -->
+                 <!-- onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" /> -->
+
+        <div class="section"><span class="label">Order #:</span> {{ order.order_number }}</div>
+        <div class="section"><span class="label">Date:</span> {{ order.order_date }}</div>
+        <div class="section"><span class="label">Time:</span> {{ order.delivery_time }}</div>
+        <div class="section"><span class="label">Client:</span> {{ order.client }}</div>
+        <div class="section"><span class="label">Agency:</span> {{ order.agency }}</div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Menu</th>
+                    <th>Submenu</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Special Request</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.menu_name }}</td>
+                    <td>{{ item.submenu_name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>${{ item.total_price }}</td>
+                    <td>{{ item.special_request }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="total">Total Price: ${{ order.order_total_price }}</div>
+
+        <div class="footer">
+            Thank you for your order!<br>
+            Visit us at <strong>https://www.agelesseatskitchen.com</strong>
+        </div>
+
+    </div>
+</body>
+</html>
