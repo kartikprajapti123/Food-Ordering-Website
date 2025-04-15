@@ -344,6 +344,8 @@ My Orders
                                                                     <th>Delivery Address</th>
                                                                     <th>Order Total Price</th>
                                                                     <th>Status</th>
+                                                                    <th>Dietary Restrictions</th>
+
                                                                     <th>Created At</th>
                                                                     <th>Download Receipt </th>
 
@@ -511,6 +513,14 @@ My Orders
             // HTML structure for the post
             const isDelivered = data.status.toLowerCase() === "delivered";
 
+            if (data.dietary_restrictions=="" || data.dietary_restrictions==null){
+                dietary_value="Not Provided"
+            }
+            else{
+                dietary_value=data.dietary_restrictions
+                
+            }
+
             all += `
                 <tr>
                     <td style="text-align:left;"><a href="/view-order/${data.id}/" style="color:#ff4667;">${data.order_number}</a></td>
@@ -519,6 +529,8 @@ My Orders
                     <td style="text-align:left;">${deliveryAddress}</td>
                     <td style="text-align:center;">$${data.order_total_price}</td>
                     <td>${data.status}</td>
+                                        <td>${dietary_value}</td>
+
                     <td>${formattedDate} ${formattedTime}</td>
 
                     <td>

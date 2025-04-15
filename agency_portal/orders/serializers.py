@@ -52,6 +52,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'order_number',
             'order_date',
             'status',
+            "dietary_restrictions",
             'order_total_price',
             'delivery_date',
             'delivery_time',

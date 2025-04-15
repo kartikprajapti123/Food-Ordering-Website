@@ -575,9 +575,14 @@ Upload-Video
                                                     <label class="add-course-label" for="delivery_time">Delivery Time</label>
                                                     <input type="time" id="delivery_time" class="form-control" placeholder="Select Time">
                                                 </div>
+                                                
     
                                             </div>
+                                            <div class="input-block" style="width:300px;">
                                             
+                                                <label class="add-course-label" for="dietary_restrictions">Dietary Restrictions</label>
+                                                <input type="text" id="dietary_restrictions" class="form-control" placeholder="Enter your Dietary">
+                                            </div>
 
                                             <div >
                                                 <h1 style="color: #685F78;">
@@ -783,6 +788,16 @@ else {
                 document.getElementById("customer_name").innerHTML=`<option selected value="${response.data.client_name}">${response.data.client_name}</option>`
                 document.getElementById("delivery_address").value=response.data.client_delivery_address
                 document.getElementById("total-price").innerHTML=`$${response.data.order_total_price}`
+
+                if (response.data.dietary_restrictions=="" || response.data.dietary_restrictions==null){
+                    dietary_value="Not Provided"
+                }
+                else{
+                    dietary_value=response.data.dietary_restrictions
+                    
+                }
+                document.getElementById("dietary_restrictions").value=`${dietary_value}`
+
                 let deliveryDate = response.data.delivery_date; // "2024-12-10"
 let deliveryTime = response.data.delivery_time.split(":").slice(0, 2).join(":"); // "22:36"
 
@@ -1454,6 +1469,7 @@ let data = {
     "client":document.getElementById("customer_name").getAttribute("data-id"),
     "order_total_price": document.getElementById("total-price").textContent.replace("$", ""),
     "items": items,
+    "dietary_restrictions":document.getElementById('dietary_restrictions').value
     
 };
 if (payload_delivery_date){

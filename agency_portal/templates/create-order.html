@@ -746,10 +746,15 @@ Create-Order
                                                 <label class="add-course-label" for="delivery_time">Delivery Time</label>
                                                 <input type="time" id="delivery_time" class="form-control" placeholder="Select Time">
                                             </div>
+                                            
 
                                         </div>
 
+                                        <div class="input-block" style="width:300px;">
                                             
+                                            <label class="add-course-label" for="dietary_restrictions">Dietary Restrictions</label>
+                                            <input type="text" id="dietary_restrictions" class="form-control" placeholder="Enter your Dietary">
+                                        </div>
 
                                             <div >
                                                 <h1 style="color: #685F78;">
@@ -1482,6 +1487,7 @@ if (payload_delivery_date){
 if (payload_delivery_time){
     data["delivery_time"]=payload_delivery_time
 }
+data["dietary_restrictions"]=document.getElementById("dietary_restrictions").value
 customer_name.style.border = "1px solid grey";
 delivery_address.style.border = "1px solid grey";
 

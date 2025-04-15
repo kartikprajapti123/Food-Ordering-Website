@@ -205,6 +205,8 @@ Agency Dashboared
                                                                     <th>Delivery Address</th>
                                                                     <th>Order Total Price</th>
                                                                     <th>Status</th>
+                                                                    <th>Dietary Restrictions</th>
+
                                                                     <th>Created At</th>
                                                                     <th>Download Receipt </th>
 
@@ -243,6 +245,7 @@ Agency Dashboared
                                                                     <th>Delivery Address</th>
                                                                     <th>Order Total Price</th>
                                                                     <th>Status</th>
+                                                                    <th>Dietary Restrictions</th>
                                                                     <th>Created At</th>
                                                                     <th>Download Receipt </th>
 
@@ -281,6 +284,8 @@ Agency Dashboared
                                                                     <th>Delivery Address</th>
                                                                     <th>Order Total Price</th>
                                                                     <th>Status</th>
+                                                                    <th>Dietary Restrictions</th>
+
                                                                     <th>Created At</th>
                                                                     <th>Download Receipt </th>
 
@@ -320,6 +325,8 @@ Agency Dashboared
                                                                     <th>Delivery Address</th>
                                                                     <th>Order Total Price</th>
                                                                     <th>Status</th>
+                                                                    <th>Dietary Restrictions</th>
+
                                                                     <th>Created At</th>
                                                                     <th>Download Receipt </th>
 
@@ -358,6 +365,8 @@ Agency Dashboared
                                                                     <th>Delivery Address</th>
                                                                     <th>Order Total Price</th>
                                                                     <th>Status</th>
+                                                                    <th>Dietary Restrictions</th>
+
                                                                     <th>Created At</th>
                                                                     <th>Download Receipt </th>
 
@@ -611,6 +620,14 @@ const dateObject = new Date(data.order_date);
             let customerName = truncateText(data.client_name, 50);
             let deliveryAddress = truncateText(data.client_delivery_address, 50);
             const isDelivered = data.status.toLowerCase() === "delivered";
+            if (data.dietary_restrictions=="" || data.dietary_restrictions==null){
+                dietary_value="Not Provided"
+            }
+            else{
+                dietary_value=data.dietary_restrictions
+                
+            }
+
             // HTML structure for the post
             const postHTML = (status) => `
                 <tr>
@@ -620,6 +637,8 @@ const dateObject = new Date(data.order_date);
                     <td style="text-align:left;">${deliveryAddress}</td>
                     <td style="text-align:center;">$${data.order_total_price}</td>
                     <td>${data.status}</td>
+                    <td>${dietary_value}</td>
+
                     <td>${formattedDate} ${formattedTime}</td>
                     <td>
                       <ul class="nav">

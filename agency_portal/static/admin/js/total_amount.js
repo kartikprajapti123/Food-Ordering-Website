@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const check = confirm(
-      "Have you selected 'Past 7 Days' or 'This Month' from Filters ? If not, the report will include all agency orders. Click 'OK' to generate and 'Cancel' to go back ? "
+      "Please select 'Past 7 Days' or 'This Month' from the filters to generate a report for the desired period; otherwise, all agency orders will be included by default. Click 'OK' to generate and 'Cancel' to go back ? "
     );
     
     if (check==false){

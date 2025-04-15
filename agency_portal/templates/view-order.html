@@ -97,19 +97,26 @@ View Order
 									</div>
 
 									<div class="col-sm-6">
-										<div class="contact-info mb-0">
+										<div class="contact-info ">
 											<h6>Status</h6>
 											<p id="status">Status</p>
 										</div>
 									</div>
 
 									<div class="col-sm-6">
-										<div class="contact-info mb-0">
+										<div class="contact-info ">
+											<h6>Dietary Restrictions</h6>
+											<p id="dietary_restrictions">Dietary Restrictions</p>
+										</div>
+									</div>
+
+									<div class="col-sm-6">
+										<div class="contact-info ">
 											<h6>Created By</h6>
 											<p id="created_by">Created_By</p>
 										</div>
 									</div>
-									<div class="col-sm-6" style="margin-top: 15px;">
+									<div class="col-sm-6" >
 										<div class="contact-info">
 											<h6>Created At </h6>
 											<p id="created_at">Not Provided</p>
@@ -268,6 +275,7 @@ View Order
 					total_price.innerHTML = `$${response.data.order_total_price}`
 					delivery_date.innerHTML = `Date: ${response.data.delivery_date} Time: ${response.data.delivery_time}`
 
+					document.getElementById('dietary_restrictions').innerHTML=response.data.dietary_restrictions
 
 					document.getElementById("status").innerHTML = response.data.status
 

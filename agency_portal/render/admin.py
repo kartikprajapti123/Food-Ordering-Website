@@ -292,16 +292,19 @@ class OrderAdmin(admin.ModelAdmin):
                 elements.append(Paragraph("<br/><br/>", styles["Normal"]))
 
                 # Table Header for Orders Summary
-                data = [["Order Number", "Order Date", "Client Name"]]
+                data = [["Order Number", "Order Date", "Client Name","Dietary Restrictions"]]
                 for order in orders:
+                    dietary = order.dietary_restrictions or "Not Provided"
                     data.append([
                         order.order_number,
                         order.order_date.strftime('%b %d, %Y'),
                         order.client.name,
+                        dietary,
+                        
                     ])
 
                 # Add Orders Table
-                table = Table(data, colWidths=[100, 100, 150])
+                table = Table(data, colWidths=[100, 100, 150,150])
                 table.setStyle(TableStyle([
                     ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
                     ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
@@ -416,6 +419,8 @@ class OrderAdmin(admin.ModelAdmin):
             # Fetch the associated order items
             order_items = order.items.all()
 
+
+            dietary = order.dietary_restrictions or "Not Provided"
             # Generate HTML content for the receipt
             html_content = f"""
                 <html>
@@ -465,11 +470,15 @@ class OrderAdmin(admin.ModelAdmin):
                     <h1>Order Ticket</h1>
 
                     <div class="order-details">
+                        <p><strong>Generated On:</strong> {datetime.now().strftime('%b %d, %Y')}</p>
+                    
                         <p><strong>Order Number:</strong> {order.order_number}</p>
                         <p><strong>Client Name:</strong> {order.client.name}</p>
                         <p><strong>Agency Name:</strong> {order.user.username}</p>
                         
                         <p><strong>Address:</strong> {order.client.delivery_address}</p>
+                        <p><strong>Dietary Restrictions:</strong> {dietary}</p>
+                        
                         <p><strong>Order Date:</strong> {order.order_date.strftime('%b %d, %Y')}</p>
                     </div>
 
@@ -577,6 +586,7 @@ class OrderAdmin(admin.ModelAdmin):
                     # Fetch the associated order items
                     order_items = order.items.all()
 
+                    dietary = order.dietary_restrictions or "Not Provided"
                     # Generate HTML content for the receipt
                     html_content = f"""
                         <html>
@@ -600,6 +610,8 @@ class OrderAdmin(admin.ModelAdmin):
                                 <p><strong>Agency Name:</strong> {order.user.username}</p>
                                 
                                 <p><strong>Address:</strong> {order.client.delivery_address}</p>
+                                <p><strong>Dietary Restrictions:</strong> {dietary}</p>
+                                
                                 <p><strong>Order Date:</strong> {order.order_date.strftime('%b %d, %Y')}</p>
                             </div>
                             <table>
